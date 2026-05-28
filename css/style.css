@@ -909,6 +909,11 @@ p {
   padding-right: 1.5rem;
 }
 
+.form-group select option {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
 .form-group textarea {
   min-height: 120px;
   resize: vertical;
