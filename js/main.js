@@ -291,19 +291,56 @@ function initContactForm() {
 
     if (!valid) return;
 
-    // Show success state
-    const wrapper = form.parentElement;
-    form.innerHTML = `
-      <div style="text-align:center;padding:3rem 1rem;">
-        <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="var(--accent)"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 1.5rem;">
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-          <polyline points="22 4 12 14.01 9 11.01"/>
-        </svg>
-        <h3 style="margin-bottom:0.5rem;">Message Sent!</h3>
-        <p>Thank you for reaching out. Our team will get back to you within 24 hours.</p>
-      </div>
-    `;
+    const statusEl = document.getElementById('contact-form-status');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (statusEl) {
+      statusEl.textContent = 'Sending...';
+      statusEl.style.color = 'var(--text-muted)';
+    }
+    if (submitBtn) submitBtn.disabled = true;
+
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        // Show success state
+        const wrapper = form.parentElement;
+        wrapper.innerHTML = `
+          <div style="text-align:center;padding:3rem 1rem;">
+            <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="var(--accent)"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 1.5rem;">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <h3 style="margin-bottom:0.5rem;">Message Sent!</h3>
+            <p>Thank you for reaching out. Our team will get back to you within 24 hours.</p>
+          </div>
+        `;
+      } else {
+        response.json().then(data => {
+          if (Object.hasOwn(data, 'errors')) {
+            statusEl.textContent = data["errors"].map(error => error["message"]).join(", ");
+            statusEl.style.color = '#ef4444';
+          } else {
+            statusEl.textContent = 'Oops! There was a problem submitting your form';
+            statusEl.style.color = '#ef4444';
+          }
+          if (submitBtn) submitBtn.disabled = false;
+        });
+      }
+    })
+    .catch(error => {
+      statusEl.textContent = 'Oops! There was a problem submitting your form';
+      statusEl.style.color = '#ef4444';
+      if (submitBtn) submitBtn.disabled = false;
+    });
   });
 }
 
