@@ -1,0 +1,194 @@
+/* ==========================================================================
+   THEMES.CSS — Atelier Polytech Design Tokens & Theme Switcher
+   Dark mode (default) · Light mode via [data-theme='light']
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. DARK MODE (Default)
+   -------------------------------------------------------------------------- */
+:root {
+  /* — Backgrounds — */
+  --bg-primary: #13151a;
+  --bg-secondary: #1a1d24;
+  --bg-tertiary: #232730;
+  --bg-card: rgba(26, 29, 36, 0.85);
+  --bg-card-hover: rgba(26, 29, 36, 0.98);
+
+  /* — Typography — */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+
+  /* — Accent / Brand Sky Blue (from logo) — */
+  --accent: #38bdf8;
+  --accent-hover: #7dd3fc;
+  --accent-dark: #0284c7;
+  --accent-glow: rgba(56, 189, 248, 0.3);
+  --accent-glow-strong: rgba(56, 189, 248, 0.5);
+
+  /* — Gradients — */
+  --gradient-hero: linear-gradient(135deg, #13151a 0%, #232730 50%, #13151a 100%);
+  --gradient-accent: linear-gradient(135deg, #38bdf8, #0284c7);
+  --gradient-card: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(56, 189, 248, 0.02));
+
+  /* — Borders — */
+  --border-color: rgba(148, 163, 184, 0.15);
+  --border-accent: rgba(56, 189, 248, 0.4);
+
+  /* — Shadows — */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 30px rgba(56, 189, 248, 0.2);
+
+  /* — Glassmorphism — */
+  --glass-bg: rgba(26, 29, 36, 0.7);
+  --glass-border: rgba(148, 163, 184, 0.15);
+
+  /* — Navigation — */
+  --nav-bg: rgba(19, 21, 26, 0.88);
+
+  /* — Color scheme hint for browser — */
+  color-scheme: dark;
+}
+
+/* --------------------------------------------------------------------------
+   2. LIGHT MODE — activated via [data-theme='light'] on <html>
+   -------------------------------------------------------------------------- */
+[data-theme='light'] {
+  /* — Backgrounds — */
+  --bg-primary: #f4f5f7;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #e9eaef;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --bg-card-hover: #ffffff;
+
+  /* — Typography — */
+  --text-primary: #1e2229;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+
+  /* — Accent / Brand Sky Blue (deeper for light mode contrast) — */
+  --accent: #0284c7;
+  --accent-hover: #0369a1;
+  --accent-dark: #075985;
+  --accent-glow: rgba(2, 132, 199, 0.15);
+  --accent-glow-strong: rgba(2, 132, 199, 0.3);
+
+  /* — Gradients — */
+  --gradient-hero: linear-gradient(135deg, #f0f4f8 0%, #e1e7ef 50%, #f0f4f8 100%);
+  --gradient-accent: linear-gradient(135deg, #0284c7, #075985);
+  --gradient-card: linear-gradient(135deg, rgba(2, 132, 199, 0.08), rgba(2, 132, 199, 0.02));
+
+  /* — Borders — */
+  --border-color: rgba(30, 34, 41, 0.1);
+  --border-accent: rgba(2, 132, 199, 0.3);
+
+  /* — Shadows — */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 30px rgba(2, 132, 199, 0.1);
+
+  /* — Glassmorphism — */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(30, 34, 41, 0.1);
+
+  /* — Navigation — */
+  --nav-bg: rgba(244, 245, 247, 0.9);
+
+  /* — Color scheme hint for browser — */
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   3. GLOBAL THEME TRANSITION
+   Smooth cross-fade when switching themes.
+   We intentionally EXCLUDE transform & opacity so scroll/hover
+   animations remain GPU-accelerated and jank-free.
+   -------------------------------------------------------------------------- */
+* {
+  transition:
+    background-color 0.4s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* --------------------------------------------------------------------------
+   4. THEME TOGGLE BUTTON
+   Circular button housing a sun / moon icon swap.
+   Expected markup:
+     <button class="theme-toggle" aria-label="Toggle theme">
+       <span class="theme-toggle__icon theme-toggle__icon--sun">☀️</span>
+       <span class="theme-toggle__icon theme-toggle__icon--moon">🌙</span>
+     </button>
+   -------------------------------------------------------------------------- */
+.theme-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-accent);
+  border-radius: 50%;
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;
+  z-index: 1001;
+  flex-shrink: 0;
+}
+
+/* Subtle glow ring on hover */
+.theme-toggle:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Focus-visible for keyboard accessibility */
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ---------- Icon base ---------- */
+.theme-toggle__icon {
+  position: absolute;
+  font-size: 1.2rem;
+  line-height: 1;
+  transition:
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.35s ease;
+  will-change: transform, opacity;
+}
+
+/* ---------- Dark mode (default): show Moon, hide Sun ---------- */
+.theme-toggle__icon--moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.theme-toggle__icon--sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+/* ---------- Light mode: show Sun, hide Moon ---------- */
+[data-theme='light'] .theme-toggle__icon--moon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
+}
+
+[data-theme='light'] .theme-toggle__icon--sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* ---------- Active press micro-feedback ---------- */
+.theme-toggle:active {
+  transform: scale(0.92);
+}

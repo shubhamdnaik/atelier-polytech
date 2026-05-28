@@ -1,0 +1,514 @@
+/**
+ * ============================================================
+ *  Atelier Polytech — Main JavaScript
+ *  Core website functionality: theme, navigation, counters,
+ *  contact form, product filters, parallax, and smooth scroll.
+ * ============================================================
+ */
+
+/* ---------------------------------------------------------- */
+/*  1. THEME TOGGLE (Dark / Light Mode)                       */
+/* ---------------------------------------------------------- */
+
+function initThemeToggle() {
+  const toggle = document.getElementById('theme-toggle');
+  if (!toggle) return;
+
+  const htmlEl = document.documentElement;
+
+  const applyTheme = (mode) => {
+    if (mode === 'light') {
+      htmlEl.setAttribute('data-theme', 'light');
+    } else {
+      htmlEl.removeAttribute('data-theme');
+    }
+
+    const sunIcon  = toggle.querySelector('.icon-sun');
+    const moonIcon = toggle.querySelector('.icon-moon');
+
+    if (sunIcon && moonIcon) {
+      sunIcon.style.display  = mode === 'dark' ? 'block' : 'none';
+      moonIcon.style.display = mode === 'light' ? 'block' : 'none';
+    }
+
+    toggle.setAttribute(
+      'aria-label',
+      mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+    );
+  };
+
+  const saved = localStorage.getItem('atelier-theme') || 'dark';
+  applyTheme(saved);
+
+  toggle.addEventListener('click', () => {
+    const current = htmlEl.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+    const next    = current === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('atelier-theme', next);
+    applyTheme(next);
+  });
+}
+
+
+/* ---------------------------------------------------------- */
+/*  2. MOBILE NAVIGATION                                      */
+/* ---------------------------------------------------------- */
+
+function initMobileNav() {
+  const hamburger  = document.getElementById('nav-toggle');
+  const mobileMenu = document.getElementById('nav-mobile-menu');
+  const backdrop   = document.getElementById('nav-backdrop');
+  if (!hamburger || !mobileMenu) return;
+
+  const open = () => {
+    mobileMenu.classList.add('open');
+    hamburger.classList.add('open');
+    if (backdrop) backdrop.classList.add('visible');
+    document.body.classList.add('no-scroll');
+    hamburger.setAttribute('aria-expanded', 'true');
+  };
+
+  const close = () => {
+    mobileMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    if (backdrop) backdrop.classList.remove('visible');
+    document.body.classList.remove('no-scroll');
+    hamburger.setAttribute('aria-expanded', 'false');
+  };
+
+  hamburger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    mobileMenu.classList.contains('open') ? close() : open();
+  });
+
+  // Close when a link is clicked
+  mobileMenu.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', close);
+  });
+
+  // Close on backdrop click
+  if (backdrop) {
+    backdrop.addEventListener('click', close);
+  }
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (
+      mobileMenu.classList.contains('open') &&
+      !mobileMenu.contains(e.target) &&
+      !hamburger.contains(e.target)
+    ) {
+      close();
+    }
+  });
+}
+
+
+/* ---------------------------------------------------------- */
+/*  3. SMOOTH SCROLL                                          */
+/* ---------------------------------------------------------- */
+
+const NAVBAR_OFFSET = 80;
+
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (e) => {
+      const targetId = anchor.getAttribute('href');
+      if (targetId === '#' || targetId === '') return;
+
+      const target = document.querySelector(targetId);
+      if (!target) return;
+
+      e.preventDefault();
+
+      const top =
+        target.getBoundingClientRect().top +
+        window.pageYOffset -
+        NAVBAR_OFFSET;
+
+      window.scrollTo({ top, behavior: 'smooth' });
+    });
+  });
+}
+
+
+/* ---------------------------------------------------------- */
+/*  4. ACTIVE NAVIGATION LINK                                 */
+/* ---------------------------------------------------------- */
+
+function initActiveNav() {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.navbar__links .navbar__link');
+  if (!sections.length || !navLinks.length) return;
+
+  const setActive = (id) => {
+    navLinks.forEach((link) => {
+      link.classList.toggle(
+        'active',
+        link.getAttribute('href') === `#${id}`
+      );
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    },
+    {
+      rootMargin: `-${NAVBAR_OFFSET}px 0px -40% 0px`,
+      threshold: 0.1,
+    }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+}
+
+
+/* ---------------------------------------------------------- */
+/*  5. NAVBAR SCROLL EFFECT                                   */
+/* ---------------------------------------------------------- */
+
+function initNavbarScroll() {
+  const navbar = document.querySelector('.navbar');
+  if (!navbar) return;
+
+  const onScroll = () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 100);
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
+
+/* ---------------------------------------------------------- */
+/*  6. ANIMATED COUNTERS                                      */
+/* ---------------------------------------------------------- */
+
+function formatNumber(n) {
+  return Math.floor(n).toLocaleString('en-US');
+}
+
+function easeOutExpo(t) {
+  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+}
+
+function animateCounter(el) {
+  const target = parseInt(el.getAttribute('data-target'), 10);
+  if (isNaN(target)) return;
+
+  const duration = 2000;
+  const start    = performance.now();
+
+  const tick = (now) => {
+    const elapsed  = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const value    = target * easeOutExpo(progress);
+
+    el.textContent = formatNumber(value);
+
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      el.textContent = formatNumber(target);
+    }
+  };
+
+  requestAnimationFrame(tick);
+}
+
+function initCounters() {
+  const counters = document.querySelectorAll('.counter');
+  if (!counters.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          obs.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.3 }
+  );
+
+  counters.forEach((counter) => observer.observe(counter));
+}
+
+
+/* ---------------------------------------------------------- */
+/*  7. CONTACT FORM                                           */
+/* ---------------------------------------------------------- */
+
+function initContactForm() {
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const showError = (field, message) => {
+    field.classList.add('error');
+    let errorEl = field.parentElement.querySelector('.field-error');
+    if (!errorEl) {
+      errorEl = document.createElement('span');
+      errorEl.className = 'field-error';
+      errorEl.style.cssText = 'color:#ef4444;font-size:0.78rem;margin-top:0.3rem;display:block;';
+      field.parentElement.appendChild(errorEl);
+    }
+    errorEl.textContent = message;
+  };
+
+  const clearErrors = () => {
+    form.querySelectorAll('.error').forEach((el) => el.classList.remove('error'));
+    form.querySelectorAll('.field-error').forEach((el) => el.remove());
+  };
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearErrors();
+
+    const name  = form.querySelector('[name="name"]');
+    const email = form.querySelector('[name="email"]');
+
+    let valid = true;
+
+    if (name && !name.value.trim()) {
+      showError(name, 'Please enter your name.');
+      valid = false;
+    }
+
+    if (email && !email.value.trim()) {
+      showError(email, 'Please enter your email.');
+      valid = false;
+    } else if (email && !isValidEmail(email.value.trim())) {
+      showError(email, 'Please enter a valid email address.');
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    // Show success state
+    const wrapper = form.parentElement;
+    form.innerHTML = `
+      <div style="text-align:center;padding:3rem 1rem;">
+        <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="var(--accent)"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 1.5rem;">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+          <polyline points="22 4 12 14.01 9 11.01"/>
+        </svg>
+        <h3 style="margin-bottom:0.5rem;">Message Sent!</h3>
+        <p>Thank you for reaching out. Our team will get back to you within 24 hours.</p>
+      </div>
+    `;
+  });
+}
+
+
+/* ---------------------------------------------------------- */
+/*  8. PRODUCTS FILTER                                        */
+/* ---------------------------------------------------------- */
+
+function initProductsFilter() {
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards      = document.querySelectorAll('[data-category]');
+  if (!filterBtns.length || !cards.length) return;
+
+  const filterCards = (category) => {
+    cards.forEach((card) => {
+      const match = category === 'all' || card.dataset.category === category;
+
+      if (match) {
+        card.style.display = '';
+        void card.offsetHeight;
+        card.style.opacity = '1';
+        card.style.transform = 'scale(1)';
+      } else {
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          if (card.style.opacity === '0') {
+            card.style.display = 'none';
+          }
+        }, 350);
+      }
+    });
+  };
+
+  // Add transition styles to cards
+  cards.forEach((card) => {
+    card.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+  });
+
+  filterBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterCards(btn.dataset.filter);
+    });
+  });
+}
+
+
+/* ---------------------------------------------------------- */
+/*  9. PARALLAX EFFECT                                        */
+/* ---------------------------------------------------------- */
+
+function initParallax() {
+  const heroBg = document.querySelector('.hero__bg img');
+  if (!heroBg) return;
+
+  let ticking = false;
+
+  const update = () => {
+    if (window.innerWidth <= 1024) {
+      heroBg.style.transform = '';
+      ticking = false;
+      return;
+    }
+    const offset = window.scrollY * 0.4;
+    heroBg.style.transform = `translateY(${offset}px) scale(1.1)`;
+    ticking = false;
+  };
+
+  window.addEventListener('resize', () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+}
+
+
+/* ---------------------------------------------------------- */
+/*  10. SCROLL PROGRESS (Molten Runner)                       */
+/* ---------------------------------------------------------- */
+
+function initScrollProgress() {
+  const progressBar = document.getElementById('scroll-progress');
+  if (!progressBar) return;
+
+  const updateProgress = () => {
+    const scrollPx = document.documentElement.scrollTop || document.body.scrollTop;
+    const winHeightPx = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = `${(scrollPx / winHeightPx) * 100}%`;
+    progressBar.style.width = scrolled;
+  };
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+}
+
+
+/* ---------------------------------------------------------- */
+/*  11. LOGO ANIMATION                                        */
+/* ---------------------------------------------------------- */
+
+function initLogoAnimation() {
+  const logoImg = document.querySelector('.logo-animated-img');
+  if (!logoImg) return;
+
+  // Trigger the animation after a short delay
+  setTimeout(() => {
+    logoImg.classList.add('logo-animate');
+  }, 300);
+}
+
+
+/* ---------------------------------------------------------- */
+/*  11. NEWSLETTER FORM                                       */
+/* ---------------------------------------------------------- */
+
+function initNewsletter() {
+  const form = document.getElementById('newsletter-form');
+  if (!form) return;
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = form.querySelector('input[type="email"]');
+    if (input && input.value.trim()) {
+      input.value = '';
+      input.placeholder = 'Subscribed! ✓';
+      setTimeout(() => {
+        input.placeholder = 'Your email address';
+      }, 3000);
+    }
+  });
+}
+
+
+/* ---------------------------------------------------------- */
+/*  12. SELECT FLOATING LABEL FIX                             */
+/* ---------------------------------------------------------- */
+
+function initSelectLabels() {
+  document.querySelectorAll('.form-group select').forEach((select) => {
+    const updateLabel = () => {
+      if (select.value) {
+        select.classList.add('has-value');
+      } else {
+        select.classList.remove('has-value');
+      }
+    };
+    select.addEventListener('change', updateLabel);
+    updateLabel();
+  });
+}
+
+
+/* ---------------------------------------------------------- */
+/*  13. NO-SCROLL UTILITY                                     */
+/* ---------------------------------------------------------- */
+
+// Prevent body scroll (used by mobile nav)
+// .no-scroll is toggled via mobile nav
+
+const noScrollStyle = document.createElement('style');
+noScrollStyle.textContent = `
+  .no-scroll { overflow: hidden !important; }
+  .navbar.scrolled {
+    background: var(--nav-bg) !important;
+    box-shadow: var(--shadow-sm);
+    border-bottom-color: var(--border-color);
+  }
+  .field-error {
+    color: #ef4444;
+    font-size: 0.78rem;
+    margin-top: 0.3rem;
+    display: block;
+  }
+  input.error, textarea.error {
+    border-bottom-color: #ef4444 !important;
+  }
+  .form-group select.has-value ~ label,
+  .form-group select:focus ~ label {
+    transform: translateY(-1.1rem);
+    font-size: 0.75rem;
+    color: var(--accent);
+  }
+`;
+document.head.appendChild(noScrollStyle);
+
+
+/* ---------------------------------------------------------- */
+/*  INITIALIZATION                                            */
+/* ---------------------------------------------------------- */
+
+document.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
+  initMobileNav();
+  initSmoothScroll();
+  initActiveNav();
+  initNavbarScroll();
+  initCounters();
+  initContactForm();
+  initProductsFilter();
+  initParallax();
+  initScrollProgress();
+  initLogoAnimation();
+  initNewsletter();
+  initSelectLabels();
+});
