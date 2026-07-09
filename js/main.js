@@ -507,6 +507,136 @@ function initThemeToggle() {
 
 
 /* ---------------------------------------------------------- */
+/*  15. CAREERS FORM SUBMISSION                               */
+/* ---------------------------------------------------------- */
+
+function initCareersForm() {
+  const form = document.getElementById('careers-form');
+  if (!form) return;
+
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const showError = (field, message) => {
+    field.classList.add('error');
+    let errorEl = field.parentElement.querySelector('.field-error');
+    if (!errorEl) {
+      errorEl = document.createElement('span');
+      errorEl.className = 'field-error';
+      errorEl.style.cssText = 'color:#ef4444;font-size:0.78rem;margin-top:0.3rem;display:block;';
+      field.parentElement.appendChild(errorEl);
+    }
+    errorEl.textContent = message;
+  };
+
+  const clearErrors = () => {
+    form.querySelectorAll('.error').forEach((el) => el.classList.remove('error'));
+    form.querySelectorAll('.field-error').forEach((el) => el.remove());
+  };
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearErrors();
+
+    const name       = form.querySelector('[name="name"]');
+    const email      = form.querySelector('[name="email"]');
+    const phone      = form.querySelector('[name="phone"]');
+    const position   = form.querySelector('[name="position"]');
+    const experience = form.querySelector('[name="experience"]');
+    const cover      = form.querySelector('[name="cover-letter"]');
+
+    let valid = true;
+
+    if (name && !name.value.trim()) {
+      showError(name, 'Please enter your name.');
+      valid = false;
+    }
+
+    if (email && !email.value.trim()) {
+      showError(email, 'Please enter your email.');
+      valid = false;
+    } else if (email && !isValidEmail(email.value.trim())) {
+      showError(email, 'Please enter a valid email address.');
+      valid = false;
+    }
+
+    if (phone && !phone.value.trim()) {
+      showError(phone, 'Please enter your phone number.');
+      valid = false;
+    }
+
+    if (position && !position.value) {
+      showError(position, 'Please select a position.');
+      valid = false;
+    }
+
+    if (experience && !experience.value.trim()) {
+      showError(experience, 'Please mention your experience.');
+      valid = false;
+    }
+
+    if (cover && !cover.value.trim()) {
+      showError(cover, 'Please write a brief cover letter.');
+      valid = false;
+    }
+
+    if (!valid) return;
+
+    const statusEl = document.getElementById('careers-form-status');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (statusEl) {
+      statusEl.textContent = 'Submitting application...';
+      statusEl.style.color = 'var(--text-muted)';
+    }
+    if (submitBtn) submitBtn.disabled = true;
+
+    const formData = new FormData(form);
+
+    fetch(form.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        // Show custom inline thank you card
+        const wrapper = form.parentElement;
+        wrapper.innerHTML = `
+          <div style="text-align:center;padding:3rem 1rem;">
+            <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="var(--accent)"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 1.5rem;">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+            <h3 style="margin-bottom:0.5rem;font-family:'Outfit',sans-serif;font-size:1.8rem;">Application Received!</h3>
+            <p style="color:var(--text-secondary);max-width:400px;margin:0 auto 1.5rem;">Thank you for applying to join our team. Our HR department will review your details and resume, and get back to you shortly.</p>
+            <a href="index.html" class="btn btn--secondary" style="display:inline-flex;">Back to Home</a>
+          </div>
+        `;
+      } else {
+        response.json().then(data => {
+          if (Object.hasOwn(data, 'errors')) {
+            statusEl.textContent = data["errors"].map(error => error["message"]).join(", ");
+            statusEl.style.color = '#ef4444';
+          } else {
+            statusEl.textContent = 'Oops! There was a problem submitting your application';
+            statusEl.style.color = '#ef4444';
+          }
+          if (submitBtn) submitBtn.disabled = false;
+        });
+      }
+    })
+    .catch(error => {
+      statusEl.textContent = 'Oops! There was a problem submitting your application';
+      statusEl.style.color = '#ef4444';
+      if (submitBtn) submitBtn.disabled = false;
+    });
+  });
+}
+
+
+/* ---------------------------------------------------------- */
 /*  INITIALIZATION                                            */
 /* ---------------------------------------------------------- */
 
@@ -518,6 +648,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavbarScroll();
   initCounters();
   initContactForm();
+  initCareersForm();
   initProductsFilter();
   initParallax();
   initScrollProgress();
