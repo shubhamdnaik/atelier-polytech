@@ -1382,6 +1382,12 @@ p {
     gap: 2.5rem;
   }
 
+  /* Prototyping → stack */
+  .prototyping__content {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
   /* Footer → 2 columns */
   .footer__grid {
     grid-template-columns: repeat(2, 1fr);

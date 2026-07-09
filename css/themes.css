@@ -7,46 +7,46 @@
    1. DARK MODE (Default)
    -------------------------------------------------------------------------- */
 :root {
-  /* — Backgrounds — */
-  --bg-primary: #13151a;
-  --bg-secondary: #1a1d24;
-  --bg-tertiary: #232730;
-  --bg-card: rgba(26, 29, 36, 0.85);
-  --bg-card-hover: rgba(26, 29, 36, 0.98);
+  /* — Backgrounds (Premium Dark) — */
+  --bg-primary: #0a0e14;
+  --bg-secondary: #0f1419;
+  --bg-tertiary: #1a1f29;
+  --bg-card: rgba(15, 20, 25, 0.90);
+  --bg-card-hover: rgba(15, 20, 25, 0.98);
 
   /* — Typography — */
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
+  --text-muted: #8b96a6;
 
-  /* — Accent / Brand Sky Blue (from logo) — */
-  --accent: #38bdf8;
-  --accent-hover: #7dd3fc;
-  --accent-dark: #0284c7;
-  --accent-glow: rgba(56, 189, 248, 0.3);
-  --accent-glow-strong: rgba(56, 189, 248, 0.5);
+  /* — Accent / Brand Premium Blue (from logo) — */
+  --accent: #3eb5f1;
+  --accent-hover: #60c5f5;
+  --accent-dark: #2a8fc7;
+  --accent-glow: rgba(62, 181, 241, 0.35);
+  --accent-glow-strong: rgba(62, 181, 241, 0.55);
 
-  /* — Gradients — */
-  --gradient-hero: linear-gradient(135deg, #13151a 0%, #232730 50%, #13151a 100%);
-  --gradient-accent: linear-gradient(135deg, #38bdf8, #0284c7);
-  --gradient-card: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(56, 189, 248, 0.02));
+  /* — Gradients (Premium) — */
+  --gradient-hero: linear-gradient(135deg, #0a0e14 0%, #1a1f29 50%, #0a0e14 100%);
+  --gradient-accent: linear-gradient(135deg, #3eb5f1, #2a8fc7);
+  --gradient-card: linear-gradient(135deg, rgba(62, 181, 241, 0.12), rgba(62, 181, 241, 0.03));
 
-  /* — Borders — */
-  --border-color: rgba(148, 163, 184, 0.15);
-  --border-accent: rgba(56, 189, 248, 0.4);
+  /* — Borders (Premium) — */
+  --border-color: rgba(62, 181, 241, 0.08);
+  --border-accent: rgba(62, 181, 241, 0.45);
 
-  /* — Shadows — */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.45);
-  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 30px rgba(56, 189, 248, 0.2);
+  /* — Shadows (Deeper) — */
+  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.45);
+  --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 40px rgba(62, 181, 241, 0.25);
 
-  /* — Glassmorphism — */
-  --glass-bg: rgba(26, 29, 36, 0.7);
-  --glass-border: rgba(148, 163, 184, 0.15);
+  /* — Glassmorphism (Premium) — */
+  --glass-bg: rgba(15, 20, 25, 0.75);
+  --glass-border: rgba(62, 181, 241, 0.12);
 
-  /* — Navigation — */
-  --nav-bg: rgba(19, 21, 26, 0.88);
+  /* — Navigation (Darker) — */
+  --nav-bg: rgba(10, 14, 20, 0.92);
 
   /* — Color scheme hint for browser — */
   color-scheme: dark;
