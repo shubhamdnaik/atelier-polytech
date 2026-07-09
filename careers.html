@@ -30,6 +30,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
 
+  <!-- Auto-detect system theme preference -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      }
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function(e) {
+          if (!localStorage.getItem('theme')) {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'light' : 'dark');
+          }
+        });
+      }
+    })();
+  </script>
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="css/themes.css">
   <link rel="stylesheet" href="css/style.css">
@@ -347,7 +370,7 @@
         <p>&copy; 2026 Atelier Polytech. All rights reserved.</p>
         <div class="footer__bottom-links">
           <a href="index.html">Home</a>
-          <a href="index.html#contact">Contact</a>
+          <a href="contact.html">Contact</a>
         </div>
       </div>
     </div>

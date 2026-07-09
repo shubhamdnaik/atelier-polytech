@@ -224,99 +224,6 @@ p {
   flex-shrink: 0;
 }
 
-/* ---------- Glowing Contact Us CTA Button ---------- */
-.btn-contact-glow {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.55rem 1.6rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  font-family: 'Outfit', 'Inter', sans-serif;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  color: #ffffff;
-  background: linear-gradient(135deg, #00c6ff 0%, #7c3aed 50%, #f43f5e 100%);
-  background-size: 200% 200%;
-  animation: contactGlowHue 4s ease infinite;
-  border: none;
-  border-radius: 100px;
-  cursor: pointer;
-  overflow: hidden;
-  white-space: nowrap;
-  z-index: 1;
-  box-shadow:
-    0 0 15px rgba(124, 58, 237, 0.4),
-    0 0 30px rgba(0, 198, 255, 0.2),
-    0 2px 8px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
-}
-
-.btn-contact-glow:hover {
-  transform: translateY(-2px) scale(1.04);
-  box-shadow:
-    0 0 25px rgba(124, 58, 237, 0.6),
-    0 0 50px rgba(0, 198, 255, 0.35),
-    0 0 80px rgba(244, 63, 94, 0.2),
-    0 4px 16px rgba(0, 0, 0, 0.4);
-}
-
-.btn-contact-glow:active {
-  transform: translateY(0) scale(0.98);
-}
-
-.btn-contact-glow__text {
-  position: relative;
-  z-index: 2;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-/* Moving shine / streak effect */
-.btn-contact-glow__shine {
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.3),
-    transparent
-  );
-  z-index: 1;
-  animation: contactShine 3s ease-in-out infinite;
-}
-
-@keyframes contactGlowHue {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes contactShine {
-  0%   { left: -100%; }
-  60%  { left: 150%; }
-  100% { left: 150%; }
-}
-
-/* Light mode adjustments */
-[data-theme='light'] .btn-contact-glow {
-  box-shadow:
-    0 0 15px rgba(124, 58, 237, 0.25),
-    0 0 30px rgba(0, 198, 255, 0.15),
-    0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-[data-theme='light'] .btn-contact-glow:hover {
-  box-shadow:
-    0 0 25px rgba(124, 58, 237, 0.4),
-    0 0 50px rgba(0, 198, 255, 0.25),
-    0 0 80px rgba(244, 63, 94, 0.15),
-    0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
 /* ---------- Hamburger ---------- */
 .navbar__hamburger {
   display: none;
@@ -1411,11 +1318,6 @@ p {
 
   .navbar__hamburger {
     display: flex;
-  }
-
-  .btn-contact-glow {
-    padding: 0.45rem 1.2rem;
-    font-size: 0.78rem;
   }
 
   /* Hero */

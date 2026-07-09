@@ -489,10 +489,29 @@ document.head.appendChild(noScrollStyle);
 
 
 /* ---------------------------------------------------------- */
+/*  14. THEME TOGGLE FUNCTIONALITY                            */
+/* ---------------------------------------------------------- */
+
+function initThemeToggle() {
+  const themeToggleBtn = document.getElementById('theme-toggle-btn');
+  if (!themeToggleBtn) return;
+
+  themeToggleBtn.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  });
+}
+
+
+/* ---------------------------------------------------------- */
 /*  INITIALIZATION                                            */
 /* ---------------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
+  initThemeToggle();
   initMobileNav();
   initSmoothScroll();
   initActiveNav();
@@ -506,3 +525,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initNewsletter();
   initSelectLabels();
 });
+

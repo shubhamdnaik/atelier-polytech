@@ -55,9 +55,9 @@
     <priority>0.7</priority>
   </url>
 
-  <!-- Contact Section -->
+  <!-- Contact Page -->
   <url>
-    <loc>https://atelierpolytech.com/#contact</loc>
+    <loc>https://atelierpolytech.com/contact.html</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
