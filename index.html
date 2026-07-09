@@ -47,11 +47,19 @@
   <link rel="alternate" hreflang="en-IN" href="https://atelierpolytech.com/">
   <link rel="alternate" hreflang="x-default" href="https://atelierpolytech.com/">
 
-  <!-- Prevent FOUC for theme -->
+  <!-- Auto-detect system theme preference -->
   <script>
     (function() {
-      var saved = localStorage.getItem('atelier-theme');
-      if (saved === 'light') document.documentElement.setAttribute('data-theme', 'light');
+      // Check if user's system prefers light mode
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+      // Listen for system theme changes
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function(e) {
+          document.documentElement.setAttribute('data-theme', e.matches ? 'light' : 'dark');
+        });
+      }
     })();
   </script>
 
@@ -339,33 +347,14 @@
         <li><a href="#prototyping" class="navbar__link">Prototyping</a></li>
         <li><a href="#industries" class="navbar__link">Industries</a></li>
         <li><a href="#products" class="navbar__link">Custom Products</a></li>
-        <li><a href="careers.html" class="navbar__link">Careers</a></li>
         <li><a href="#contact" class="navbar__link">Contact</a></li>
       </ul>
 
       <div class="navbar__actions">
-        <!-- Logo Icon (small) -->
+        <!-- Logo Icon (larger) -->
         <div class="navbar__logo-icon">
-          <img src="assets/images/logo.png" alt="Atelier Polytech Icon" class="logo-invert" style="height:28px;width:auto;opacity:0.9;transition:opacity 0.3s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.9'">
+          <img src="assets/images/logo.png" alt="Atelier Polytech" class="logo-invert" style="height:42px;width:auto;opacity:0.95;transition:all 0.3s;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.05)'" onmouseout="this.style.opacity='0.95';this.style.transform='scale(1)'">
         </div>
-        
-        <!-- Theme toggle -->
-        <button class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">
-          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-          </svg>
-        </button>
 
         <!-- Hamburger -->
         <button class="navbar__hamburger" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -386,7 +375,6 @@
     <a href="#prototyping" class="navbar__link">Prototyping</a>
     <a href="#industries" class="navbar__link">Industries</a>
     <a href="#products" class="navbar__link">Custom Products</a>
-    <a href="careers.html" class="navbar__link">Careers</a>
     <a href="#contact" class="navbar__link">Contact</a>
   </div>
 
@@ -1006,8 +994,8 @@
             <li><a href="#services">Services</a></li>
             <li><a href="#prototyping">Prototyping</a></li>
             <li><a href="#products">Custom Products</a></li>
-            <li><a href="careers.html">Careers - Jobs</a></li>
             <li><a href="#contact">Contact</a></li>
+            <li><a href="careers.html">Careers</a></li>
           </ul>
         </div>
 

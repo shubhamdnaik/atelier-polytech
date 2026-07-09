@@ -1,56 +1,14 @@
 /**
  * ============================================================
  *  Atelier Polytech — Main JavaScript
- *  Core website functionality: theme, navigation, counters,
+ *  Core website functionality: navigation, counters,
  *  contact form, product filters, parallax, and smooth scroll.
+ *  Theme: Auto-detects system preference (dark/light mode)
  * ============================================================
  */
 
 /* ---------------------------------------------------------- */
-/*  1. THEME TOGGLE (Dark / Light Mode)                       */
-/* ---------------------------------------------------------- */
-
-function initThemeToggle() {
-  const toggle = document.getElementById('theme-toggle');
-  if (!toggle) return;
-
-  const htmlEl = document.documentElement;
-
-  const applyTheme = (mode) => {
-    if (mode === 'light') {
-      htmlEl.setAttribute('data-theme', 'light');
-    } else {
-      htmlEl.removeAttribute('data-theme');
-    }
-
-    const sunIcon  = toggle.querySelector('.icon-sun');
-    const moonIcon = toggle.querySelector('.icon-moon');
-
-    if (sunIcon && moonIcon) {
-      sunIcon.style.display  = mode === 'dark' ? 'block' : 'none';
-      moonIcon.style.display = mode === 'light' ? 'block' : 'none';
-    }
-
-    toggle.setAttribute(
-      'aria-label',
-      mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
-    );
-  };
-
-  const saved = localStorage.getItem('atelier-theme') || 'dark';
-  applyTheme(saved);
-
-  toggle.addEventListener('click', () => {
-    const current = htmlEl.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-    const next    = current === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('atelier-theme', next);
-    applyTheme(next);
-  });
-}
-
-
-/* ---------------------------------------------------------- */
-/*  2. MOBILE NAVIGATION                                      */
+/*  1. MOBILE NAVIGATION                                      */
 /* ---------------------------------------------------------- */
 
 function initMobileNav() {
@@ -535,7 +493,6 @@ document.head.appendChild(noScrollStyle);
 /* ---------------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
-  initThemeToggle();
   initMobileNav();
   initSmoothScroll();
   initActiveNav();
