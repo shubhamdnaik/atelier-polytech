@@ -137,7 +137,7 @@
   justify-content: center;
   width: 44px;
   height: 44px;
-  border: 1px solid var(--border-accent);
+  border: none;
   border-radius: 50%;
   background: var(--glass-bg);
   backdrop-filter: blur(8px);
@@ -151,7 +151,6 @@
 
 /* Subtle glow ring on hover */
 .theme-toggle:hover {
-  border-color: var(--accent);
   box-shadow: var(--shadow-glow);
 }
 
