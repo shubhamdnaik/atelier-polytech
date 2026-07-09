@@ -192,3 +192,36 @@
 .theme-toggle:active {
   transform: scale(0.92);
 }
+
+/* ==========================================================================
+   5. THEME-AWARE LOGO FILTERS
+   Inverts black logo.png to white in dark mode (default), keeping it black
+   in light mode. Also integrates drop-shadow glows for featured displays.
+   ========================================================================== */
+
+/* Dark mode (default): Invert black logo to white */
+.logo-invert {
+  filter: invert(1);
+}
+
+.logo-invert-shadow-md {
+  filter: invert(1) drop-shadow(0 0 30px var(--accent-glow));
+}
+
+.logo-invert-shadow-lg {
+  filter: invert(1) drop-shadow(0 0 40px var(--accent-glow-strong));
+}
+
+/* Light mode: Keep black logo as black */
+[data-theme='light'] .logo-invert {
+  filter: invert(0);
+}
+
+[data-theme='light'] .logo-invert-shadow-md {
+  filter: invert(0) drop-shadow(0 0 30px var(--accent-glow));
+}
+
+[data-theme='light'] .logo-invert-shadow-lg {
+  filter: invert(0) drop-shadow(0 0 40px var(--accent-glow-strong));
+}
+
