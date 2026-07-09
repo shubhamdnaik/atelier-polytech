@@ -50,9 +50,11 @@
   <!-- Auto-detect system theme preference -->
   <script>
     (function() {
-      // Check if user's system prefers light mode
+      // Check system preference and set explicit data-theme
       if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
         document.documentElement.setAttribute('data-theme', 'light');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
       }
       // Listen for system theme changes
       if (window.matchMedia) {
@@ -335,7 +337,7 @@
   <nav class="navbar" id="navbar">
     <div class="container">
       <a href="#home" class="navbar__logo">
-        <img src="assets/images/logo.png" alt="Atelier Polytech Logo" class="logo-animated-img logo-invert">
+        <img src="assets/images/logo.png" alt="Atelier Polytech Logo" class="logo-animated-img logo-theme-adaptive">
         <span>Atelier <span class="navbar__logo-accent">Polytech</span></span>
       </a>
 
@@ -347,14 +349,14 @@
         <li><a href="#prototyping" class="navbar__link">Prototyping</a></li>
         <li><a href="#industries" class="navbar__link">Industries</a></li>
         <li><a href="#products" class="navbar__link">Custom Products</a></li>
-        <li><a href="#contact" class="navbar__link">Contact</a></li>
       </ul>
 
       <div class="navbar__actions">
-        <!-- Logo Icon (larger) -->
-        <div class="navbar__logo-icon">
-          <img src="assets/images/logo.png" alt="Atelier Polytech" class="logo-invert" style="height:42px;width:auto;opacity:0.95;transition:all 0.3s;" onmouseover="this.style.opacity='1';this.style.transform='scale(1.05)'" onmouseout="this.style.opacity='0.95';this.style.transform='scale(1)'">
-        </div>
+        <!-- Contact Us CTA -->
+        <a href="#contact" class="btn-contact-glow" id="navbar-contact-btn">
+          <span class="btn-contact-glow__text">Contact Us</span>
+          <span class="btn-contact-glow__shine"></span>
+        </a>
 
         <!-- Hamburger -->
         <button class="navbar__hamburger" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
