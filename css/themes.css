@@ -4,98 +4,98 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. DARK MODE (Default)
+   1. DARK MODE (Default) - Premium Black & White
    -------------------------------------------------------------------------- */
 :root {
-  /* — Backgrounds (Premium Dark) — */
-  --bg-primary: #0a0e14;
-  --bg-secondary: #0f1419;
-  --bg-tertiary: #1a1f29;
-  --bg-card: rgba(15, 20, 25, 0.90);
-  --bg-card-hover: rgba(15, 20, 25, 0.98);
+  /* — Backgrounds (Pure Black & Charcoal) — */
+  --bg-primary: #000000;
+  --bg-secondary: #0d0d0d;
+  --bg-tertiary: #1a1a1a;
+  --bg-card: rgba(13, 13, 13, 0.95);
+  --bg-card-hover: rgba(26, 26, 26, 0.98);
 
-  /* — Typography — */
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-muted: #8b96a6;
+  /* — Typography (Pure White to Grays) — */
+  --text-primary: #ffffff;
+  --text-secondary: #d4d4d4;
+  --text-muted: #a3a3a3;
 
-  /* — Accent / Brand Premium Blue (from logo) — */
-  --accent: #3eb5f1;
-  --accent-hover: #60c5f5;
-  --accent-dark: #2a8fc7;
-  --accent-glow: rgba(62, 181, 241, 0.35);
-  --accent-glow-strong: rgba(62, 181, 241, 0.55);
+  /* — Accent / Brand (Pure White with subtle effects) — */
+  --accent: #ffffff;
+  --accent-hover: #f5f5f5;
+  --accent-dark: #e5e5e5;
+  --accent-glow: rgba(255, 255, 255, 0.15);
+  --accent-glow-strong: rgba(255, 255, 255, 0.25);
 
-  /* — Gradients (Premium) — */
-  --gradient-hero: linear-gradient(135deg, #0a0e14 0%, #1a1f29 50%, #0a0e14 100%);
-  --gradient-accent: linear-gradient(135deg, #3eb5f1, #2a8fc7);
-  --gradient-card: linear-gradient(135deg, rgba(62, 181, 241, 0.12), rgba(62, 181, 241, 0.03));
+  /* — Gradients (Black to White) — */
+  --gradient-hero: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+  --gradient-accent: linear-gradient(135deg, #ffffff, #e5e5e5);
+  --gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
 
-  /* — Borders (Premium) — */
-  --border-color: rgba(62, 181, 241, 0.08);
-  --border-accent: rgba(62, 181, 241, 0.45);
+  /* — Borders (Subtle White) — */
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-accent: rgba(255, 255, 255, 0.3);
 
-  /* — Shadows (Deeper) — */
-  --shadow-sm: 0 2px 12px rgba(0, 0, 0, 0.45);
-  --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.55);
-  --shadow-lg: 0 8px 48px rgba(0, 0, 0, 0.7);
-  --shadow-glow: 0 0 40px rgba(62, 181, 241, 0.25);
+  /* — Shadows (Deep Black) — */
+  --shadow-sm: 0 2px 16px rgba(0, 0, 0, 0.8);
+  --shadow-md: 0 4px 32px rgba(0, 0, 0, 0.9);
+  --shadow-lg: 0 8px 64px rgba(0, 0, 0, 0.95);
+  --shadow-glow: 0 0 40px rgba(255, 255, 255, 0.15);
 
-  /* — Glassmorphism (Premium) — */
-  --glass-bg: rgba(15, 20, 25, 0.75);
-  --glass-border: rgba(62, 181, 241, 0.12);
+  /* — Glassmorphism (Black with transparency) — */
+  --glass-bg: rgba(13, 13, 13, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
 
-  /* — Navigation (Darker) — */
-  --nav-bg: rgba(10, 14, 20, 0.92);
+  /* — Navigation (Pure Black) — */
+  --nav-bg: rgba(0, 0, 0, 0.95);
 
   /* — Color scheme hint for browser — */
   color-scheme: dark;
 }
 
 /* --------------------------------------------------------------------------
-   2. LIGHT MODE — activated via [data-theme='light'] on <html>
+   2. LIGHT MODE — Premium White & Gray
    -------------------------------------------------------------------------- */
 [data-theme='light'] {
-  /* — Backgrounds — */
-  --bg-primary: #f4f5f7;
-  --bg-secondary: #ffffff;
-  --bg-tertiary: #e9eaef;
+  /* — Backgrounds (Pure White & Light Grays) — */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f8f8;
+  --bg-tertiary: #f0f0f0;
   --bg-card: rgba(255, 255, 255, 0.95);
   --bg-card-hover: #ffffff;
 
-  /* — Typography — */
-  --text-primary: #1e2229;
-  --text-secondary: #4a5568;
-  --text-muted: #718096;
+  /* — Typography (Black to Grays) — */
+  --text-primary: #000000;
+  --text-secondary: #525252;
+  --text-muted: #737373;
 
-  /* — Accent / Brand Sky Blue (deeper for light mode contrast) — */
-  --accent: #0284c7;
-  --accent-hover: #0369a1;
-  --accent-dark: #075985;
-  --accent-glow: rgba(2, 132, 199, 0.15);
-  --accent-glow-strong: rgba(2, 132, 199, 0.3);
+  /* — Accent / Brand (Pure Black) — */
+  --accent: #000000;
+  --accent-hover: #1a1a1a;
+  --accent-dark: #0d0d0d;
+  --accent-glow: rgba(0, 0, 0, 0.08);
+  --accent-glow-strong: rgba(0, 0, 0, 0.15);
 
-  /* — Gradients — */
-  --gradient-hero: linear-gradient(135deg, #f0f4f8 0%, #e1e7ef 50%, #f0f4f8 100%);
-  --gradient-accent: linear-gradient(135deg, #0284c7, #075985);
-  --gradient-card: linear-gradient(135deg, rgba(2, 132, 199, 0.08), rgba(2, 132, 199, 0.02));
+  /* — Gradients (White to Gray) — */
+  --gradient-hero: linear-gradient(135deg, #ffffff 0%, #f0f0f0 50%, #ffffff 100%);
+  --gradient-accent: linear-gradient(135deg, #000000, #1a1a1a);
+  --gradient-card: linear-gradient(135deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.01));
 
-  /* — Borders — */
-  --border-color: rgba(30, 34, 41, 0.1);
-  --border-accent: rgba(2, 132, 199, 0.3);
+  /* — Borders (Subtle Black) — */
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-accent: rgba(0, 0, 0, 0.2);
 
-  /* — Shadows — */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.12);
-  --shadow-glow: 0 0 30px rgba(2, 132, 199, 0.1);
+  /* — Shadows (Soft Black) — */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 24px rgba(0, 0, 0, 0.05);
 
-  /* — Glassmorphism — */
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-border: rgba(30, 34, 41, 0.1);
+  /* — Glassmorphism (White with transparency) — */
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(0, 0, 0, 0.08);
 
-  /* — Navigation — */
-  --nav-bg: rgba(244, 245, 247, 0.9);
+  /* — Navigation (Pure White) — */
+  --nav-bg: rgba(255, 255, 255, 0.95);
 
   /* — Color scheme hint for browser — */
   color-scheme: light;
