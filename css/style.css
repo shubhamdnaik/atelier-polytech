@@ -1189,7 +1189,7 @@ p {
 
 .btn--primary {
   background: var(--gradient-accent);
-  color: #fff;
+  color: var(--btn-primary-text);
   box-shadow: var(--shadow-sm);
 }
 

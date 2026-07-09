@@ -41,6 +41,11 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="apple-touch-icon" href="assets/images/logo.png">
+  
+  <!-- Alternate Language Tags for International SEO -->
+  <link rel="alternate" hreflang="en" href="https://atelierpolytech.com/">
+  <link rel="alternate" hreflang="en-IN" href="https://atelierpolytech.com/">
+  <link rel="alternate" hreflang="x-default" href="https://atelierpolytech.com/">
 
   <!-- Prevent FOUC for theme -->
   <script>
@@ -177,6 +182,139 @@
     ]
   }
   </script>
+
+  <!-- Local Business Schema for Bangalore Location -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Atelier Polytech",
+    "image": "https://atelierpolytech.com/assets/images/logo.png",
+    "@id": "https://atelierpolytech.com",
+    "url": "https://atelierpolytech.com",
+    "telephone": "+91-80-2839-4567",
+    "priceRange": "$$",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Peenya Industrial Area, Phase IV",
+      "addressLocality": "Bengaluru",
+      "addressRegion": "Karnataka",
+      "postalCode": "560058",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 12.9716,
+      "longitude": 77.5946
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      "opens": "09:00",
+      "closes": "18:00"
+    },
+    "sameAs": [
+      "https://github.com/shubhamdnaik/atelier-polytech"
+    ]
+  }
+  </script>
+
+  <!-- FAQ Schema for Common Questions -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What plastic injection molding services does Atelier Polytech offer in Bangalore?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Atelier Polytech offers comprehensive plastic injection molding services including custom injection molding, mold design and engineering, rapid prototyping, overmolding, insert molding, assembly, post-processing, and quality assurance for automotive, medical, electronics, and industrial applications."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How fast can you produce injection molding prototypes?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We offer rapid prototyping services with soft tooling that can deliver physical prototypes in days, not weeks. This allows for quick design validation and testing before committing to production tooling."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What industries do you serve with plastic injection molding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We serve diverse industries including automotive, medical and healthcare, consumer electronics, packaging, industrial engineering, and household products manufacturing across India and globally."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Atelier Polytech ISO certified?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, Atelier Polytech is ISO 9001:2015 certified for quality management, ISO 14001 certified for environmental standards, and CE certified for European conformity with a 99.7% quality rate."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you have plastic injection molding jobs available in Bangalore?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, we regularly hire skilled professionals for various positions in our Bangalore facility. Contact us at info@atelierpolytech.com for current job openings in plastic injection molding, mold design, quality control, and engineering."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Job Posting Schema for Careers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    "title": "Plastic Injection Molding Technician",
+    "description": "Join Atelier Polytech's growing team in Bangalore. We're looking for skilled injection molding technicians, mold designers, and quality control specialists to work with advanced manufacturing technology.",
+    "datePosted": "2026-07-10",
+    "validThrough": "2026-12-31",
+    "employmentType": "FULL_TIME",
+    "hiringOrganization": {
+      "@type": "Organization",
+      "name": "Atelier Polytech",
+      "sameAs": "https://atelierpolytech.com",
+      "logo": "https://atelierpolytech.com/assets/images/logo.png"
+    },
+    "jobLocation": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Peenya Industrial Area, Phase IV",
+        "addressLocality": "Bengaluru",
+        "addressRegion": "Karnataka",
+        "postalCode": "560058",
+        "addressCountry": "IN"
+      }
+    },
+    "baseSalary": {
+      "@type": "MonetaryAmount",
+      "currency": "INR",
+      "value": {
+        "@type": "QuantitativeValue",
+        "minValue": 300000,
+        "maxValue": 800000,
+        "unitText": "YEAR"
+      }
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -201,6 +339,7 @@
         <li><a href="#prototyping" class="navbar__link">Prototyping</a></li>
         <li><a href="#industries" class="navbar__link">Industries</a></li>
         <li><a href="#products" class="navbar__link">Custom Products</a></li>
+        <li><a href="careers.html" class="navbar__link">Careers</a></li>
         <li><a href="#contact" class="navbar__link">Contact</a></li>
       </ul>
 
@@ -247,13 +386,14 @@
     <a href="#prototyping" class="navbar__link">Prototyping</a>
     <a href="#industries" class="navbar__link">Industries</a>
     <a href="#products" class="navbar__link">Custom Products</a>
+    <a href="careers.html" class="navbar__link">Careers</a>
     <a href="#contact" class="navbar__link">Contact</a>
   </div>
 
   <!-- ========== HERO SECTION ========== -->
   <section class="hero" id="home">
     <div class="hero__bg">
-      <img src="assets/images/hero-banner.png" alt="Modern injection molding machine in action">
+      <img src="assets/images/hero-banner.png" alt="Advanced plastic injection molding machine at Atelier Polytech manufacturing facility in Bangalore, India - Custom mold production" loading="eager">
       <div class="hero__overlay"></div>
     </div>
 
@@ -344,7 +484,7 @@
 
       <div class="about__grid">
         <div class="about__image-wrapper reveal reveal-left">
-          <img src="assets/images/about-team.png" alt="Atelier Polytech manufacturing facility - Plastic injection molding in Bangalore">
+          <img src="assets/images/about-team.png" alt="Atelier Polytech state-of-the-art plastic injection molding manufacturing facility in Bangalore - Professional engineering team and advanced machinery for custom mold production" loading="lazy">
         </div>
         <div class="about__text reveal reveal-right">
           <h3>Premium Plastic Manufacturing in Bangalore</h3>
@@ -478,15 +618,15 @@
     <div class="container">
       <div class="section__header reveal">
         <p class="text-accent" style="font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.8rem;">Prototype Before Production</p>
-        <h2 class="section__title">Rapid <span class="gradient-text">Prototyping Services</span></h2>
-        <p class="section__subtitle">Validate your design, test functionality, and refine your product before investing in production tooling. Our prototyping services accelerate development and reduce risk.</p>
+        <h2 class="section__title">Rapid Plastic <span class="gradient-text">Prototyping Services</span> in Bangalore</h2>
+        <p class="section__subtitle">Validate your product design, test functionality, and refine plastic components before investing in production tooling. Our rapid prototyping services reduce development time, minimize costs, and accelerate your time-to-market with fast, accurate prototypes.</p>
       </div>
 
       <div class="prototyping__content" style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;margin-top:3rem;">
         <!-- Left: Image/Icon -->
         <div class="prototyping__visual reveal reveal-left">
           <div style="position:relative;border-radius:20px;overflow:hidden;background:var(--gradient-card);border:1px solid var(--border-accent);padding:3rem;text-align:center;">
-            <img src="assets/images/logo.png" alt="Atelier Polytech Logo" class="logo-invert-shadow-md" style="max-width:280px;margin:2rem auto;opacity:0.9;">
+            <img src="assets/images/logo.png" alt="Atelier Polytech - Premier plastic injection molding and rapid prototyping services in Bangalore, India" class="logo-invert-shadow-md" style="max-width:280px;margin:2rem auto;opacity:0.9;" loading="lazy">
             <div style="margin-top:2rem;padding:1.5rem;background:var(--glass-bg);border-radius:12px;border:1px solid var(--border-color);">
               <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" style="margin:0 auto 1rem;"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
               <p style="color:var(--text-secondary);font-size:0.95rem;margin:0;"><strong style="color:var(--accent);display:block;margin-bottom:0.5rem;">From Concept to Reality</strong>Fast turnaround prototypes ready in days, not weeks</p>
@@ -553,8 +693,8 @@
     <div class="container">
       <div class="section__header reveal">
         <p class="text-accent" style="font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.8rem;">Industries We Serve</p>
-        <h2 class="section__title">Trusted Across <span class="gradient-text">Every Sector</span></h2>
-        <p class="section__subtitle">We deliver precision plastic components to diverse industries, each with unique quality standards and technical requirements.</p>
+        <h2 class="section__title">Plastic Injection Molding for <span class="gradient-text">Every Industry</span></h2>
+        <p class="section__subtitle">We manufacture precision plastic components for diverse industries across India and globally. Each sector has unique quality standards and technical requirements - our injection molding expertise delivers custom solutions for automotive, medical, electronics, packaging, and industrial applications.</p>
       </div>
 
       <div class="industries__grid stagger-group">
@@ -627,7 +767,7 @@
         <div style="position:relative;z-index:2;max-width:700px;margin:0 auto;">
           <!-- Logo Display -->
           <div style="margin-bottom:2rem;">
-            <img src="assets/images/logo.png" alt="Atelier Polytech" class="logo-invert-shadow-lg" style="max-width:320px;height:auto;margin:0 auto;">
+            <img src="assets/images/logo.png" alt="Atelier Polytech - Custom plastic products coming soon - Premium injection molded components and consumer goods" class="logo-invert-shadow-lg" style="max-width:320px;height:auto;margin:0 auto;" loading="lazy">
           </div>
 
           <!-- Coming Soon Badge -->
@@ -724,7 +864,7 @@
           </div>
         </div>
         <div class="about__image-wrapper">
-          <img src="assets/images/quality-control.png" alt="Quality control inspection at Atelier Polytech">
+          <img src="assets/images/quality-control.png" alt="ISO certified quality control and inspection process at Atelier Polytech plastic injection molding facility - Precision measurement and testing equipment" loading="lazy">
         </div>
       </div>
     </div>
@@ -841,10 +981,10 @@
       <div class="footer__grid">
         <div class="footer__brand">
           <a href="#home" class="navbar__logo" style="margin-bottom:1rem;display:inline-flex;">
-            <img src="assets/images/logo.png" alt="Atelier Polytech" class="logo-invert" style="height:36px;">
+            <img src="assets/images/logo.png" alt="Atelier Polytech - Leading plastic injection molding company in Bangalore, India" class="logo-invert" style="height:36px;" loading="lazy">
             <span>Atelier <span class="navbar__logo-accent">Polytech</span></span>
           </a>
-          <p>A modern, agile approach to plastic injection molding. Transforming ideas into precision-manufactured products from our state-of-the-art facility in Bangalore.</p>
+          <p>A modern, agile approach to plastic injection molding. Transforming ideas into precision-manufactured products from our state-of-the-art facility in Bangalore. Expert mold design, rapid prototyping, and custom manufacturing solutions for all industries.</p>
           <div class="footer__social">
             <a href="#" class="footer__social-link" aria-label="LinkedIn">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
@@ -864,8 +1004,9 @@
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About Us</a></li>
             <li><a href="#services">Services</a></li>
-            <li><a href="#process">Our Process</a></li>
-            <li><a href="#products">Products</a></li>
+            <li><a href="#prototyping">Prototyping</a></li>
+            <li><a href="#products">Custom Products</a></li>
+            <li><a href="careers.html">Careers - Jobs</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </div>
