@@ -337,7 +337,7 @@ p {
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0;
-  transition: opacity 1.5s ease-in-out;
+  transition: opacity 1.5s ease-in-out, transform 10s ease-out;
   pointer-events: none;
 }
 
@@ -345,11 +345,17 @@ p {
   opacity: 1;
 }
 
-/* Base Ken Burns Animations for specific slide directions (defined in animations.css or inline) */
-.hero__slide[data-zoom="zoom-out-left"].active { animation: kenBurnsOutLeft 14s ease-out forwards; }
-.hero__slide[data-zoom="zoom-in-right"].active { animation: kenBurnsInRight 14s ease-out forwards; }
-.hero__slide[data-zoom="zoom-out-right"].active { animation: kenBurnsOutRight 14s ease-out forwards; }
-.hero__slide[data-zoom="zoom-in-left"].active { animation: kenBurnsInLeft 14s ease-out forwards; }
+/* Base states (when NOT active) */
+.hero__slide[data-zoom="zoom-out-left"] { transform: scale(1.15) translate(2%, 2%); }
+.hero__slide[data-zoom="zoom-in-right"] { transform: scale(1.0) translate(0, 0); }
+.hero__slide[data-zoom="zoom-out-right"] { transform: scale(1.15) translate(-2%, -2%); }
+.hero__slide[data-zoom="zoom-in-left"] { transform: scale(1.0) translate(0, 0); }
+
+/* Active states (triggers transition) */
+.hero__slide[data-zoom="zoom-out-left"].active { transform: scale(1.0) translate(0, 0); }
+.hero__slide[data-zoom="zoom-in-right"].active { transform: scale(1.15) translate(-2%, 2%); }
+.hero__slide[data-zoom="zoom-out-right"].active { transform: scale(1.0) translate(0, 0); }
+.hero__slide[data-zoom="zoom-in-left"].active { transform: scale(1.15) translate(2%, -2%); }
 
 .hero__overlay {
   position: absolute;
