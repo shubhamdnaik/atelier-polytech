@@ -1418,6 +1418,22 @@ p {
     align-items: center;
   }
 
+  /* Slideshow Mobile Nav */
+  .hero__slide-nav {
+    flex-direction: column;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 1.5rem;
+    gap: 0.5rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  .hero__slide-caption {
+    font-size: 0.75rem;
+  }
+
   /* Stats → 2 columns */
   .stats-bar__grid {
     grid-template-columns: repeat(2, 1fr);
