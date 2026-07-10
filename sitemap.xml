@@ -1,58 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  
+
   <!-- Homepage -->
   <url>
     <loc>https://atelierpolytech.com/</loc>
-    <lastmod>2026-07-09</lastmod>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
       <image:loc>https://atelierpolytech.com/assets/images/logo.png</image:loc>
-      <image:title>Atelier Polytech Logo</image:title>
-      <image:caption>Leading plastic injection molding manufacturer</image:caption>
+      <image:title>Atelier Polytech - Plastic Injection Molding and Manufacturing Solutions</image:title>
+      <image:caption>Atelier Polytech helps OEMs, startups, and industrial businesses source high-quality plastic injection molded components through a trusted manufacturing network.</image:caption>
     </image:image>
-  </url>
-
-  <!-- About Section -->
-  <url>
-    <loc>https://atelierpolytech.com/#about</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Services Section -->
-  <url>
-    <loc>https://atelierpolytech.com/#services</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Prototyping Section -->
-  <url>
-    <loc>https://atelierpolytech.com/#prototyping</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Industries Section -->
-  <url>
-    <loc>https://atelierpolytech.com/#industries</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!-- Custom Products Section -->
-  <url>
-    <loc>https://atelierpolytech.com/#products</loc>
-    <lastmod>2026-07-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
 
   <!-- Contact Page -->
@@ -60,7 +20,7 @@
     <loc>https://atelierpolytech.com/contact.html</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
 
   <!-- Careers Page -->
@@ -68,7 +28,7 @@
     <loc>https://atelierpolytech.com/careers.html</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <priority>0.8</priority>
   </url>
 
 </urlset>
