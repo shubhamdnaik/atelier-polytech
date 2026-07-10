@@ -421,21 +421,39 @@
 
   <!-- ========== HERO SECTION ========== -->
   <section class="hero" id="home">
-    <div class="hero__bg">
-      <img src="assets/images/hero-banner.png" alt="Advanced plastic injection molding machine at Atelier Polytech manufacturing facility in Bangalore, India - Custom mold production" loading="eager">
+
+    <!-- SLIDESHOW BACKGROUND -->
+    <div class="hero__slideshow" id="heroSlideshow">
+      <div class="hero__slide active" style="background-image:url('assets/images/slide-machine.png');" data-caption="High-Tonnage Molding" data-zoom="zoom-out-left"></div>
+      <div class="hero__slide" style="background-image:url('assets/images/slide-mold.png');" data-caption="Precision CNC Tooling" data-zoom="zoom-in-right"></div>
+      <div class="hero__slide" style="background-image:url('assets/images/slide-polycarbonate.png');" data-caption="Polycarbonate Components" data-zoom="zoom-out-right"></div>
+      <div class="hero__slide" style="background-image:url('assets/images/hero-slide-3.png');" data-caption="ABS & Custom Resins" data-zoom="zoom-in-left"></div>
       <div class="hero__overlay"></div>
+      <div class="hero__scanline"></div>
     </div>
 
-    <!-- Floating particles -->
+    <!-- Slide progress bar -->
+    <div class="hero__progress-bar"><div class="hero__progress-fill" id="heroProgressFill"></div></div>
+
+    <!-- Slide caption + dot nav -->
+    <div class="hero__slide-nav">
+      <span class="hero__slide-caption" id="heroSlideCaption">High-Tonnage Molding</span>
+      <div class="hero__slide-dots" id="heroSlideDots">
+        <button class="hero__slide-dot active" aria-label="Slide 1"></button>
+        <button class="hero__slide-dot" aria-label="Slide 2"></button>
+        <button class="hero__slide-dot" aria-label="Slide 3"></button>
+        <button class="hero__slide-dot" aria-label="Slide 4"></button>
+      </div>
+    </div>
+
+    <!-- Particles -->
     <div class="hero__particles">
-      <div class="particle" style="left:10%; top:20%; --particle-size:3px; --particle-dx:80px; --particle-dy:-180px; --particle-duration:9s; --particle-delay:0s;"></div>
-      <div class="particle" style="left:25%; top:60%; --particle-size:5px; --particle-dx:-60px; --particle-dy:-220px; --particle-duration:11s; --particle-delay:1s;"></div>
-      <div class="particle" style="left:50%; top:30%; --particle-size:4px; --particle-dx:120px; --particle-dy:-150px; --particle-duration:8s; --particle-delay:2s;"></div>
-      <div class="particle" style="left:70%; top:70%; --particle-size:3px; --particle-dx:-100px; --particle-dy:-200px; --particle-duration:10s; --particle-delay:0.5s;"></div>
-      <div class="particle" style="left:85%; top:25%; --particle-size:6px; --particle-dx:60px; --particle-dy:-250px; --particle-duration:12s; --particle-delay:3s;"></div>
-      <div class="particle" style="left:40%; top:80%; --particle-size:4px; --particle-dx:-80px; --particle-dy:-180px; --particle-duration:9s; --particle-delay:1.5s;"></div>
-      <div class="particle" style="left:60%; top:45%; --particle-size:3px; --particle-dx:100px; --particle-dy:-160px; --particle-duration:10s; --particle-delay:4s;"></div>
-      <div class="particle" style="left:15%; top:50%; --particle-size:5px; --particle-dx:70px; --particle-dy:-200px; --particle-duration:11s; --particle-delay:2.5s;"></div>
+      <div class="particle" style="left:8%;  top:75%; --particle-size:4px; --particle-dx:40px;  --particle-dy:-260px; --particle-duration:10s; --particle-delay:0s;"></div>
+      <div class="particle" style="left:20%; top:80%; --particle-size:3px; --particle-dx:-30px; --particle-dy:-200px; --particle-duration:13s; --particle-delay:1.5s;"></div>
+      <div class="particle" style="left:35%; top:70%; --particle-size:5px; --particle-dx:60px;  --particle-dy:-240px; --particle-duration:9s;  --particle-delay:0.8s;"></div>
+      <div class="particle" style="left:60%; top:85%; --particle-size:3px; --particle-dx:-50px; --particle-dy:-220px; --particle-duration:11s; --particle-delay:2.2s;"></div>
+      <div class="particle" style="left:78%; top:72%; --particle-size:4px; --particle-dx:30px;  --particle-dy:-280px; --particle-duration:12s; --particle-delay:0.3s;"></div>
+      <div class="particle" style="left:90%; top:78%; --particle-size:3px; --particle-dx:-40px; --particle-dy:-190px; --particle-duration:10s; --particle-delay:3.5s;"></div>
     </div>
 
     <div class="hero__content">
@@ -446,7 +464,9 @@
 
       <h1 class="hero__title">
         <span class="hero-text-reveal hero-text-reveal--delay-2" style="display:block;">Plastic Injection Molding</span>
-        <span class="hero-text-reveal hero-text-reveal--delay-3 gradient-text" style="display:block;">and Manufacturing Solutions</span>
+        <span class="hero-text-reveal hero-text-reveal--delay-3" style="display:block;">
+          <span class="gradient-text">for </span><span class="hero-cycle-word gradient-text" id="hero-cycling-word">OEMs</span>
+        </span>
       </h1>
 
       <p class="hero__subtitle hero-text-reveal hero-text-reveal--delay-3">
@@ -456,11 +476,11 @@
       </p>
 
       <div class="hero__cta-group hero-text-reveal hero-text-reveal--delay-4">
-        <a href="contact.html" class="btn btn--primary pulse-glow">
+        <a href="contact.html" class="btn btn--primary pulse-glow magnetic-btn">
           <span>Start Your Project</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </a>
-        <a href="#services" class="btn btn--secondary">How We Work</a>
+        <a href="#services" class="btn btn--secondary magnetic-btn">How We Work</a>
       </div>
     </div>
 
@@ -469,6 +489,7 @@
       <span style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--text-muted);">Scroll</span>
     </div>
   </section>
+
 
   <!-- ========== STATS BAR ========== -->
   <section class="stats-bar" id="stats">

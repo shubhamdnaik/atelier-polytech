@@ -319,18 +319,37 @@ p {
   overflow: hidden;
 }
 
-/* Background image + dark overlay */
-.hero__bg {
+/* Slideshow container */
+.hero__slideshow {
   position: absolute;
   inset: 0;
   z-index: 0;
+  overflow: hidden;
+  background: #000;
 }
 
-.hero__bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.hero__slide {
+  position: absolute;
+  inset: -10%; /* Extra size for ken burns zoom */
+  width: 120%;
+  height: 120%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+  pointer-events: none;
 }
+
+.hero__slide.active {
+  opacity: 1;
+}
+
+/* Base Ken Burns Animations for specific slide directions (defined in animations.css or inline) */
+.hero__slide[data-zoom="zoom-out-left"].active { animation: kenBurnsOutLeft 14s ease-out forwards; }
+.hero__slide[data-zoom="zoom-in-right"].active { animation: kenBurnsInRight 14s ease-out forwards; }
+.hero__slide[data-zoom="zoom-out-right"].active { animation: kenBurnsOutRight 14s ease-out forwards; }
+.hero__slide[data-zoom="zoom-in-left"].active { animation: kenBurnsInLeft 14s ease-out forwards; }
 
 .hero__overlay {
   position: absolute;
@@ -338,6 +357,73 @@ p {
   background: var(--gradient-hero);
   opacity: 0.88;
   z-index: 1;
+}
+
+/* Slideshow UI: Progress Bar */
+.hero__progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.1);
+  z-index: 5;
+}
+
+.hero__progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  transition: width 0.1s linear;
+}
+
+/* Slideshow UI: Nav & Captions */
+.hero__slide-nav {
+  position: absolute;
+  bottom: 3rem;
+  right: 5%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hero__slide-caption {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  opacity: 0.9;
+  animation: wordFadeIn 0.5s ease;
+}
+
+.hero__slide-dots {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.hero__slide-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-glow-strong);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.hero__slide-dot:hover {
+  background: var(--text-muted);
+}
+
+.hero__slide-dot.active {
+  background: transparent;
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  transform: scale(1.3);
 }
 
 .hero__canvas {
@@ -394,6 +480,7 @@ p {
 
 .hero__subtitle {
   font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 600;
   color: var(--text-secondary);
   margin-bottom: 2.4rem;
   max-width: 600px;

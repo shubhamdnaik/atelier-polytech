@@ -8,6 +8,107 @@
  */
 
 /* ---------------------------------------------------------- */
+/*  0. HERO WORD CYCLING                                      */
+/* ---------------------------------------------------------- */
+
+function initHeroWordCycle() {
+  const el = document.getElementById('hero-cycling-word');
+  if (!el) return;
+
+  const words = ['OEMs', 'Startups', 'Industrials', 'Manufacturers', 'Innovators'];
+  let current = 0;
+
+  function cycleWord() {
+    // Fade out current word
+    el.classList.remove('word-in');
+    el.classList.add('word-out');
+
+    setTimeout(() => {
+      current = (current + 1) % words.length;
+      el.textContent = words[current];
+      el.classList.remove('word-out');
+      el.classList.add('word-in');
+    }, 370); // matches wordFadeOut duration
+  }
+
+  // Start cycling after initial entrance animation settles
+  setTimeout(() => {
+    el.classList.add('word-in');
+    setInterval(cycleWord, 2800);
+  }, 1400);
+}
+
+/* ---------------------------------------------------------- */
+/*  0.5 HERO SLIDESHOW                                        */
+/* ---------------------------------------------------------- */
+function initHeroSlideshow() {
+  const slides = document.querySelectorAll('.hero__slide');
+  const dots = document.querySelectorAll('.hero__slide-dot');
+  const caption = document.getElementById('heroSlideCaption');
+  const progressFill = document.getElementById('heroProgressFill');
+  if (!slides.length) return;
+
+  let currentSlide = 0;
+  const slideDuration = 6000;
+  let slideInterval;
+  let progressInterval;
+  let startTime;
+
+  function updateProgress() {
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min((elapsed / slideDuration) * 100, 100);
+    if (progressFill) progressFill.style.width = `${progress}%`;
+    
+    if (progress < 100) {
+      progressInterval = requestAnimationFrame(updateProgress);
+    }
+  }
+
+  function goToSlide(index) {
+    slides[currentSlide].classList.remove('active');
+    if (dots[currentSlide]) dots[currentSlide].classList.remove('active');
+
+    currentSlide = index;
+
+    slides[currentSlide].classList.add('active');
+    if (dots[currentSlide]) dots[currentSlide].classList.add('active');
+
+    if (caption) {
+      // Re-trigger animation
+      caption.style.animation = 'none';
+      caption.offsetHeight; // trigger reflow
+      caption.style.animation = null;
+      caption.textContent = slides[currentSlide].dataset.caption || '';
+    }
+
+    // Reset progress
+    cancelAnimationFrame(progressInterval);
+    startTime = Date.now();
+    updateProgress();
+  }
+
+  function nextSlide() {
+    goToSlide((currentSlide + 1) % slides.length);
+  }
+
+  function startAutoPlay() {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(nextSlide, slideDuration);
+    startTime = Date.now();
+    updateProgress();
+  }
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      goToSlide(index);
+      startAutoPlay();
+    });
+  });
+
+  // Init first progress bar run
+  startAutoPlay();
+}
+/* ---------------------------------------------------------- */
 /*  1. MOBILE NAVIGATION                                      */
 /* ---------------------------------------------------------- */
 
@@ -655,5 +756,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initLogoAnimation();
   initNewsletter();
   initSelectLabels();
+  initHeroWordCycle();
+  initHeroSlideshow();
 });
 
