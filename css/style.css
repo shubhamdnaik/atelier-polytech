@@ -1182,49 +1182,26 @@ p {
   color: var(--accent);
 }
 
-/* Newsletter form */
-.footer__newsletter p {
+/* Contact info */
+.footer__contact p {
   font-size: 0.88rem;
   color: var(--text-muted);
-  margin-bottom: 1rem;
+  margin-bottom: 0.6rem;
+  line-height: 1.5;
 }
 
-.footer__newsletter-form {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.footer__newsletter-form input {
-  flex: 1;
-  padding: 0.7rem 1rem;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background: var(--bg-tertiary);
+.footer__contact p strong {
   color: var(--text-primary);
-  font-size: 0.88rem;
-  outline: none;
-  transition: border-color 0.3s ease;
 }
 
-.footer__newsletter-form input:focus {
-  border-color: var(--accent);
+.footer__contact p a {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-.footer__newsletter-form button {
-  padding: 0.7rem 1.4rem;
-  border-radius: 10px;
-  border: none;
-  background: var(--gradient-accent);
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.88rem;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: box-shadow 0.3s ease, transform 0.2s ease;
-}
-
-.footer__newsletter-form button:hover {
-  box-shadow: var(--shadow-glow);
+.footer__contact p a:hover {
+  color: var(--accent);
 }
 
 /* Footer bottom bar */
