@@ -984,7 +984,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroFill(document.getElementById('hero-canvas'));
   initProcessLine(document.getElementById('process-line'));
   initContactGlow(document.getElementById('contact-glow'));
-  initCursorTrail();
   
   // Apply Tilt Effect to all product cards
   document.querySelectorAll('.product-card').forEach(card => {
