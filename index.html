@@ -835,33 +835,160 @@
     </div>
   </section>
 
-  <!-- ========== CUSTOM PRODUCTS - COMING SOON ========== -->
+  <!-- ========== FEATURED PRODUCTS ========== -->
   <section class="section section--alt" id="products">
     <div class="container">
       <div class="section__header reveal">
-        <p class="text-accent" style="font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.8rem;">Custom Plastic Products</p>
-        <h2 class="section__title">Premium <span class="gradient-text">Products</span></h2>
-        <p class="section__subtitle">We are currently developing an exclusive range of precision-manufactured plastic products for consumer and industrial applications.</p>
+        <p class="text-accent" style="font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.8rem;">Our Products</p>
+        <h2 class="section__title">Featured <span class="gradient-text">Products</span></h2>
+        <p class="section__subtitle">Explore our newly launched range of high-quality household and industrial plastic products.</p>
       </div>
 
-      <!-- Coming Soon Display -->
-      <div class="coming-soon-wrapper reveal" style="text-align:center;padding:4rem 2rem;background:var(--gradient-card);border:1px solid var(--border-accent);border-radius:24px;position:relative;overflow:hidden;">
-        <!-- Background Pattern -->
-        <div style="position:absolute;inset:0;opacity:0.05;background-image:repeating-linear-gradient(45deg, var(--accent) 0px, var(--accent) 1px, transparent 1px, transparent 20px);pointer-events:none;"></div>
-        
-        <!-- Content -->
-        <div style="position:relative;z-index:2;max-width:700px;margin:0 auto;">
-          <h3 style="font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:1.5rem;color:var(--text-primary);">
-            Launching Soon
-          </h3>
-          <p style="font-size:1.1rem;color:var(--text-secondary);line-height:1.8;margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto;">
-            Join our waiting list to be notified the moment our new product line becomes available.
-          </p>
-          <!-- Email Notify Form -->
-          <form style="display:flex;gap:0.5rem;max-width:400px;margin:0 auto;flex-wrap:wrap;justify-content:center;">
-            <input type="email" placeholder="Your email address" required style="flex:1;min-width:200px;padding:0.75rem 1rem;border-radius:8px;border:1px solid var(--border-color);background:var(--bg-primary);color:var(--text-primary);">
-            <button type="submit" class="btn btn--primary" style="padding:0.75rem 1.5rem;">Notify Me</button>
-          </form>
+      <div class="products__grid stagger-group" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:2rem;">
+            <!-- Product 1 -->
+        <div class="product-card reveal" style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.3s ease, border-color 0.3s ease;">
+          <div class="product-card__image" style="background:var(--bg-tertiary); padding:2rem; display:flex; justify-content:center; align-items:center; min-height:260px; position:relative;">
+            <span style="position:absolute; top:1rem; right:1rem; background:var(--accent); color:var(--bg-primary); font-size:0.75rem; font-weight:700; padding:0.3rem 0.8rem; border-radius:20px; text-transform:uppercase;">Household</span>
+            <img src="assets/images/product-fishing-bucket.png" alt="Fishing Bucket" loading="lazy" style="max-width:100%; max-height:220px; object-fit:contain; border-radius:8px;">
+          </div>
+          <div class="product-card__content" style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+            <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">Fishing Bucket</h3>
+            <p style="font-size:0.95rem; color:var(--text-secondary); margin-bottom:1.5rem; line-height:1.6; flex:1;">Multipurpose, durable, lightweight bucket with a strong handle for bath, laundry, or kindergarten storage.</p>
+            
+            <div class="product-card__colors" style="display:flex; gap:0.6rem; margin-bottom:1.5rem; align-items:center;">
+              <span style="font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-right:0.2rem;">Colors:</span>
+              <div style="width:16px; height:16px; border-radius:50%; background:#4A90E2; border:1px solid var(--border-color);" title="Blue"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#7ED321; border:1px solid var(--border-color);" title="Green"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#FFC0CB; border:1px solid var(--border-color);" title="Pink"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#F5F5DC; border:1px solid var(--border-color);" title="Beige"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#9B9B9B; border:1px solid var(--border-color);" title="Gray"></div>
+            </div>
+            
+            <a href="contact.html?subject=Inquiry:%20Fishing%20Bucket" class="btn btn--outline" style="width:100%; text-align:center; padding:0.75rem; border-radius:8px; font-weight:600;">Inquire Now</a>
+          </div>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card reveal" style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.3s ease, border-color 0.3s ease;">
+          <div class="product-card__image" style="background:var(--bg-tertiary); padding:2rem; display:flex; justify-content:center; align-items:center; min-height:260px; position:relative;">
+            <span style="position:absolute; top:1rem; right:1rem; background:var(--accent); color:var(--bg-primary); font-size:0.75rem; font-weight:700; padding:0.3rem 0.8rem; border-radius:20px; text-transform:uppercase;">Industrial</span>
+            <img src="assets/images/product-warehouse-separator.png" alt="Warehouse Separators" loading="lazy" style="max-width:100%; max-height:220px; object-fit:contain; border-radius:8px;">
+          </div>
+          <div class="product-card__content" style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+            <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">Warehouse Separators</h3>
+            <p style="font-size:0.95rem; color:var(--text-secondary); margin-bottom:1.5rem; line-height:1.6; flex:1;">Modular plastic barrier & safety separation systems. High impact resistance and UV stabilized.</p>
+            
+            <div class="product-card__colors" style="display:flex; gap:0.6rem; margin-bottom:1.5rem; align-items:center;">
+              <span style="font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-right:0.2rem;">Colors:</span>
+              <div style="width:16px; height:16px; border-radius:50%; background:#F8E71C; border:1px solid var(--border-color);" title="Yellow"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#F5A623; border:1px solid var(--border-color);" title="Orange"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#4A90E2; border:1px solid var(--border-color);" title="Blue"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#9B9B9B; border:1px solid var(--border-color);" title="Gray"></div>
+            </div>
+            
+            <a href="contact.html?subject=Inquiry:%20Warehouse%20Separators" class="btn btn--outline" style="width:100%; text-align:center; padding:0.75rem; border-radius:8px; font-weight:600;">Inquire Now</a>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card reveal" style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.3s ease, border-color 0.3s ease;">
+          <div class="product-card__image" style="background:var(--bg-tertiary); padding:2rem; display:flex; justify-content:center; align-items:center; min-height:260px; position:relative;">
+            <span style="position:absolute; top:1rem; right:1rem; background:var(--accent); color:var(--bg-primary); font-size:0.75rem; font-weight:700; padding:0.3rem 0.8rem; border-radius:20px; text-transform:uppercase;">Kitchen</span>
+            <img src="assets/images/product-drain-basket.png" alt="PP Drain Basket" loading="lazy" style="max-width:100%; max-height:220px; object-fit:contain; border-radius:8px;">
+          </div>
+          <div class="product-card__content" style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+            <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">PP Drain Basket</h3>
+            <p style="font-size:0.95rem; color:var(--text-secondary); margin-bottom:1.5rem; line-height:1.6; flex:1;">High-quality food-safe drain basket with comfortable handles and a transparent PET basin for easy cleaning.</p>
+            
+            <div class="product-card__colors" style="display:flex; gap:0.6rem; margin-bottom:1.5rem; align-items:center;">
+              <span style="font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-right:0.2rem;">Colors:</span>
+              <div style="width:16px; height:16px; border-radius:50%; background:#7ED321; border:1px solid var(--border-color);" title="Green"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#9B9B9B; border:1px solid var(--border-color);" title="Gray"></div>
+            </div>
+            
+            <a href="contact.html?subject=Inquiry:%20PP%20Drain%20Basket" class="btn btn--outline" style="width:100%; text-align:center; padding:0.75rem; border-radius:8px; font-weight:600;">Inquire Now</a>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card reveal" style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.3s ease, border-color 0.3s ease;">
+          <div class="product-card__image" style="background:var(--bg-tertiary); padding:2rem; display:flex; justify-content:center; align-items:center; min-height:260px; position:relative;">
+            <span style="position:absolute; top:1rem; right:1rem; background:var(--accent); color:var(--bg-primary); font-size:0.75rem; font-weight:700; padding:0.3rem 0.8rem; border-radius:20px; text-transform:uppercase;">Home & Kitchen</span>
+            <img src="assets/images/product-tote-bin.png" alt="Portable Tote Bin" loading="lazy" style="max-width:100%; max-height:220px; object-fit:contain; border-radius:8px;">
+          </div>
+          <div class="product-card__content" style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+            <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">Portable Tote Bin</h3>
+            <p style="font-size:0.95rem; color:var(--text-secondary); margin-bottom:1.5rem; line-height:1.6; flex:1;">Hand carry storage basket with a premium faux leather texture, perfect for organizing daily essentials.</p>
+            
+            <div class="product-card__colors" style="display:flex; gap:0.6rem; margin-bottom:1.5rem; align-items:center;">
+              <span style="font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-right:0.2rem;">Colors:</span>
+              <div style="width:16px; height:16px; border-radius:50%; background:#F5F5DC; border:1px solid var(--border-color);" title="Beige"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#9B9B9B; border:1px solid var(--border-color);" title="Grey"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#8B4513; border:1px solid var(--border-color);" title="Brown"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#2C2C2C; border:1px solid var(--border-color);" title="Black"></div>
+            </div>
+            
+            <a href="contact.html?subject=Inquiry:%20Portable%20Tote%20Bin" class="btn btn--outline" style="width:100%; text-align:center; padding:0.75rem; border-radius:8px; font-weight:600;">Inquire Now</a>
+          </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card reveal" style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.3s ease, border-color 0.3s ease;">
+          <div class="product-card__image" style="background:var(--bg-tertiary); padding:2rem; display:flex; justify-content:center; align-items:center; min-height:260px; position:relative;">
+            <span style="position:absolute; top:1rem; right:1rem; background:var(--accent); color:var(--bg-primary); font-size:0.75rem; font-weight:700; padding:0.3rem 0.8rem; border-radius:20px; text-transform:uppercase;">Household</span>
+            <img src="assets/images/product-brush-set.png" alt="Cleaning Brush Set" loading="lazy" style="max-width:100%; max-height:220px; object-fit:contain; border-radius:8px;">
+          </div>
+          <div class="product-card__content" style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+            <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">Cleaning Brush Set</h3>
+            <p style="font-size:0.95rem; color:var(--text-secondary); margin-bottom:1.5rem; line-height:1.6; flex:1;">Modern bathroom toilet plastic cleaning set. Includes round brush, flat brush, and a ventilated holder.</p>
+            
+            <div class="product-card__colors" style="display:flex; gap:0.6rem; margin-bottom:1.5rem; align-items:center;">
+              <span style="font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-right:0.2rem;">Colors:</span>
+              <div style="width:16px; height:16px; border-radius:50%; background:#FFFFFF; border:1px solid var(--border-color);" title="White/Grey"></div>
+            </div>
+            
+            <a href="contact.html?subject=Inquiry:%20Cleaning%20Brush%20Set" class="btn btn--outline" style="width:100%; text-align:center; padding:0.75rem; border-radius:8px; font-weight:600;">Inquire Now</a>
+          </div>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card reveal" style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.3s ease, border-color 0.3s ease;">
+          <div class="product-card__image" style="background:var(--bg-tertiary); padding:2rem; display:flex; justify-content:center; align-items:center; min-height:260px; position:relative;">
+            <span style="position:absolute; top:1rem; right:1rem; background:var(--accent); color:var(--bg-primary); font-size:0.75rem; font-weight:700; padding:0.3rem 0.8rem; border-radius:20px; text-transform:uppercase;">Kitchen</span>
+            <img src="assets/images/product-new-1.png" alt="Food Storage Containers" loading="lazy" style="max-width:100%; max-height:220px; object-fit:contain; border-radius:8px;">
+          </div>
+          <div class="product-card__content" style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+            <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">Food Storage Containers</h3>
+            <p style="font-size:0.95rem; color:var(--text-secondary); margin-bottom:1.5rem; line-height:1.6; flex:1;">Multi-purpose, eco-friendly food storage containers perfect for keeping your kitchen organized.</p>
+            
+            <div class="product-card__colors" style="display:flex; gap:0.6rem; margin-bottom:1.5rem; align-items:center;">
+              <span style="font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-right:0.2rem;">Colors:</span>
+              <div style="width:16px; height:16px; border-radius:50%; background:#FFFFFF; border:1px solid var(--border-color);" title="Transparent/White"></div>
+            </div>
+            
+            <a href="contact.html?subject=Inquiry:%20Food%20Storage%20Containers" class="btn btn--outline" style="width:100%; text-align:center; padding:0.75rem; border-radius:8px; font-weight:600;">Inquire Now</a>
+          </div>
+        </div>
+
+        <!-- Product 7 -->
+        <div class="product-card reveal" style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; transition:transform 0.3s ease, border-color 0.3s ease;">
+          <div class="product-card__image" style="background:var(--bg-tertiary); padding:2rem; display:flex; justify-content:center; align-items:center; min-height:260px; position:relative;">
+            <span style="position:absolute; top:1rem; right:1rem; background:var(--accent); color:var(--bg-primary); font-size:0.75rem; font-weight:700; padding:0.3rem 0.8rem; border-radius:20px; text-transform:uppercase;">Industrial</span>
+            <img src="assets/images/product-new-2.png" alt="Heavy-Duty Plastic Pallet" loading="lazy" style="max-width:100%; max-height:220px; object-fit:contain; border-radius:8px;">
+          </div>
+          <div class="product-card__content" style="padding:1.5rem; flex:1; display:flex; flex-direction:column;">
+            <h3 style="font-size:1.25rem; font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">Heavy-Duty Plastic Pallet</h3>
+            <p style="font-size:0.95rem; color:var(--text-secondary); margin-bottom:1.5rem; line-height:1.6; flex:1;">Durable and reliable heavy-duty plastic pallet designed for demanding logistics and warehousing needs.</p>
+            
+            <div class="product-card__colors" style="display:flex; gap:0.6rem; margin-bottom:1.5rem; align-items:center;">
+              <span style="font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-right:0.2rem;">Colors:</span>
+              <div style="width:16px; height:16px; border-radius:50%; background:#4A90E2; border:1px solid var(--border-color);" title="Blue"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#2C2C2C; border:1px solid var(--border-color);" title="Black"></div>
+              <div style="width:16px; height:16px; border-radius:50%; background:#9B9B9B; border:1px solid var(--border-color);" title="Grey"></div>
+            </div>
+            
+            <a href="contact.html?subject=Inquiry:%20Heavy-Duty%20Plastic%20Pallet" class="btn btn--outline" style="width:100%; text-align:center; padding:0.75rem; border-radius:8px; font-weight:600;">Inquire Now</a>
+          </div>
         </div>
       </div>
     </div>
