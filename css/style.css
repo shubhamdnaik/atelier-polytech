@@ -1487,7 +1487,7 @@ p {
   h2 { font-size: 1.6rem; }
 
   .stats-bar__grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 1.2rem;
   }
 
@@ -1500,7 +1500,7 @@ p {
   }
 
   .industries__grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
   .products__grid {
