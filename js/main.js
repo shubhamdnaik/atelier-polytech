@@ -738,6 +738,132 @@ function initCareersForm() {
 
 
 /* ---------------------------------------------------------- */
+/*  15.5 DYNAMIC PRODUCTS RENDERER                            */
+/* ---------------------------------------------------------- */
+
+function renderDynamicProducts() {
+  if (typeof PRODUCT_CATALOGUE === 'undefined') return;
+
+  const featuredContainer = document.getElementById('featured-products-container');
+  const allContainer = document.getElementById('all-products-container');
+
+  const generateCardHTML = (product) => {
+    return `
+      <div class="product-card reveal" data-title="${product.title}" data-images='${JSON.stringify(product.images)}' data-desc="${product.desc}">
+        <div class="product-card__image">
+          <img src="${product.images[0]}" alt="${product.title}" loading="lazy">
+        </div>
+        <div class="product-card__content">
+          <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem; color: var(--text-primary);">${product.title}</h3>
+          <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${product.desc}</p>
+          <button class="btn btn--secondary btn--sm quick-view-btn" style="width:100%; font-size:0.8rem; margin-top:auto;">Quick View</button>
+        </div>
+      </div>
+    `;
+  };
+
+  if (featuredContainer) {
+    // Select 8 random products to fill the grid
+    const shuffled = [...PRODUCT_CATALOGUE].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 8);
+    featuredContainer.innerHTML = selected.map(generateCardHTML).join('');
+  }
+
+  if (allContainer) {
+    // Show all products
+    allContainer.innerHTML = PRODUCT_CATALOGUE.map(generateCardHTML).join('');
+  }
+}
+
+/* ---------------------------------------------------------- */
+/*  16. QUICK VIEW MODAL                                      */
+/* ---------------------------------------------------------- */
+function initQuickView() {
+  const modal = document.getElementById('quick-view-modal');
+  if (!modal) return;
+  
+  const closeBtn = document.getElementById('quick-view-close');
+  const mainImg = document.getElementById('quick-view-main-image');
+  const title = document.getElementById('quick-view-title');
+  const desc = document.getElementById('quick-view-desc');
+  const thumbContainer = document.getElementById('quick-view-thumbnails');
+  const inqBtn = document.getElementById('quick-view-inquire-btn');
+  
+  const cards = document.querySelectorAll('.product-card');
+  
+  const openModal = (card) => {
+    const rawImages = card.getAttribute('data-images');
+    if(!rawImages) return;
+    
+    let images = [];
+    try {
+      images = JSON.parse(rawImages);
+    } catch(e) {
+      console.error("Error parsing images JSON", e);
+      return;
+    }
+    
+    const cardTitle = card.getAttribute('data-title') || 'Product';
+    const cardDesc = card.getAttribute('data-desc') || '';
+    
+    title.textContent = cardTitle;
+    desc.textContent = cardDesc;
+    inqBtn.href = `contact.html?subject=Inquiry:%20${encodeURIComponent(cardTitle)}`;
+    
+    // Setup Images
+    thumbContainer.innerHTML = '';
+    
+    if(images.length > 0) {
+      mainImg.src = images[0];
+      
+      if(images.length > 1) {
+        images.forEach((src, idx) => {
+          const img = document.createElement('img');
+          img.src = src;
+          img.style.width = '50px';
+          img.style.height = '50px';
+          img.style.objectFit = 'cover';
+          img.style.borderRadius = '4px';
+          img.style.cursor = 'pointer';
+          img.style.border = idx === 0 ? '2px solid var(--accent)' : '1px solid var(--border-color)';
+          img.style.background = 'var(--gradient-card)';
+          
+          img.addEventListener('click', () => {
+            mainImg.src = src;
+            Array.from(thumbContainer.children).forEach(child => {
+              child.style.border = '1px solid var(--border-color)';
+            });
+            img.style.border = '2px solid var(--accent)';
+          });
+          
+          thumbContainer.appendChild(img);
+        });
+      }
+    }
+    
+    modal.classList.add('active');
+    document.body.classList.add('no-scroll');
+  };
+  
+  const closeModal = () => {
+    modal.classList.remove('active');
+    document.body.classList.remove('no-scroll');
+  };
+  
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      if(e.target.tagName.toLowerCase() === 'a') return;
+      openModal(card);
+    });
+  });
+  
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', (e) => {
+    if(e.target === modal) closeModal();
+  });
+}
+
+/* ---------------------------------------------------------- */
 /*  INITIALIZATION                                            */
 /* ---------------------------------------------------------- */
 
@@ -758,5 +884,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSelectLabels();
   initHeroWordCycle();
   initHeroSlideshow();
+  renderDynamicProducts();
+  initQuickView();
 });
 

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FTW6XRSSL4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-FTW6XRSSL4');
+  </script>
+  
+  <meta name="description" content="Custom plastic products catalog. Premier plastic injection molding manufacturer in Bangalore.">
+  <meta name="robots" content="index, follow">
+  
+  <link rel="canonical" href="https://atelierpolytech.com/products.html">
+  
+  <title>Custom Products | Plastic Injection Molding | Atelier Polytech</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="48x48" href="https://atelierpolytech.com/assets/images/favicon_48.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="https://atelierpolytech.com/assets/images/favicon.png">
+  <link rel="shortcut icon" href="https://atelierpolytech.com/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://atelierpolytech.com/assets/images/favicon.png">
+
+  <!-- Auto-detect system theme preference -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      }
+    })();
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar" style="position:sticky;top:0;z-index:1000;">
+    <div class="container">
+      <a href="index.html" class="navbar__logo">
+        <img src="assets/images/logo.png" alt="Atelier Polytech Logo" class="logo-animated-img logo-invert">
+        <span>Atelier <span class="navbar__logo-accent">Polytech</span></span>
+      </a>
+      <div class="navbar__actions">
+        <a href="index.html" class="btn btn--secondary" style="font-size:0.9rem;padding:0.6rem 1.2rem;">Back to Home</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="section" style="padding-top:6rem;padding-bottom:2rem;background:var(--gradient-card);">
+    <div class="container" style="text-align:center;">
+      <h1 class="section__title" style="font-size:clamp(2rem,5vw,3.5rem);margin-bottom:1rem;">
+        Custom <span class="gradient-text">Products</span>
+      </h1>
+      <p class="section__subtitle" style="font-size:1.1rem;max-width:700px;margin:0 auto;">
+        Explore our extensive catalog of high-quality household and industrial plastic products. Click on any product to view more details.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="products" style="padding-top:2rem;">
+    <div class="container">
+      <div class="products-grid stagger-group" id="all-products-container">
+        <!-- Products injected via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="index.html#home" class="navbar__logo" style="margin-bottom:1rem;display:inline-flex;">
+            <img src="assets/images/logo.png" alt="Atelier Polytech" class="logo-invert" style="height:36px;" loading="lazy">
+            <span>Atelier <span class="navbar__logo-accent">Polytech</span></span>
+          </a>
+          <p>End-to-end plastic injection molding and engineering solutions through a trusted manufacturing network.</p>
+        </div>
+
+        <div class="footer__column">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">About Us</a></li>
+            <li><a href="products.html">Custom Products</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>&copy; 2026 Atelier Polytech. All rights reserved.</p>
+        <div class="footer__bottom-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Quick View Modal -->
+  <div class="quick-view-modal" id="quick-view-modal">
+    <div class="quick-view-modal__content">
+      <button class="quick-view-modal__close" id="quick-view-close" aria-label="Close">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div style="padding: 2.5rem 2rem 2rem;">
+        <div id="quick-view-main-image-container" style="display:flex; justify-content:center; align-items:center; height:300px; margin-bottom:1rem; background:var(--gradient-card); border-radius:8px; border:1px solid var(--border-color);">
+          <img id="quick-view-main-image" src="" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; margin:0 auto;">
+        </div>
+        <div id="quick-view-thumbnails" style="display:flex; gap:0.5rem; justify-content:center; overflow-x:auto; margin-bottom:1.5rem; padding-bottom:0.5rem; min-height:55px;">
+          <!-- Thumbnails injected via JS -->
+        </div>
+        <h2 id="quick-view-title" style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary); text-align:center;">Product Title</h2>
+        <p id="quick-view-desc" style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6; text-align:center;">Product description here.</p>
+        
+        <div style="display:flex; gap:1rem; justify-content:center;">
+          <a id="quick-view-inquire-btn" href="contact.html" class="btn btn--primary" style="width:100%; max-width:300px; text-align:center;">Inquire Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/animations.js"></script>
+</body>
+</html>
