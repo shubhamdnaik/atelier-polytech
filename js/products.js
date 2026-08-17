@@ -54,10 +54,10 @@ const PRODUCT_CATALOGUE = [
     images: [
       "assets/images/products/warehouse-seperator/1.png",
       "assets/images/products/warehouse-seperator/2.png",
-      "assets/images/products/warehouse-seperator/3.png",
-      "assets/images/products/warehouse-seperator/4.png"
+      "assets/images/products/warehouse-seperator/3.png"
     ]
   },
+
   {
     id: "coming-soon-1",
     title: "New Product (Coming Soon)",
