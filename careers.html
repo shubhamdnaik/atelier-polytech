@@ -46,20 +46,25 @@
   <!-- Auto-detect system theme preference -->
   <script>
     (function() {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      } else {
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-          document.documentElement.setAttribute('data-theme', 'light');
+      function applySystemTheme() {
+        const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme');
+        const isMobile = window.innerWidth <= 860;
+        
+        if (isMobile || !savedTheme) {
+          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
         } else {
-          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.setAttribute('data-theme', savedTheme);
         }
       }
+
+      applySystemTheme();
+
       if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function(e) {
-          if (!localStorage.getItem('theme')) {
-            document.documentElement.setAttribute('data-theme', e.matches ? 'light' : 'dark');
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+          const isMobile = window.innerWidth <= 860;
+          if (isMobile || !localStorage.getItem('theme-manual-override')) {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
           }
         });
       }
@@ -118,26 +123,29 @@
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar" id="navbar" style="position:sticky;top:0;z-index:1000;">
+  <nav class="navbar" id="navbar">
     <div class="container">
       <a href="index.html" class="navbar__logo">
         <img src="assets/images/logo.png" alt="Atelier Polytech Logo" class="logo-animated-img logo-invert">
         <span>Atelier <span class="navbar__logo-accent">Polytech</span></span>
       </a>
       <div class="navbar__actions">
-        <a href="index.html" class="btn btn--secondary" style="font-size:0.9rem;padding:0.6rem 1.2rem;">Back to Home</a>
+        <a href="index.html" class="btn btn--secondary btn-back-home">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          <span>Back to Home</span>
+        </a>
       </div>
     </div>
   </nav>
 
   <!-- Hero Section -->
-  <section class="section" style="padding-top:8rem;padding-bottom:4rem;background:var(--gradient-card);">
-    <div class="container" style="max-width:900px;text-align:center;">
-      <h1 class="section__title" style="font-size:clamp(2rem,5vw,3.5rem);margin-bottom:1.5rem;">
+  <section class="section" style="padding-top:6.5rem;padding-bottom:2.5rem;background:var(--gradient-card);">
+    <div class="container" style="max-width:850px;text-align:center;">
+      <h1 class="section__title" style="font-size:clamp(1.85rem,5.5vw,3.2rem);margin-bottom:1rem;">
         Join Our Team at <span class="gradient-text">Atelier Polytech</span>
       </h1>
-      <p class="section__subtitle" style="font-size:1.2rem;max-width:700px;margin:0 auto 2rem;">
-        Be part of a team that transforms plastic product ideas into finished reality. We're hiring for engineering, supplier coordination, quality assurance, and operations roles in Bangalore.
+      <p class="section__subtitle" style="font-size:1.05rem;max-width:650px;margin:0 auto 1.5rem;">
+        Be part of a team transforming plastic product ideas into finished reality. We're hiring for engineering, supplier coordination, quality assurance, and operations roles in Bangalore.
       </p>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
         <a href="#apply" class="btn btn--primary">Apply Now</a>
@@ -146,68 +154,68 @@
   </section>
 
   <!-- Application Form -->
-  <section class="section" id="apply">
+  <section class="section" id="apply" style="padding-top:2rem;">
     <div class="container">
-      <div class="section__header">
+      <div class="section__header" style="margin-bottom:2rem;">
         <h2 class="section__title">Apply to <span class="gradient-text">Join Our Team</span></h2>
         <p class="section__subtitle">Submit your application for a role at Atelier Polytech — where engineering meets plastic manufacturing</p>
       </div>
 
-      <div class="glass-card" style="max-width:700px;margin:3rem auto 0;padding:3rem;">
+      <div class="contact__form-card" style="max-width:700px;margin:0 auto;">
         <form class="contact__form" id="careers-form" action="https://formspree.io/f/mvzjeprk" method="POST">
           <input type="hidden" name="_subject" value="New Career Application - Atelier Polytech">
           
           <div class="form-group">
-            <input type="text" id="name" name="name" placeholder=" " required>
-            <label for="name">Full Name</label>
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" placeholder="e.g. John Doe" required>
           </div>
 
           <div class="form-group">
-            <input type="email" id="email" name="email" placeholder=" " required>
-            <label for="email">Email Address</label>
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" placeholder="e.g. john@example.com" required>
           </div>
 
           <div class="form-group">
-            <input type="tel" id="phone" name="phone" placeholder=" " required>
-            <label for="phone">Phone Number</label>
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required>
           </div>
 
           <div class="form-group">
+            <label for="position">Position Applied For *</label>
             <select id="position" name="position" required>
-              <option value="" disabled selected></option>
+              <option value="" disabled selected>Select a position...</option>
               <option value="engineering-review">Engineering Review Analyst</option>
               <option value="supplier-coordination">Supplier Coordination Manager</option>
               <option value="quality-assurance">Quality Assurance Specialist</option>
               <option value="operations-manager">Operations Manager</option>
               <option value="other">Other Position</option>
             </select>
-            <label for="position">Position Applied For</label>
           </div>
 
           <div class="form-group">
-            <input type="text" id="experience" name="experience" placeholder=" " required>
-            <label for="experience">Years of Experience</label>
+            <label for="experience">Years of Experience *</label>
+            <input type="text" id="experience" name="experience" placeholder="e.g. 3 years" required>
           </div>
 
           <div class="form-group">
-            <textarea id="cover-letter" name="cover-letter" rows="6" placeholder=" " required></textarea>
-            <label for="cover-letter">Cover Letter / Why you want to join us</label>
+            <label for="cover-letter">Cover Letter / Professional Background *</label>
+            <textarea id="cover-letter" name="cover-letter" rows="5" placeholder="Tell us about your relevant background, skills, and why you'd like to join..." required></textarea>
           </div>
 
-          <div style="margin-bottom:1.5rem;">
-            <label style="display:block;margin-bottom:0.5rem;font-size:0.9rem;color:var(--text-secondary);">Resume / CV (attach link or mention "will email")</label>
-            <input type="text" name="resume-link" placeholder="Google Drive link, Dropbox link, or type 'will email'" style="width:100%;padding:0.8rem;background:var(--glass-bg);border:1px solid var(--border-color);border-radius:12px;color:var(--text-primary);">
+          <div class="form-group">
+            <label for="resume-link">Resume / CV (attach Google Drive / Dropbox link or mention "will email")</label>
+            <input type="text" id="resume-link" name="resume-link" placeholder="https://drive.google.com/... or 'will email'">
           </div>
 
-          <button type="submit" class="btn btn--primary" style="width:100%;">
+          <button type="submit" class="btn btn--primary" style="width:100%;margin-top:0.4rem;">
             <span>Submit Application</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </button>
           
-          <p id="careers-form-status" style="margin-top: 1rem; font-size: 0.9rem; text-align: center; font-weight: 500;"></p>
+          <p id="careers-form-status" style="margin-top: 0.5rem; font-size: 0.9rem; text-align: center; font-weight: 500;"></p>
 
-          <p style="margin-top:1rem;font-size:0.85rem;color:var(--text-muted);text-align:center;">
-            You can also email your resume to <strong style="color:var(--accent);">careers@atelierpolytech.com</strong>
+          <p style="margin-top:0.75rem;font-size:0.85rem;color:var(--text-muted);text-align:center;">
+            You can also email your resume directly to <strong style="color:var(--accent);">careers@atelierpolytech.com</strong>
           </p>
         </form>
       </div>

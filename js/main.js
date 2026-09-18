@@ -105,9 +105,56 @@ function initHeroSlideshow() {
     });
   });
 
-  // Init first progress bar run
+    // Init first progress bar run
   startAutoPlay();
 }
+
+/* ---------------------------------------------------------- */
+/*  0.8 THEME DETECTION & DESKTOP TOGGLE                      */
+/* ---------------------------------------------------------- */
+
+function initThemeToggle() {
+  const toggleBtn = document.getElementById('theme-toggle-btn');
+
+  // Auto-detect system preference
+  const syncWithSystem = () => {
+    const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const saved = localStorage.getItem('theme');
+    const isMobile = window.innerWidth <= 860;
+    
+    // On mobile, strictly follow phone settings
+    if (isMobile || !saved) {
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', saved);
+    }
+  };
+
+  // Run on initial load
+  syncWithSystem();
+
+  // Listen for real-time system theme change on phone/OS
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      const isMobile = window.innerWidth <= 860;
+      if (isMobile || !localStorage.getItem('theme-manual-override')) {
+        document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+      }
+    });
+  }
+
+  // Desktop Toggle Button
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      localStorage.setItem('theme-manual-override', 'true');
+    });
+  }
+}
+
 /* ---------------------------------------------------------- */
 /*  1. MOBILE NAVIGATION                                      */
 /* ---------------------------------------------------------- */

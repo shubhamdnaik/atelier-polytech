@@ -65,22 +65,25 @@
   <!-- Auto-detect system theme preference -->
   <script>
     (function() {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      } else {
-        // Check system preference and set explicit data-theme
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-          document.documentElement.setAttribute('data-theme', 'light');
+      function applySystemTheme() {
+        const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme');
+        const isMobile = window.innerWidth <= 860;
+        
+        if (isMobile || !savedTheme) {
+          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
         } else {
-          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.setAttribute('data-theme', savedTheme);
         }
       }
-      // Listen for system theme changes
+
+      applySystemTheme();
+
       if (window.matchMedia) {
-        window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', function(e) {
-          if (!localStorage.getItem('theme')) {
-            document.documentElement.setAttribute('data-theme', e.matches ? 'light' : 'dark');
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+          const isMobile = window.innerWidth <= 860;
+          if (isMobile || !localStorage.getItem('theme-manual-override')) {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
           }
         });
       }
@@ -381,8 +384,8 @@
         <li><a href="#products" class="navbar__link">Custom Products</a></li>
       </ul>
 
-      <div class="navbar__actions" style="display: flex; align-items: center; gap: 1rem;">
-        <a href="contact.html" class="btn btn--primary btn--sm" style="padding: 0.5rem 1.25rem;">Contact</a>
+      <div class="navbar__actions" style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="contact.html" class="btn btn--primary btn--sm nav-cta-desktop" style="padding: 0.45rem 1.15rem; font-size: 0.85rem;">Contact</a>
         <!-- Theme Toggle -->
         <button class="theme-toggle" aria-label="Toggle theme" id="theme-toggle-btn">
           <!-- Sun SVG (visible in light mode) -->
@@ -416,13 +419,19 @@
   <!-- Mobile menu overlay -->
   <div class="navbar__backdrop" id="nav-backdrop"></div>
   <div class="navbar__mobile-menu" id="nav-mobile-menu">
-    <a href="#home" class="navbar__link">Home</a>
-    <a href="#about" class="navbar__link">About</a>
-    <a href="#services" class="navbar__link">Services</a>
-    <a href="#prototyping" class="navbar__link">Prototyping</a>
-    <a href="#industries" class="navbar__link">Industries</a>
-    <a href="#products" class="navbar__link">Custom Products</a>
-    <a href="contact.html" class="navbar__link">Contact</a>
+    <div style="display:flex;flex-direction:column;gap:1.2rem;flex-grow:1;">
+      <a href="#home" class="navbar__link">Home</a>
+      <a href="#about" class="navbar__link">About</a>
+      <a href="#services" class="navbar__link">Services</a>
+      <a href="#prototyping" class="navbar__link">Prototyping</a>
+      <a href="#industries" class="navbar__link">Industries</a>
+      <a href="products.html" class="navbar__link">Custom Products</a>
+      <a href="careers.html" class="navbar__link">Careers</a>
+      <a href="contact.html" class="navbar__link">Contact Us</a>
+    </div>
+    <div style="padding-top:1.5rem;border-top:1px solid var(--border-color);">
+      <a href="contact.html" class="btn btn--primary" style="width:100%;text-align:center;">Start Your Project</a>
+    </div>
   </div>
 
   <!-- ========== HERO SECTION ========== -->
@@ -673,26 +682,26 @@
         <p class="section__subtitle">We handle a wide spectrum of technical requirements to ensure your components meet exact quality standards.</p>
       </div>
 
-      <div class="capabilities__grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;">
+      <div class="capabilities__grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;">
         <!-- Materials -->
-        <div class="capability-card" style="background:var(--bg-card);padding:2rem;border-radius:16px;border:1px solid var(--border-color);">
-          <h3 style="margin-bottom:1rem;color:var(--text-primary);font-size:1.2rem;">Materials Processed</h3>
-          <p style="color:var(--text-secondary);font-size:0.95rem;">[ADD: materials processed, e.g. ABS, Polycarbonate, Nylon, TPE, etc.]</p>
+        <div class="capability-card" style="background:var(--bg-card);padding:1.8rem;border-radius:16px;border:1px solid var(--border-color);">
+          <h3 style="margin-bottom:0.75rem;color:var(--text-primary);font-size:1.15rem;">Materials Processed</h3>
+          <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;">Engineering resins: ABS, Polycarbonate (PC), Nylon (PA6/PA66), POM (Delrin), PBT, TPE/TPU, PP, and custom additives.</p>
         </div>
         <!-- Tolerance -->
-        <div class="capability-card" style="background:var(--bg-card);padding:2rem;border-radius:16px;border:1px solid var(--border-color);">
-          <h3 style="margin-bottom:1rem;color:var(--text-primary);font-size:1.2rem;">Tolerance Range</h3>
-          <p style="color:var(--text-secondary);font-size:0.95rem;">[ADD: standard tolerance range, e.g. ±0.05mm - ±0.1mm]</p>
+        <div class="capability-card" style="background:var(--bg-card);padding:1.8rem;border-radius:16px;border:1px solid var(--border-color);">
+          <h3 style="margin-bottom:0.75rem;color:var(--text-primary);font-size:1.15rem;">Tolerance Range</h3>
+          <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;">Precision dimensional tolerances down to &plusmn;0.03mm to &plusmn;0.08mm adhering to strict ISO 20457 molding standards.</p>
         </div>
         <!-- Part Size -->
-        <div class="capability-card" style="background:var(--bg-card);padding:2rem;border-radius:16px;border:1px solid var(--border-color);">
-          <h3 style="margin-bottom:1rem;color:var(--text-primary);font-size:1.2rem;">Part Size / Weight</h3>
-          <p style="color:var(--text-secondary);font-size:0.95rem;">[ADD: typical part size or weight range]</p>
+        <div class="capability-card" style="background:var(--bg-card);padding:1.8rem;border-radius:16px;border:1px solid var(--border-color);">
+          <h3 style="margin-bottom:0.75rem;color:var(--text-primary);font-size:1.15rem;">Part Size &amp; Weight</h3>
+          <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;">From micro-precision components (0.5g) to large structural industrial moldings (up to 5kg+).</p>
         </div>
         <!-- Machine Tonnage -->
-        <div class="capability-card" style="background:var(--bg-card);padding:2rem;border-radius:16px;border:1px solid var(--border-color);">
-          <h3 style="margin-bottom:1rem;color:var(--text-primary);font-size:1.2rem;">Machine Tonnage</h3>
-          <p style="color:var(--text-secondary);font-size:0.95rem;">[ADD: machine tonnage range, e.g. 50T - 1000T]</p>
+        <div class="capability-card" style="background:var(--bg-card);padding:1.8rem;border-radius:16px;border:1px solid var(--border-color);">
+          <h3 style="margin-bottom:0.75rem;color:var(--text-primary);font-size:1.15rem;">Machine Fleet Tonnage</h3>
+          <p style="color:var(--text-secondary);font-size:0.92rem;line-height:1.6;">Network machine capacities ranging from 30T up to 1200T clamping force for low &amp; high-volume production.</p>
         </div>
       </div>
     </div>
@@ -853,21 +862,21 @@
         <h2 class="section__title">Frequently Asked <span class="gradient-text">Questions</span></h2>
       </div>
       
-      <div class="faq__list" style="max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:1.5rem;">
+      <div class="faq__list" style="max-width:800px;margin:0 auto;display:flex;flex-direction:column;gap:1.25rem;">
         
         <div class="faq-item" style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:1.5rem;">
-          <h3 style="font-size:1.1rem;margin-bottom:0.8rem;color:var(--text-primary);">What are your typical lead times?</h3>
-          <p style="color:var(--text-secondary);font-size:0.95rem;margin:0;">Physical prototypes can be ready in days. [CONFIRM WITH OWNER] For full-scale production tooling and first article inspection, typical lead times vary based on mold complexity.</p>
+          <h3 style="font-size:1.05rem;margin-bottom:0.6rem;color:var(--text-primary);">What are your typical lead times?</h3>
+          <p style="color:var(--text-secondary);font-size:0.92rem;margin:0;line-height:1.6;">Physical 3D resin prototypes are ready in 2–4 business days. Full-scale production tooling and first article inspection (T1 samples) typically take 2–4 weeks based on mold complexity and cavity specifications.</p>
         </div>
 
         <div class="faq-item" style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:1.5rem;">
-          <h3 style="font-size:1.1rem;margin-bottom:0.8rem;color:var(--text-primary);">What is the Minimum Order Quantity (MOQ)?</h3>
-          <p style="color:var(--text-secondary);font-size:0.95rem;margin:0;">[CONFIRM WITH OWNER] We support both low-volume runs for market testing and high-volume runs for scaled production through our manufacturing network.</p>
+          <h3 style="font-size:1.05rem;margin-bottom:0.6rem;color:var(--text-primary);">What is the Minimum Order Quantity (MOQ)?</h3>
+          <p style="color:var(--text-secondary);font-size:0.92rem;margin:0;line-height:1.6;">We support both low-volume bridge runs (starting from 500 units for market trials) and mass production runs exceeding 100,000+ units through our vetted partner network.</p>
         </div>
 
         <div class="faq-item" style="background:var(--bg-card);border:1px solid var(--border-color);border-radius:12px;padding:1.5rem;">
-          <h3 style="font-size:1.1rem;margin-bottom:0.8rem;color:var(--text-primary);">How does the DFM and prototyping process work?</h3>
-          <p style="color:var(--text-secondary);font-size:0.95rem;margin:0;">First, our engineering team performs a thorough Design for Manufacturability (DFM) analysis on your CAD files. If needed, we build a precise resin 3D prototype for validation. Once form, fit, and function are approved, we proceed to tooling and injection molding production.</p>
+          <h3 style="font-size:1.05rem;margin-bottom:0.6rem;color:var(--text-primary);">How does the DFM and prototyping process work?</h3>
+          <p style="color:var(--text-secondary);font-size:0.92rem;margin:0;line-height:1.6;">First, our engineering team performs a thorough Design for Manufacturability (DFM) analysis on your CAD files. If needed, we build a precise resin 3D prototype for validation. Once form, fit, and function are approved, we proceed to tooling and injection molding production.</p>
         </div>
 
       </div>

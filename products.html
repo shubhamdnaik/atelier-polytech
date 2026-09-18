@@ -30,15 +30,27 @@
   <!-- Auto-detect system theme preference -->
   <script>
     (function() {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      } else {
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-          document.documentElement.setAttribute('data-theme', 'light');
+      function applySystemTheme() {
+        const isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme');
+        const isMobile = window.innerWidth <= 860;
+        
+        if (isMobile || !savedTheme) {
+          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
         } else {
-          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.setAttribute('data-theme', savedTheme);
         }
+      }
+
+      applySystemTheme();
+
+      if (window.matchMedia) {
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+          const isMobile = window.innerWidth <= 860;
+          if (isMobile || !localStorage.getItem('theme-manual-override')) {
+            document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+          }
+        });
       }
     })();
   </script>
@@ -56,14 +68,17 @@
 <body>
 
   <!-- Navigation -->
-  <nav class="navbar" id="navbar" style="position:sticky;top:0;z-index:1000;">
+  <nav class="navbar" id="navbar">
     <div class="container">
       <a href="index.html" class="navbar__logo">
         <img src="assets/images/logo.png" alt="Atelier Polytech Logo" class="logo-animated-img logo-invert">
         <span>Atelier <span class="navbar__logo-accent">Polytech</span></span>
       </a>
       <div class="navbar__actions">
-        <a href="index.html" class="btn btn--secondary" style="font-size:0.9rem;padding:0.6rem 1.2rem;">Back to Home</a>
+        <a href="index.html" class="btn btn--secondary btn-back-home">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          <span>Back to Home</span>
+        </a>
       </div>
     </div>
   </nav>
