@@ -57,7 +57,7 @@ function initHeroVideoSlideshow() {
     },
     {
       src: "assets/videos/2.mp4",
-      caption: "Resin 3D Rapid Prototyping"
+      caption: "Bambu Lab H2S 3D Prototyping"
     },
     {
       src: "assets/videos/3.mp4",
