@@ -558,6 +558,101 @@ p {
   transition: width 0.08s linear;
 }
 
+/* --------------------------------------------------------------------------
+   6.1 SUBPAGE HERO BANNER (Standard across About, Services, Prototyping, etc.)
+   -------------------------------------------------------------------------- */
+.page-hero {
+  position: relative;
+  min-height: 44vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 7.5rem 1.5rem 3.5rem;
+  background: #000000;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.page-hero__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.35;
+  filter: grayscale(1) brightness(0.65);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.page-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.85) 100%),
+              linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, #000000 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.page-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.page-hero__breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+  color: var(--text-muted);
+}
+
+.page-hero__breadcrumb a {
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.page-hero__breadcrumb a:hover {
+  color: var(--accent);
+}
+
+.page-hero__breadcrumb svg {
+  width: 13px;
+  height: 13px;
+  stroke: var(--text-muted);
+}
+
+.page-hero__breadcrumb span {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.page-hero h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.page-hero p {
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 650px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
 
 /* --------------------------------------------------------------------------
    7. STATS BAR

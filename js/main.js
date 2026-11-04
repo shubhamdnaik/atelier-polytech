@@ -357,34 +357,26 @@ function initSmoothScroll() {
 /* ---------------------------------------------------------- */
 
 function initActiveNav() {
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.navbar__links .navbar__link');
-  if (!sections.length || !navLinks.length) return;
+  const navLinks = document.querySelectorAll('.navbar__links .navbar__link, .navbar__mobile-menu .navbar__link');
+  if (!navLinks.length) return;
 
-  const setActive = (id) => {
-    navLinks.forEach((link) => {
-      link.classList.toggle(
-        'active',
-        link.getAttribute('href') === `#${id}`
-      );
-    });
-  };
+  let currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  if (currentPath === '' || currentPath === '/') currentPath = 'index.html';
+  const normCurrent = currentPath.replace(/\.html$/, '');
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActive(entry.target.id);
-        }
-      });
-    },
-    {
-      rootMargin: `-${NAVBAR_OFFSET}px 0px -40% 0px`,
-      threshold: 0.1,
+  navLinks.forEach((link) => {
+    const href = link.getAttribute('href');
+    if (!href) return;
+    const rawTarget = href.split('#')[0];
+    const linkPath = (rawTarget ? rawTarget.split('/').pop() : 'index.html') || 'index.html';
+    const normLink = linkPath.replace(/\.html$/, '');
+
+    if (normLink === normCurrent || (normCurrent === 'index' && (normLink === '' || normLink === 'index'))) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
     }
-  );
-
-  sections.forEach((section) => observer.observe(section));
+  });
 }
 
 
@@ -925,8 +917,8 @@ function renderDynamicProducts() {
   };
 
   if (featuredContainer) {
-    // Show all available products since we only have the real ones
-    const selected = [...PRODUCT_CATALOGUE].slice(0, 8);
+    // Show top 3 featured products on homepage
+    const selected = [...PRODUCT_CATALOGUE].slice(0, 3);
     featuredContainer.innerHTML = selected.map(generateCardHTML).join('');
   }
 

@@ -123,20 +123,68 @@
 <body>
 
   <!-- Navigation -->
+  <!-- ========== NAVIGATION ========== -->
   <nav class="navbar" id="navbar">
     <div class="container">
       <a href="index.html" class="navbar__logo">
         <img src="assets/images/logo.png" alt="Atelier Polytech Logo" class="logo-animated-img logo-invert">
         <span>Atelier <span class="navbar__logo-accent">Polytech</span></span>
       </a>
-      <div class="navbar__actions">
-        <a href="index.html" class="btn btn--secondary btn-back-home">
-          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-          <span>Back to Home</span>
-        </a>
+
+      <!-- Desktop links -->
+      <ul class="navbar__links" id="nav-links">
+        <li><a href="index.html" class="navbar__link">Home</a></li>
+        <li><a href="about.html" class="navbar__link">About</a></li>
+        <li><a href="services.html" class="navbar__link">Services</a></li>
+        <li><a href="prototyping.html" class="navbar__link">Prototyping</a></li>
+        <li><a href="industries.html" class="navbar__link">Industries</a></li>
+        <li><a href="products.html" class="navbar__link">Products</a></li>
+      </ul>
+
+      <div class="navbar__actions" style="display: flex; align-items: center; gap: 0.75rem;">
+        <a href="contact.html" class="btn btn--primary btn--sm nav-cta-desktop" style="padding: 0.45rem 1.15rem; font-size: 0.85rem;">Contact</a>
+        <button class="theme-toggle" aria-label="Toggle theme" id="theme-toggle-btn">
+          <svg class="theme-toggle__icon theme-toggle__icon--sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="theme-toggle__icon theme-toggle__icon--moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <button class="navbar__hamburger" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
   </nav>
+
+  <!-- Mobile menu overlay -->
+  <div class="navbar__backdrop" id="nav-backdrop"></div>
+  <div class="navbar__mobile-menu" id="nav-mobile-menu">
+    <div style="display:flex;flex-direction:column;gap:1.2rem;flex-grow:1;">
+      <a href="index.html" class="navbar__link">Home</a>
+      <a href="about.html" class="navbar__link">About</a>
+      <a href="services.html" class="navbar__link">Services</a>
+      <a href="prototyping.html" class="navbar__link">Prototyping</a>
+      <a href="industries.html" class="navbar__link">Industries</a>
+      <a href="products.html" class="navbar__link">Products</a>
+      <a href="careers.html" class="navbar__link active">Careers</a>
+      <a href="contact.html" class="navbar__link">Contact Us</a>
+    </div>
+    <div style="padding-top:1.5rem;border-top:1px solid var(--border-color);">
+      <a href="contact.html" class="btn btn--primary" style="width:100%;text-align:center;">Start Your Project</a>
+    </div>
+  </div>
 
   <!-- Hero Section -->
   <section class="section" style="padding-top:6.5rem;padding-bottom:2.5rem;background:var(--gradient-card);">
