@@ -240,10 +240,23 @@
       overflow: hidden;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease;
       cursor: pointer;
       display: flex;
       flex-direction: column;
+      opacity: 1;
+      animation: cardEntrance 0.35s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+    }
+
+    @keyframes cardEntrance {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .showcase-card:hover {
@@ -614,9 +627,10 @@
         return labels[cat] || cat;
       }
 
-      function createCard(product) {
+      function createCard(product, index = 0) {
         const card = document.createElement('div');
-        card.className = 'showcase-card reveal';
+        card.className = 'showcase-card';
+        card.style.animationDelay = `${index * 0.04}s`;
         card.setAttribute('data-category', product.category || 'all');
         card.setAttribute('data-title', product.title);
         card.setAttribute('data-images', JSON.stringify(product.images));
@@ -675,7 +689,7 @@
           ? PRODUCT_CATALOGUE
           : PRODUCT_CATALOGUE.filter(p => p.category === filter);
 
-        filtered.forEach(p => showcase.appendChild(createCard(p)));
+        filtered.forEach((p, idx) => showcase.appendChild(createCard(p, idx)));
 
         if (countEl) {
           countEl.innerHTML = `Showing <strong>${filtered.length}</strong> of <strong>${PRODUCT_CATALOGUE.length}</strong> products`;
@@ -683,9 +697,6 @@
 
         // Re-init quick view for new cards
         initProductQuickView();
-
-        // Trigger reveal animations
-        if (typeof initRevealAnimations === 'function') initRevealAnimations();
       }
 
       // Filter buttons
