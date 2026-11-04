@@ -64,6 +64,358 @@
   <link rel="stylesheet" href="css/themes.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/animations.css">
+
+  <style>
+    /* ===== Products Page Overhaul Styles ===== */
+
+    /* Hero banner for products page */
+    .products-hero {
+      position: relative;
+      min-height: 50vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 1.5rem 4rem;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .products-hero__video-wrap {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .products-hero__video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      pointer-events: none;
+    }
+
+    .products-hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.6) 0%,
+        rgba(0, 0, 0, 0.5) 50%,
+        rgba(0, 0, 0, 0.75) 100%
+      );
+      z-index: 1;
+    }
+
+    .products-hero__content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .products-hero__content h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    .products-hero__content h1 span {
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .products-hero__content p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.1rem;
+      max-width: 550px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .products-hero__breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .products-hero__breadcrumb a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .products-hero__breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    .products-hero__breadcrumb svg {
+      width: 14px;
+      height: 14px;
+      opacity: 0.5;
+    }
+
+    /* Filter tabs */
+    .products-filter {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+    }
+
+    .products-filter__btn {
+      padding: 0.6rem 1.5rem;
+      border-radius: 100px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      border: 1px solid var(--border-color);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .products-filter__btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .products-filter__btn.active {
+      background: var(--gradient-accent);
+      color: var(--btn-primary-text);
+      border-color: var(--accent);
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
+
+    /* Product count */
+    .products-count {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .products-count strong {
+      color: var(--accent);
+    }
+
+    /* Products masonry grid */
+    .products-showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+      .products-showcase {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    /* Product showcase card */
+    .showcase-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .showcase-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--accent);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15), 0 0 0 1px var(--accent);
+    }
+
+    .showcase-card__badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 2;
+      padding: 0.3rem 0.85rem;
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--accent-glow);
+      color: var(--accent);
+      border: 1px solid var(--border-accent);
+      backdrop-filter: blur(8px);
+    }
+
+    .showcase-card__gallery {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      background: var(--bg-secondary);
+    }
+
+    .showcase-card__gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 1.5rem;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .showcase-card:hover .showcase-card__gallery img {
+      transform: scale(1.08);
+    }
+
+    .showcase-card__gallery-dots {
+      position: absolute;
+      bottom: 0.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.4rem;
+      z-index: 2;
+    }
+
+    .showcase-card__gallery-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      opacity: 0.4;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .showcase-card__gallery-dot.active {
+      opacity: 1;
+      background: var(--accent);
+      transform: scale(1.3);
+    }
+
+    .showcase-card__body {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .showcase-card__category {
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .showcase-card__title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .showcase-card__desc {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+    }
+
+    .showcase-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .showcase-card__images-count {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .showcase-card__cta {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: gap 0.3s ease;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .showcase-card__cta:hover {
+      gap: 0.7rem;
+    }
+
+    /* CTA banner at the bottom */
+    .products-cta {
+      text-align: center;
+      padding: 5rem 1.5rem;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .products-cta__icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: var(--accent-glow);
+      border: 1px solid var(--border-accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: var(--accent);
+    }
+
+    .products-cta h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .products-cta p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+  </style>
 </head>
 <body>
 
@@ -83,24 +435,57 @@
     </div>
   </nav>
 
-  <!-- Page Header -->
-  <section class="section" style="padding-top:6rem;padding-bottom:2rem;background:var(--gradient-card);">
-    <div class="container" style="text-align:center;">
-      <h1 class="section__title" style="font-size:clamp(2rem,5vw,3.5rem);margin-bottom:1rem;">
-        Custom <span class="gradient-text">Products</span>
-      </h1>
-      <p class="section__subtitle" style="font-size:1.1rem;max-width:700px;margin:0 auto;">
-        Explore our extensive catalog of high-quality household and industrial plastic products. Click on any product to view more details.
-      </p>
+  <!-- Products Hero with Video -->
+  <section class="products-hero">
+    <div class="products-hero__video-wrap">
+      <video class="products-hero__video" autoplay muted loop playsinline preload="auto">
+        <source src="assets/videos/3.mp4" type="video/mp4">
+      </video>
+      <div class="products-hero__overlay"></div>
+    </div>
+    <div class="products-hero__content">
+      <div class="products-hero__breadcrumb">
+        <a href="index.html">Home</a>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <span style="color:rgba(255,255,255,0.8);">Products</span>
+      </div>
+      <h1>Our <span>Products</span></h1>
+      <p>High-quality injection molded plastic products designed for durability, functionality, and modern living.</p>
     </div>
   </section>
 
-  <section class="section" id="products" style="padding-top:2rem;">
+  <!-- Products Section -->
+  <section class="section" id="products" style="padding-top:3rem;">
     <div class="container">
-      <div class="products-grid stagger-group" id="all-products-container">
+
+      <!-- Filter Tabs -->
+      <div class="products-filter" id="productsFilter">
+        <button class="products-filter__btn active" data-filter="all">All Products</button>
+        <button class="products-filter__btn" data-filter="household">Household</button>
+        <button class="products-filter__btn" data-filter="industrial">Industrial</button>
+      </div>
+
+      <!-- Product Count -->
+      <div class="products-count" id="productsCount"></div>
+
+      <!-- Products Grid -->
+      <div class="products-showcase" id="productsShowcase">
         <!-- Products injected via JS -->
       </div>
     </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="products-cta">
+    <div class="products-cta__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+    </div>
+    <h2>Need a Custom Product?</h2>
+    <p>We can manufacture custom plastic products to your exact specifications. Share your design and let's bring it to life.</p>
+    <a href="contact.html?subject=Custom%20Product%20Inquiry" class="btn btn--primary" style="display:inline-flex;align-items:center;gap:0.5rem;">
+      Get a Quote
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+    </a>
   </section>
 
   <!-- ========== FOOTER ========== -->
@@ -161,7 +546,195 @@
 
   <!-- Scripts -->
   <script src="js/products.js"></script>
+  <script>
+    // ===== Products Page Renderer =====
+    (function() {
+      if (typeof PRODUCT_CATALOGUE === 'undefined') return;
+
+      const showcase = document.getElementById('productsShowcase');
+      const countEl = document.getElementById('productsCount');
+      const filterBtns = document.querySelectorAll('.products-filter__btn');
+
+      function getCategoryLabel(cat) {
+        const labels = { household: 'Household', industrial: 'Industrial' };
+        return labels[cat] || cat;
+      }
+
+      function createCard(product) {
+        const card = document.createElement('div');
+        card.className = 'showcase-card reveal';
+        card.setAttribute('data-category', product.category || 'all');
+        card.setAttribute('data-title', product.title);
+        card.setAttribute('data-images', JSON.stringify(product.images));
+        card.setAttribute('data-desc', product.desc);
+
+        const dotsHTML = product.images.length > 1
+          ? `<div class="showcase-card__gallery-dots">
+              ${product.images.map((_, i) => `<button class="showcase-card__gallery-dot${i === 0 ? ' active' : ''}" data-index="${i}"></button>`).join('')}
+             </div>`
+          : '';
+
+        card.innerHTML = `
+          ${product.category ? `<div class="showcase-card__badge">${getCategoryLabel(product.category)}</div>` : ''}
+          <div class="showcase-card__gallery">
+            <img src="${product.images[0]}" alt="${product.title}" loading="lazy">
+            ${dotsHTML}
+          </div>
+          <div class="showcase-card__body">
+            <div class="showcase-card__category">${getCategoryLabel(product.category || '')}</div>
+            <h3 class="showcase-card__title">${product.title}</h3>
+            <p class="showcase-card__desc">${product.desc}</p>
+            <div class="showcase-card__footer">
+              <span class="showcase-card__images-count">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                ${product.images.length} ${product.images.length === 1 ? 'image' : 'images'}
+              </span>
+              <button class="showcase-card__cta quick-view-trigger">
+                Quick View
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </button>
+            </div>
+          </div>
+        `;
+
+        // Gallery dots interaction
+        if (product.images.length > 1) {
+          const img = card.querySelector('.showcase-card__gallery img');
+          const dots = card.querySelectorAll('.showcase-card__gallery-dot');
+          dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const idx = parseInt(dot.dataset.index);
+              img.src = product.images[idx];
+              dots.forEach(d => d.classList.remove('active'));
+              dot.classList.add('active');
+            });
+          });
+        }
+
+        return card;
+      }
+
+      function renderProducts(filter) {
+        showcase.innerHTML = '';
+        const filtered = filter === 'all'
+          ? PRODUCT_CATALOGUE
+          : PRODUCT_CATALOGUE.filter(p => p.category === filter);
+
+        filtered.forEach(p => showcase.appendChild(createCard(p)));
+
+        if (countEl) {
+          countEl.innerHTML = `Showing <strong>${filtered.length}</strong> of <strong>${PRODUCT_CATALOGUE.length}</strong> products`;
+        }
+
+        // Re-init quick view for new cards
+        initProductQuickView();
+
+        // Trigger reveal animations
+        if (typeof initRevealAnimations === 'function') initRevealAnimations();
+      }
+
+      // Filter buttons
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderProducts(btn.dataset.filter);
+        });
+      });
+
+      // Quick View Modal
+      function initProductQuickView() {
+        const modal = document.getElementById('quick-view-modal');
+        if (!modal) return;
+
+        const closeBtn = document.getElementById('quick-view-close');
+        const mainImg = document.getElementById('quick-view-main-image');
+        const title = document.getElementById('quick-view-title');
+        const desc = document.getElementById('quick-view-desc');
+        const thumbContainer = document.getElementById('quick-view-thumbnails');
+        const inqBtn = document.getElementById('quick-view-inquire-btn');
+
+        const cards = document.querySelectorAll('.showcase-card');
+
+        const openModal = (card) => {
+          const rawImages = card.getAttribute('data-images');
+          if (!rawImages) return;
+
+          let images = [];
+          try { images = JSON.parse(rawImages); } catch(e) { return; }
+
+          const cardTitle = card.getAttribute('data-title') || 'Product';
+          const cardDesc = card.getAttribute('data-desc') || '';
+
+          title.textContent = cardTitle;
+          desc.textContent = cardDesc;
+          inqBtn.href = `contact.html?subject=Inquiry:%20${encodeURIComponent(cardTitle)}`;
+
+          thumbContainer.innerHTML = '';
+          if (images.length > 0) {
+            mainImg.src = images[0];
+            if (images.length > 1) {
+              images.forEach((src, idx) => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.style.cssText = 'width:50px;height:50px;object-fit:cover;border-radius:4px;cursor:pointer;background:var(--gradient-card);';
+                img.style.border = idx === 0 ? '2px solid var(--accent)' : '1px solid var(--border-color)';
+                img.addEventListener('click', () => {
+                  mainImg.src = src;
+                  Array.from(thumbContainer.children).forEach(child => child.style.border = '1px solid var(--border-color)');
+                  img.style.border = '2px solid var(--accent)';
+                });
+                thumbContainer.appendChild(img);
+              });
+            }
+          }
+
+          modal.classList.add('active');
+          document.body.classList.add('no-scroll');
+        };
+
+        const closeModal = () => {
+          modal.classList.remove('active');
+          document.body.classList.remove('no-scroll');
+        };
+
+        cards.forEach(card => {
+          card.addEventListener('click', (e) => {
+            if (e.target.tagName.toLowerCase() === 'a') return;
+            openModal(card);
+          });
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+      }
+
+      // Initial render
+      renderProducts('all');
+
+      // Ensure products hero video autoplays safely
+      const prodHeroVideo = document.querySelector('.products-hero__video');
+      if (prodHeroVideo) {
+        prodHeroVideo.muted = true;
+        prodHeroVideo.defaultMuted = true;
+        const p = prodHeroVideo.play();
+        if (p !== undefined) {
+          p.catch(() => {
+            const unlock = () => {
+              prodHeroVideo.play();
+              window.removeEventListener('click', unlock);
+              window.removeEventListener('scroll', unlock);
+            };
+            window.addEventListener('click', unlock, { once: true });
+            window.addEventListener('scroll', unlock, { once: true });
+          });
+        }
+      }
+    })();
+  </script>
   <script src="js/main.js"></script>
   <script src="js/animations.js"></script>
+
 </body>
 </html>

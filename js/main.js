@@ -39,74 +39,189 @@ function initHeroWordCycle() {
 }
 
 /* ---------------------------------------------------------- */
-/*  0.5 HERO SLIDESHOW                                        */
+/*  0.5 HERO VIDEO SLIDESHOW PLAYLIST                         */
 /* ---------------------------------------------------------- */
-function initHeroSlideshow() {
-  const slides = document.querySelectorAll('.hero__slide');
-  const dots = document.querySelectorAll('.hero__slide-dot');
+function initHeroVideoSlideshow() {
+  const videoA = document.getElementById('heroVideoA');
+  const videoB = document.getElementById('heroVideoB');
+  const dotsContainer = document.getElementById('heroSlideDots');
   const caption = document.getElementById('heroSlideCaption');
   const progressFill = document.getElementById('heroProgressFill');
-  if (!slides.length) return;
 
-  let currentSlide = 0;
-  const slideDuration = 6000;
-  let slideInterval;
-  let progressInterval;
-  let startTime;
+  if (!videoA || !videoB) return;
+
+  const HERO_VIDEOS = [
+    {
+      src: "assets/videos/1.mp4",
+      caption: "High-Tonnage Injection Molding"
+    },
+    {
+      src: "assets/videos/2.mp4",
+      caption: "Resin 3D Rapid Prototyping"
+    },
+    {
+      src: "assets/videos/3.mp4",
+      caption: "Precision Plastic Components"
+    },
+    {
+      src: "assets/videos/4.mp4",
+      caption: "Advanced Mold Design & Tooling"
+    },
+    {
+      src: "assets/videos/5.mp4",
+      caption: "Prototype Manufacturing"
+    },
+    {
+      src: "assets/videos/6.mp4",
+      caption: "CAD Engineering & Simulation"
+    },
+    {
+      src: "assets/videos/7.mp4",
+      caption: "Finished Production Quality"
+    }
+  ];
+
+  let currentIndex = 0;
+  let activePlayer = videoA;
+  let idlePlayer = videoB;
+  let isTransitioning = false;
+  let progressAnimId = null;
+  let transitionTimer = null;
+  const VIDEO_DURATION_MS = 6500; // ~6.5s per video
+  let clipStartTime = Date.now();
+
+  function playSafely(v) {
+    if (!v) return;
+    v.muted = true;
+    v.defaultMuted = true;
+    const playPromise = v.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        const unlock = () => {
+          v.play();
+          window.removeEventListener('click', unlock);
+          window.removeEventListener('touchstart', unlock);
+          window.removeEventListener('scroll', unlock);
+        };
+        window.addEventListener('click', unlock, { once: true });
+        window.addEventListener('touchstart', unlock, { once: true });
+        window.addEventListener('scroll', unlock, { once: true });
+      });
+    }
+  }
 
   function updateProgress() {
-    const elapsed = Date.now() - startTime;
-    const progress = Math.min((elapsed / slideDuration) * 100, 100);
-    if (progressFill) progressFill.style.width = `${progress}%`;
-    
-    if (progress < 100) {
-      progressInterval = requestAnimationFrame(updateProgress);
+    const elapsed = Date.now() - clipStartTime;
+    const pct = Math.min((elapsed / VIDEO_DURATION_MS) * 100, 100);
+    if (progressFill) progressFill.style.width = pct + '%';
+
+    if (pct < 100) {
+      progressAnimId = requestAnimationFrame(updateProgress);
     }
   }
 
-  function goToSlide(index) {
-    slides[currentSlide].classList.remove('active');
-    if (dots[currentSlide]) dots[currentSlide].classList.remove('active');
-
-    currentSlide = index;
-
-    slides[currentSlide].classList.add('active');
-    if (dots[currentSlide]) dots[currentSlide].classList.add('active');
-
-    if (caption) {
-      // Re-trigger animation
-      caption.style.animation = 'none';
-      caption.offsetHeight; // trigger reflow
-      caption.style.animation = null;
-      caption.textContent = slides[currentSlide].dataset.caption || '';
-    }
-
-    // Reset progress
-    cancelAnimationFrame(progressInterval);
-    startTime = Date.now();
-    updateProgress();
-  }
-
-  function nextSlide() {
-    goToSlide((currentSlide + 1) % slides.length);
-  }
-
-  function startAutoPlay() {
-    clearInterval(slideInterval);
-    slideInterval = setInterval(nextSlide, slideDuration);
-    startTime = Date.now();
-    updateProgress();
-  }
-
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => {
-      goToSlide(index);
-      startAutoPlay();
+  function updateDots(index) {
+    if (!dotsContainer) return;
+    const dots = dotsContainer.querySelectorAll('.hero__slide-dot');
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === index);
     });
-  });
+  }
 
-    // Init first progress bar run
-  startAutoPlay();
+  function updateCaption(text) {
+    if (!caption) return;
+    caption.style.opacity = '0';
+    setTimeout(() => {
+      caption.textContent = text;
+      caption.style.opacity = '1';
+    }, 200);
+  }
+
+  function switchVideo(nextIndex) {
+    if (isTransitioning) return;
+    isTransitioning = true;
+
+    clearTimeout(transitionTimer);
+    if (progressAnimId) cancelAnimationFrame(progressAnimId);
+
+    const nextItem = HERO_VIDEOS[nextIndex];
+    currentIndex = nextIndex;
+
+    updateDots(currentIndex);
+    updateCaption(nextItem.caption);
+
+    // Prepare idle player
+    idlePlayer.src = nextItem.src;
+    idlePlayer.currentTime = 0;
+    idlePlayer.muted = true;
+    idlePlayer.defaultMuted = true;
+
+    const finalizeSwitch = () => {
+      idlePlayer.classList.add('active');
+      activePlayer.classList.remove('active');
+
+      const previousPlayer = activePlayer;
+      activePlayer = idlePlayer;
+      idlePlayer = previousPlayer;
+
+      clipStartTime = Date.now();
+      updateProgress();
+
+      setTimeout(() => {
+        previousPlayer.pause();
+        isTransitioning = false;
+      }, 1000);
+
+      transitionTimer = setTimeout(() => {
+        switchVideo((currentIndex + 1) % HERO_VIDEOS.length);
+      }, VIDEO_DURATION_MS);
+    };
+
+    idlePlayer.load();
+    const p = idlePlayer.play();
+    if (p !== undefined) {
+      p.then(finalizeSwitch).catch(finalizeSwitch);
+    } else {
+      finalizeSwitch();
+    }
+  }
+
+  // Setup dot navigation clicks
+  if (dotsContainer) {
+    dotsContainer.querySelectorAll('.hero__slide-dot').forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const targetIdx = parseInt(dot.getAttribute('data-index'), 10);
+        if (!isNaN(targetIdx) && targetIdx !== currentIndex) {
+          switchVideo(targetIdx);
+        }
+      });
+    });
+  }
+
+  // Initialize first video
+  activePlayer.src = HERO_VIDEOS[0].src;
+  activePlayer.muted = true;
+  activePlayer.defaultMuted = true;
+  activePlayer.classList.add('active');
+  playSafely(activePlayer);
+
+  updateDots(0);
+  if (caption) caption.textContent = HERO_VIDEOS[0].caption;
+
+  clipStartTime = Date.now();
+  updateProgress();
+
+  transitionTimer = setTimeout(() => {
+    switchVideo(1);
+  }, VIDEO_DURATION_MS);
+
+  // Transition on video ended events
+  videoA.addEventListener('ended', () => {
+    if (activePlayer === videoA) switchVideo((currentIndex + 1) % HERO_VIDEOS.length);
+  });
+  videoB.addEventListener('ended', () => {
+    if (activePlayer === videoB) switchVideo((currentIndex + 1) % HERO_VIDEOS.length);
+  });
 }
 
 /* ---------------------------------------------------------- */
@@ -810,9 +925,8 @@ function renderDynamicProducts() {
   };
 
   if (featuredContainer) {
-    // Select 8 random products to fill the grid
-    const shuffled = [...PRODUCT_CATALOGUE].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 8);
+    // Show all available products since we only have the real ones
+    const selected = [...PRODUCT_CATALOGUE].slice(0, 8);
     featuredContainer.innerHTML = selected.map(generateCardHTML).join('');
   }
 
@@ -930,7 +1044,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNewsletter();
   initSelectLabels();
   initHeroWordCycle();
-  initHeroSlideshow();
+  initHeroVideoSlideshow();
   renderDynamicProducts();
   initQuickView();
 });

@@ -54,8 +54,6 @@
   <link rel="shortcut icon" href="https://atelierpolytech.com/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="https://atelierpolytech.com/assets/images/favicon.png">
   
-  <!-- Preload Critical Assets (Core Web Vitals LCP Optimization) -->
-  <link rel="preload" as="image" href="assets/images/slide-machine.png">
 
   <!-- Alternate Language Tags for International SEO -->
   <link rel="alternate" hreflang="en" href="https://atelierpolytech.com/">
@@ -435,36 +433,31 @@
   </div>
 
   <!-- ========== HERO SECTION ========== -->
-  <section class="hero" id="home">
+  <section class="hero hero--video" id="home">
 
-    <!-- SLIDESHOW BACKGROUND -->
-    <div class="hero__slideshow" id="heroSlideshow">
-      <div class="hero__slide active" style="background-image:url('assets/images/slide-machine.png');" data-caption="High-Tonnage Molding" data-zoom="zoom-out-left"></div>
-      <div class="hero__slide" style="background-image:url('assets/images/slide-mold.png');" data-caption="Precision CNC Tooling" data-zoom="zoom-in-right"></div>
-      <div class="hero__slide" style="background-image:url('assets/images/slide-polycarbonate.png');" data-caption="Polycarbonate Components" data-zoom="zoom-out-right"></div>
-      <div class="hero__slide" style="background-image:url('assets/images/hero-slide-3.png');" data-caption="ABS & Custom Resins" data-zoom="zoom-in-left"></div>
-      <div class="hero__overlay"></div>
-      <div class="hero__scanline"></div>
+    <!-- VIDEO BACKGROUND SLIDESHOW -->
+    <div class="hero__video-wrap" id="heroVideoWrap">
+      <video class="hero__video-player active" id="heroVideoA" autoplay muted playsinline webkit-playsinline preload="auto">
+        <source src="assets/videos/1.mp4" type="video/mp4">
+      </video>
+      <video class="hero__video-player" id="heroVideoB" muted playsinline webkit-playsinline preload="auto"></video>
+      <div class="hero__video-overlay"></div>
+      <div class="hero__video-vignette"></div>
     </div>
 
-    <!-- Slide progress bar -->
-    <div class="hero__progress-bar"><div class="hero__progress-fill" id="heroProgressFill"></div></div>
-
-    <!-- Slide caption + dot nav -->
-    <div class="hero__slide-nav">
-      <span class="hero__slide-caption" id="heroSlideCaption">High-Tonnage Molding</span>
-      <div class="hero__slide-dots" id="heroSlideDots">
-        <button class="hero__slide-dot active" aria-label="Slide 1"></button>
-        <button class="hero__slide-dot" aria-label="Slide 2"></button>
-        <button class="hero__slide-dot" aria-label="Slide 3"></button>
-        <button class="hero__slide-dot" aria-label="Slide 4"></button>
-      </div>
+    <!-- Video Slide Progress Bar -->
+    <div class="hero__progress-bar">
+      <div class="hero__progress-fill" id="heroProgressFill"></div>
     </div>
 
+    <!-- Company Logo Watermark Badge (Covering bottom-right Veo watermark) -->
+    <div class="hero__brand-badge" aria-label="Atelier Polytech">
+      <img src="assets/images/logo.png" alt="Atelier Polytech Logo" class="hero__brand-badge-img">
+    </div>
 
-    <div class="hero__content">
+    <div class="hero__content hero__content--video">
       <div class="hero__badge hero-text-reveal hero-text-reveal--delay-1">
-        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:8px;animation:pulseGlow 2s ease-in-out infinite;"></span>
+        <span></span>
         Top Plastic Injection Molding Manufacturer in Bangalore
       </div>
 
@@ -488,11 +481,6 @@
         </a>
         <a href="#services" class="btn btn--secondary magnetic-btn">How We Work</a>
       </div>
-    </div>
-
-    <div class="hero-scroll-indicator" style="position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;opacity:0.6;z-index:3;">
-      <div style="width:1px;height:40px;background:var(--accent);animation:float 2s ease-in-out infinite;"></div>
-      <span style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--text-muted);">Scroll</span>
     </div>
   </section>
 
@@ -574,7 +562,7 @@
           <h3 style="font-size:1.8rem;margin-bottom:1.5rem;color:var(--text-primary);">Your Manufacturing Partner</h3>
           <ul class="check-list" style="list-style:none;padding:0;display:flex;flex-direction:column;gap:1.5rem;margin-bottom:2.5rem;">
             <li style="display:flex;align-items:flex-start;gap:1rem;">
-              <div style="flex-shrink:0;width:24px;height:24px;background:rgba(212,175,55,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);margin-top:2px;">
+              <div style="flex-shrink:0;width:24px;height:24px;background:var(--accent-glow);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);margin-top:2px;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
               </div>
               <div>
@@ -583,7 +571,7 @@
               </div>
             </li>
             <li style="display:flex;align-items:flex-start;gap:1rem;">
-              <div style="flex-shrink:0;width:24px;height:24px;background:rgba(212,175,55,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);margin-top:2px;">
+              <div style="flex-shrink:0;width:24px;height:24px;background:var(--accent-glow);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);margin-top:2px;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
               </div>
               <div>
@@ -592,7 +580,7 @@
               </div>
             </li>
             <li style="display:flex;align-items:flex-start;gap:1rem;">
-              <div style="flex-shrink:0;width:24px;height:24px;background:rgba(212,175,55,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);margin-top:2px;">
+              <div style="flex-shrink:0;width:24px;height:24px;background:var(--accent-glow);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);margin-top:2px;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
               </div>
               <div>

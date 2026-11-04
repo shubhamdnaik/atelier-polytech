@@ -4,10 +4,10 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. DARK MODE (Default) - Premium Black & White
+   1. DARK MODE (Default) - Pure AMOLED Black & White
    -------------------------------------------------------------------------- */
 :root {
-  /* — Backgrounds (Pure Black & Charcoal) — */
+  /* — Backgrounds (Pure AMOLED Black & Charcoal) — */
   --bg-primary: #000000;
   --bg-secondary: #0d0d0d;
   --bg-tertiary: #1a1a1a;
