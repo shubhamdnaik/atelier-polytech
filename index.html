@@ -94,9 +94,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
 
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/themes.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/themes.css?v=2.2">
+  <link rel="stylesheet" href="css/style.css?v=2.2">
+  <link rel="stylesheet" href="css/animations.css?v=2.2">
 
   <!-- Structured Data / Schema.org Markup -->
   <script type="application/ld+json">
@@ -433,29 +433,29 @@
   </div>
 
   <!-- ========== HERO SECTION ========== -->
-  <section class="hero hero--video" id="home">
+  <section class="hero hero--video" id="home" style="display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;background:#000;">
 
     <!-- VIDEO BACKGROUND SLIDESHOW -->
-    <div class="hero__video-wrap" id="heroVideoWrap">
-      <video class="hero__video-player active" id="heroVideoA" autoplay muted playsinline webkit-playsinline preload="auto">
+    <div class="hero__video-wrap" id="heroVideoWrap" style="position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:0;overflow:hidden;background:#000;pointer-events:none;">
+      <video class="hero__video-player active" id="heroVideoA" autoplay muted playsinline webkit-playsinline preload="auto" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;background:#000;pointer-events:none;">
         <source src="assets/videos/1.mp4" type="video/mp4">
       </video>
-      <video class="hero__video-player" id="heroVideoB" muted playsinline webkit-playsinline preload="auto"></video>
-      <div class="hero__video-overlay"></div>
-      <div class="hero__video-vignette"></div>
+      <video class="hero__video-player" id="heroVideoB" muted playsinline webkit-playsinline preload="auto" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center;background:#000;pointer-events:none;"></video>
+      <div class="hero__video-overlay" style="position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:3;pointer-events:none;"></div>
+      <div class="hero__video-vignette" style="position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;z-index:3;pointer-events:none;"></div>
     </div>
 
     <!-- Video Slide Progress Bar -->
-    <div class="hero__progress-bar">
+    <div class="hero__progress-bar" style="position:absolute;bottom:0;left:0;width:100%;height:4px;z-index:6;">
       <div class="hero__progress-fill" id="heroProgressFill"></div>
     </div>
 
     <!-- Company Logo Watermark Badge (Covering bottom-right Veo watermark) -->
-    <div class="hero__brand-badge" aria-label="Atelier Polytech">
+    <div class="hero__brand-badge" aria-label="Atelier Polytech" style="position:absolute;bottom:0.25rem;right:0.35rem;z-index:10;background:#000000 !important;">
       <img src="assets/images/logo.png" alt="Atelier Polytech Logo" class="hero__brand-badge-img">
     </div>
 
-    <div class="hero__content hero__content--video">
+    <div class="hero__content hero__content--video" style="position:relative;z-index:5;">
       <div class="hero__badge hero-text-reveal hero-text-reveal--delay-1">
         <span></span>
         Top Plastic Injection Molding Manufacturer in Bangalore
@@ -987,9 +987,9 @@
   </div>
 
   <!-- Scripts -->
-  <script src="js/products.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/animations.js"></script>
+  <script src="js/products.js?v=2.2"></script>
+  <script src="js/main.js?v=2.2"></script>
+  <script src="js/animations.js?v=2.2"></script>
 </body>
 </html>
 
