@@ -1017,6 +1017,83 @@ function initQuickView() {
 }
 
 /* ---------------------------------------------------------- */
+/*  18. SMOOTH FADING VIDEO LOOP FOR SUBPAGE HEROES           */
+/* ---------------------------------------------------------- */
+function initPageHeroVideos() {
+  const videos = document.querySelectorAll('.page-hero__video, .products-hero__video');
+  if (!videos.length) return;
+
+  videos.forEach((video) => {
+    if (video.dataset.loopInitialized) return;
+    video.dataset.loopInitialized = 'true';
+
+    video.removeAttribute('loop');
+    video.muted = true;
+    video.defaultMuted = true;
+
+    let isFadingOut = false;
+    const FADE_LEAD_TIME = 1.2; // starts fading out 1.2s before the end
+
+    const fadeIn = () => {
+      requestAnimationFrame(() => {
+        video.classList.add('is-visible');
+      });
+    };
+
+    const playSafely = () => {
+      const p = video.play();
+      if (p !== undefined) {
+        p.then(fadeIn).catch(() => {
+          const unlock = () => {
+            video.play().then(fadeIn).catch(() => {});
+            window.removeEventListener('click', unlock);
+            window.removeEventListener('scroll', unlock);
+            window.removeEventListener('touchstart', unlock);
+          };
+          window.addEventListener('click', unlock, { once: true });
+          window.addEventListener('scroll', unlock, { once: true });
+          window.addEventListener('touchstart', unlock, { once: true });
+        });
+      } else {
+        fadeIn();
+      }
+    };
+
+    const loopSmoothly = () => {
+      if (isFadingOut) return;
+      isFadingOut = true;
+      // Smoothly fade out to deep black
+      video.classList.remove('is-visible');
+
+      // After fade completes, reset and fade back in seamlessly
+      setTimeout(() => {
+        video.currentTime = 0;
+        isFadingOut = false;
+        playSafely();
+      }, 1200);
+    };
+
+    video.addEventListener('timeupdate', () => {
+      if (!video.duration || isFadingOut) return;
+      const timeLeft = video.duration - video.currentTime;
+      if (timeLeft <= FADE_LEAD_TIME) {
+        loopSmoothly();
+      }
+    });
+
+    video.addEventListener('ended', () => {
+      loopSmoothly();
+    });
+
+    if (video.readyState >= 2) {
+      playSafely();
+    } else {
+      video.addEventListener('loadeddata', playSafely, { once: true });
+    }
+  });
+}
+
+/* ---------------------------------------------------------- */
 /*  INITIALIZATION                                            */
 /* ---------------------------------------------------------- */
 
@@ -1037,6 +1114,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSelectLabels();
   initHeroWordCycle();
   initHeroVideoSlideshow();
+  initPageHeroVideos();
   renderDynamicProducts();
   initQuickView();
 });
