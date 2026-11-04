@@ -573,7 +573,8 @@ p {
   justify-content: center;
   text-align: center;
   padding: calc(80px + 3.5rem) 1.5rem 3.5rem;
-  background: #000000;
+  background: #000000 !important;
+  color: #ffffff !important;
   overflow: hidden;
   border-bottom: 1px solid var(--border-color);
   box-sizing: border-box;
@@ -641,6 +642,11 @@ p {
   z-index: 1;
 }
 
+.page-hero,
+.page-hero__content {
+  color: #ffffff !important;
+}
+
 .page-hero__content {
   position: relative;
   z-index: 2;
@@ -655,26 +661,26 @@ p {
   font-size: 0.85rem;
   font-weight: 500;
   margin-bottom: 1.2rem;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 .page-hero__breadcrumb a {
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.75) !important;
   transition: color 0.2s ease;
 }
 
 .page-hero__breadcrumb a:hover {
-  color: var(--accent);
+  color: #ffffff !important;
 }
 
 .page-hero__breadcrumb svg {
   width: 13px;
   height: 13px;
-  stroke: var(--text-muted);
+  stroke: rgba(255, 255, 255, 0.6) !important;
 }
 
 .page-hero__breadcrumb span {
-  color: var(--text-primary);
+  color: #ffffff !important;
   font-weight: 600;
 }
 
@@ -682,17 +688,57 @@ p {
   font-family: 'Outfit', sans-serif;
   font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 800;
-  color: #ffffff;
+  color: #ffffff !important;
   margin-bottom: 1rem;
   line-height: 1.2;
 }
 
+.page-hero h1 span,
+.page-hero h1 .gradient-text,
+.page-hero .gradient-text,
+.products-hero h1 span,
+.products-hero .gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #e5e5e5 50%, #ffffff 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: #ffffff !important;
+  display: inline-block;
+}
+
 .page-hero p {
   font-size: clamp(0.95rem, 1.8vw, 1.15rem);
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.85) !important;
   max-width: 650px;
   margin: 0 auto;
   line-height: 1.65;
+}
+
+/* Explicit light-mode protections for dark cinematic hero sections */
+[data-theme='light'] .page-hero__breadcrumb span,
+[data-theme='light'] .products-hero__breadcrumb span {
+  color: #ffffff !important;
+}
+
+[data-theme='light'] .page-hero h1,
+[data-theme='light'] .products-hero h1 {
+  color: #ffffff !important;
+}
+
+[data-theme='light'] .page-hero h1 span,
+[data-theme='light'] .page-hero .gradient-text,
+[data-theme='light'] .products-hero h1 span,
+[data-theme='light'] .products-hero .gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #e5e5e5 50%, #ffffff 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: #ffffff !important;
+}
+
+[data-theme='light'] .page-hero p,
+[data-theme='light'] .products-hero p {
+  color: rgba(255, 255, 255, 0.85) !important;
 }
 
 
