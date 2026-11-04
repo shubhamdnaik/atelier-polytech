@@ -902,12 +902,14 @@ function renderDynamicProducts() {
   const allContainer = document.getElementById('all-products-container');
 
   const generateCardHTML = (product) => {
+    const catLabel = product.category === '3d-printed' ? '3D Printed' : 'Injection Molded';
     return `
       <div class="product-card reveal" data-title="${product.title}" data-images='${JSON.stringify(product.images)}' data-desc="${product.desc}">
         <div class="product-card__image">
           <img src="${product.images[0]}" alt="${product.title}" loading="lazy">
         </div>
         <div class="product-card__content">
+          <span style="display:inline-block; font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); margin-bottom:0.35rem;">${catLabel}</span>
           <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem; color: var(--text-primary);">${product.title}</h3>
           <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${product.desc}</p>
           <button class="btn btn--secondary btn--sm quick-view-btn" style="width:100%; font-size:0.8rem; margin-top:auto;">Quick View</button>
@@ -917,8 +919,10 @@ function renderDynamicProducts() {
   };
 
   if (featuredContainer) {
-    // Show top 3 featured products on homepage
-    const selected = [...PRODUCT_CATALOGUE].slice(0, 3);
+    // Show balanced showcase of 3D printed & injection molded products on homepage
+    const printed = PRODUCT_CATALOGUE.filter(p => p.category === '3d-printed').slice(0, 2);
+    const molded = PRODUCT_CATALOGUE.filter(p => p.category === 'injection-molded').slice(0, 2);
+    const selected = [...printed, ...molded];
     featuredContainer.innerHTML = selected.map(generateCardHTML).join('');
   }
 

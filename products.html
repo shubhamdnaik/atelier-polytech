@@ -501,7 +501,7 @@
         <span style="color:rgba(255,255,255,0.8);">Products</span>
       </div>
       <h1>Our <span>Products</span></h1>
-      <p>High-quality injection molded plastic products designed for durability, functionality, and modern living.</p>
+      <p>High-precision 3D printed prototypes and mass production injection molded plastic products engineered for performance.</p>
     </div>
   </section>
 
@@ -512,8 +512,8 @@
       <!-- Filter Tabs -->
       <div class="products-filter" id="productsFilter">
         <button class="products-filter__btn active" data-filter="all">All Products</button>
-        <button class="products-filter__btn" data-filter="household">Household</button>
-        <button class="products-filter__btn" data-filter="industrial">Industrial</button>
+        <button class="products-filter__btn" data-filter="3d-printed">3D Printed</button>
+        <button class="products-filter__btn" data-filter="injection-molded">Injection Molded</button>
       </div>
 
       <!-- Product Count -->
@@ -607,7 +607,10 @@
       const filterBtns = document.querySelectorAll('.products-filter__btn');
 
       function getCategoryLabel(cat) {
-        const labels = { household: 'Household', industrial: 'Industrial' };
+        const labels = {
+          '3d-printed': '3D Printed',
+          'injection-molded': 'Injection Molded'
+        };
         return labels[cat] || cat;
       }
 
