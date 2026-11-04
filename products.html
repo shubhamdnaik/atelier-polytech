@@ -97,6 +97,12 @@
       object-fit: cover;
       object-position: center;
       pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .products-hero__video.is-visible {
+      opacity: 1;
     }
 
     .products-hero__overlay {
@@ -485,7 +491,7 @@
   <!-- Products Hero with Video -->
   <section class="products-hero">
     <div class="products-hero__video-wrap">
-      <video class="products-hero__video" autoplay muted loop playsinline preload="auto">
+      <video class="products-hero__video" id="prodHeroVideo" autoplay muted playsinline preload="auto">
         <source src="assets/videos/3.mp4" type="video/mp4">
       </video>
       <div class="products-hero__overlay"></div>
@@ -760,22 +766,71 @@
       // Initial render
       renderProducts('all');
 
-      // Ensure products hero video autoplays safely
+      // Smooth non-ending fading loop for products hero video
       const prodHeroVideo = document.querySelector('.products-hero__video');
       if (prodHeroVideo) {
+        prodHeroVideo.removeAttribute('loop');
         prodHeroVideo.muted = true;
         prodHeroVideo.defaultMuted = true;
-        const p = prodHeroVideo.play();
-        if (p !== undefined) {
-          p.catch(() => {
-            const unlock = () => {
-              prodHeroVideo.play();
-              window.removeEventListener('click', unlock);
-              window.removeEventListener('scroll', unlock);
-            };
-            window.addEventListener('click', unlock, { once: true });
-            window.addEventListener('scroll', unlock, { once: true });
+
+        let isFadingOut = false;
+        const FADE_LEAD_TIME = 1.2; // starts fading out 1.2s before the end
+
+        const fadeIn = () => {
+          requestAnimationFrame(() => {
+            prodHeroVideo.classList.add('is-visible');
           });
+        };
+
+        const playSafely = () => {
+          const p = prodHeroVideo.play();
+          if (p !== undefined) {
+            p.then(fadeIn).catch(() => {
+              const unlock = () => {
+                prodHeroVideo.play().then(fadeIn).catch(() => {});
+                window.removeEventListener('click', unlock);
+                window.removeEventListener('scroll', unlock);
+                window.removeEventListener('touchstart', unlock);
+              };
+              window.addEventListener('click', unlock, { once: true });
+              window.addEventListener('scroll', unlock, { once: true });
+              window.addEventListener('touchstart', unlock, { once: true });
+            });
+          } else {
+            fadeIn();
+          }
+        };
+
+        const loopSmoothly = () => {
+          if (isFadingOut) return;
+          isFadingOut = true;
+          // Smoothly fade out to deep black
+          prodHeroVideo.classList.remove('is-visible');
+
+          // After fade completes, reset and fade back in seamlessly
+          setTimeout(() => {
+            prodHeroVideo.currentTime = 0;
+            isFadingOut = false;
+            playSafely();
+          }, 1200);
+        };
+
+        prodHeroVideo.addEventListener('timeupdate', () => {
+          if (!prodHeroVideo.duration || isFadingOut) return;
+          const timeLeft = prodHeroVideo.duration - prodHeroVideo.currentTime;
+          if (timeLeft <= FADE_LEAD_TIME) {
+            loopSmoothly();
+          }
+        });
+
+        prodHeroVideo.addEventListener('ended', () => {
+          loopSmoothly();
+        });
+
+        if (prodHeroVideo.readyState >= 2) {
+          playSafely();
+        } else {
+          prodHeroVideo.addEventListener('loadeddata', playSafely, { once: true });
         }
       }
     })();
