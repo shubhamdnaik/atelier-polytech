@@ -750,6 +750,11 @@
    -------------------------------------------------------------------------- */
 .hero-cycle-word {
   display: inline-block;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
 }
 
 @keyframes wordFadeIn {

@@ -282,17 +282,21 @@ function initMobileNav() {
 
   const open = () => {
     mobileMenu.classList.add('open');
+    mobileMenu.setAttribute('aria-hidden', 'false');
     hamburger.classList.add('open');
     if (backdrop) backdrop.classList.add('visible');
     document.body.classList.add('no-scroll');
+    document.body.classList.add('mobile-nav-open');
     hamburger.setAttribute('aria-expanded', 'true');
   };
 
   const close = () => {
     mobileMenu.classList.remove('open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
     hamburger.classList.remove('open');
     if (backdrop) backdrop.classList.remove('visible');
     document.body.classList.remove('no-scroll');
+    document.body.classList.remove('mobile-nav-open');
     hamburger.setAttribute('aria-expanded', 'false');
   };
 
@@ -310,6 +314,13 @@ function initMobileNav() {
   if (backdrop) {
     backdrop.addEventListener('click', close);
   }
+
+  // Close on Escape key press
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+      close();
+    }
+  });
 
   // Close on outside click
   document.addEventListener('click', (e) => {
@@ -461,6 +472,25 @@ function initContactForm() {
   const form = document.getElementById('contact-form');
   if (!form) return;
 
+  // Handle URL query parameters for product prefill (/contact?subject=... or /contact?product=...)
+  const urlParams = new URLSearchParams(window.location.search);
+  const subjectParam = urlParams.get('subject') || urlParams.get('product');
+  if (subjectParam) {
+    const msgField = form.querySelector('[name="message"]');
+    const serviceField = form.querySelector('[name="service"]') || form.querySelector('[name="interest"]');
+    if (msgField && !msgField.value) {
+      msgField.value = `Hi Atelier Polytech team,\n\nI am inquiring about "${subjectParam}". Please share details regarding material availability, pricing, tooling lead times, and MOQ.`;
+    }
+    if (serviceField) {
+      const lower = subjectParam.toLowerCase();
+      if (lower.includes('3d') || lower.includes('prototype') || lower.includes('arm') || lower.includes('bracket') || lower.includes('laser')) {
+        serviceField.value = 'prototyping';
+      } else {
+        serviceField.value = 'component-sourcing';
+      }
+    }
+  }
+
   const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const showError = (field, message) => {
@@ -484,8 +514,16 @@ function initContactForm() {
     e.preventDefault();
     clearErrors();
 
-    const name  = form.querySelector('[name="name"]');
-    const email = form.querySelector('[name="email"]');
+    // Check honeypot for spam bots
+    const honeypot = form.querySelector('[name="_gotcha"]');
+    if (honeypot && honeypot.value.trim() !== '') {
+      // Silently discard spam submission
+      return;
+    }
+
+    const name    = form.querySelector('[name="name"]');
+    const email   = form.querySelector('[name="email"]');
+    const message = form.querySelector('[name="message"]');
 
     let valid = true;
 
@@ -502,15 +540,24 @@ function initContactForm() {
       valid = false;
     }
 
+    if (message && !message.value.trim()) {
+      showError(message, 'Please provide details on your requirements.');
+      valid = false;
+    }
+
     if (!valid) return;
 
     const statusEl = document.getElementById('contact-form-status');
     const submitBtn = form.querySelector('button[type="submit"]');
+    const originalBtnHTML = submitBtn ? submitBtn.innerHTML : '';
     if (statusEl) {
-      statusEl.textContent = 'Sending...';
+      statusEl.textContent = 'Submitting your inquiry...';
       statusEl.style.color = 'var(--text-muted)';
     }
-    if (submitBtn) submitBtn.disabled = true;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Sending...</span>`;
+    }
 
     const formData = new FormData(form);
 
@@ -526,14 +573,23 @@ function initContactForm() {
         // Show success state
         const wrapper = form.parentElement;
         wrapper.innerHTML = `
-          <div style="text-align:center;padding:3rem 1rem;">
+          <div style="text-align:center;padding:3rem 1.5rem;">
             <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="var(--accent)"
                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 1.5rem;">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
               <polyline points="22 4 12 14.01 9 11.01"/>
             </svg>
-            <h3 style="margin-bottom:0.5rem;">Message Sent!</h3>
-            <p>Thank you for reaching out. Our team will get back to you within 24 hours.</p>
+            <h3 style="margin-bottom:0.75rem;font-size:1.6rem;color:var(--text-primary);">Inquiry Received!</h3>
+            <p style="color:var(--text-secondary);max-width:480px;margin:0 auto 1.5rem;line-height:1.65;font-size:1rem;">
+              Thank you for reaching out. Our engineering team will review your requirements and provide a comprehensive response within 24 business hours.
+            </p>
+            <div style="background:var(--bg-secondary);padding:1.5rem;border-radius:12px;border:1px solid var(--border-color);max-width:480px;margin:0 auto;text-align:left;">
+              <p style="font-size:0.9rem;font-weight:600;margin-bottom:0.5rem;color:var(--text-primary);">Have 3D CAD files or technical drawings?</p>
+              <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:1rem;line-height:1.5;">You can share them on WhatsApp or email <a href="mailto:sales@atelierpolytech.com" style="color:var(--accent);font-weight:600;">sales@atelierpolytech.com</a> for immediate DFM review.</p>
+              <a href="https://wa.me/918970365175?text=Hi%20Atelier%20Polytech%2C%20I%20just%20submitted%20a%20project%20inquiry%20via%20your%20website." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="width:100%;">
+                Share CAD files on WhatsApp
+              </a>
+            </div>
           </div>
         `;
       } else {
@@ -542,17 +598,23 @@ function initContactForm() {
             statusEl.textContent = data["errors"].map(error => error["message"]).join(", ");
             statusEl.style.color = '#ef4444';
           } else {
-            statusEl.textContent = 'Oops! There was a problem submitting your form';
+            statusEl.textContent = 'Oops! There was a problem submitting your form. Please try again or WhatsApp us.';
             statusEl.style.color = '#ef4444';
           }
-          if (submitBtn) submitBtn.disabled = false;
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalBtnHTML;
+          }
         });
       }
     })
     .catch(error => {
-      statusEl.textContent = 'Oops! There was a problem submitting your form';
+      statusEl.textContent = 'Network error. Please check your connection or contact us on WhatsApp directly.';
       statusEl.style.color = '#ef4444';
-      if (submitBtn) submitBtn.disabled = false;
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnHTML;
+      }
     });
   });
 }
@@ -896,23 +958,37 @@ function initCareersForm() {
 /* ---------------------------------------------------------- */
 
 function renderDynamicProducts() {
-  if (typeof PRODUCT_CATALOGUE === 'undefined') return;
-
   const featuredContainer = document.getElementById('featured-products-container');
   const allContainer = document.getElementById('all-products-container');
 
+  if (typeof PRODUCT_CATALOGUE === 'undefined' || !Array.isArray(PRODUCT_CATALOGUE) || PRODUCT_CATALOGUE.length === 0) {
+    const fallbackHTML = `
+      <div class="products-fallback" style="text-align:center;padding:3rem 1.5rem;grid-column:1/-1;">
+        <p style="color:var(--text-secondary);font-size:1.05rem;margin-bottom:1.5rem;">Products are loading, or contact us for our complete manufacturing catalog.</p>
+        <a href="/contact" class="btn btn--primary">Contact Us for Catalog &rarr;</a>
+      </div>
+    `;
+    if (featuredContainer && !featuredContainer.children.length) featuredContainer.innerHTML = fallbackHTML;
+    if (allContainer && !allContainer.children.length) allContainer.innerHTML = fallbackHTML;
+    return;
+  }
+
   const generateCardHTML = (product) => {
     const catLabel = product.category === '3d-printed' ? '3D Printed' : 'Injection Molded';
+    const contactUrl = `/contact?subject=${encodeURIComponent(product.title)}`;
     return `
-      <div class="product-card reveal" data-title="${product.title}" data-images='${JSON.stringify(product.images)}' data-desc="${product.desc}">
+      <div class="product-card" data-title="${product.title}" data-images='${JSON.stringify(product.images)}' data-desc="${product.desc}">
         <div class="product-card__image">
-          <img src="${product.images[0]}" alt="${product.title}" loading="lazy">
+          <img src="${product.images[0]}" alt="${product.title} - Atelier Polytech" loading="lazy" width="400" height="300">
         </div>
         <div class="product-card__content">
           <span style="display:inline-block; font-size:0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent); margin-bottom:0.35rem;">${catLabel}</span>
           <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem; color: var(--text-primary);">${product.title}</h3>
           <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${product.desc}</p>
-          <button class="btn btn--secondary btn--sm quick-view-btn" style="width:100%; font-size:0.8rem; margin-top:auto;">Quick View</button>
+          <div style="display:flex;gap:0.5rem;margin-top:auto;width:100%;">
+            <a href="${contactUrl}" class="btn btn--primary btn--sm product-card__inquire-btn" style="flex:1;text-align:center;font-size:0.8rem;padding:0.45rem 0.5rem;">Inquire Now</a>
+            <button type="button" class="btn btn--secondary btn--sm quick-view-btn" style="font-size:0.8rem;padding:0.45rem 0.65rem;">Quick View</button>
+          </div>
         </div>
       </div>
     `;
@@ -927,7 +1003,6 @@ function renderDynamicProducts() {
   }
 
   if (allContainer) {
-    // Show all products
     allContainer.innerHTML = PRODUCT_CATALOGUE.map(generateCardHTML).join('');
   }
 }
@@ -963,20 +1038,24 @@ function initQuickView() {
     const cardTitle = card.getAttribute('data-title') || 'Product';
     const cardDesc = card.getAttribute('data-desc') || '';
     
-    title.textContent = cardTitle;
-    desc.textContent = cardDesc;
-    inqBtn.href = `contact.html?subject=Inquiry:%20${encodeURIComponent(cardTitle)}`;
+    if (title) title.textContent = cardTitle;
+    if (desc) desc.textContent = cardDesc;
+    if (inqBtn) inqBtn.href = `/contact?subject=${encodeURIComponent(cardTitle)}`;
     
     // Setup Images
-    thumbContainer.innerHTML = '';
+    if (thumbContainer) thumbContainer.innerHTML = '';
     
     if(images.length > 0) {
-      mainImg.src = images[0];
+      if (mainImg) {
+        mainImg.src = images[0];
+        mainImg.alt = `${cardTitle} - Product view`;
+      }
       
-      if(images.length > 1) {
+      if(images.length > 1 && thumbContainer) {
         images.forEach((src, idx) => {
           const img = document.createElement('img');
           img.src = src;
+          img.alt = `${cardTitle} thumbnail ${idx + 1}`;
           img.style.width = '50px';
           img.style.height = '50px';
           img.style.objectFit = 'cover';
@@ -986,7 +1065,7 @@ function initQuickView() {
           img.style.background = 'var(--gradient-card)';
           
           img.addEventListener('click', () => {
-            mainImg.src = src;
+            if (mainImg) mainImg.src = src;
             Array.from(thumbContainer.children).forEach(child => {
               child.style.border = '1px solid var(--border-color)';
             });
@@ -998,12 +1077,16 @@ function initQuickView() {
       }
     }
     
+    modal.removeAttribute('hidden');
+    modal.setAttribute('aria-hidden', 'false');
     modal.classList.add('active');
     document.body.classList.add('no-scroll');
   };
   
   const closeModal = () => {
     modal.classList.remove('active');
+    modal.setAttribute('hidden', '');
+    modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('no-scroll');
   };
   
@@ -1014,10 +1097,86 @@ function initQuickView() {
     });
   });
   
-  closeBtn.addEventListener('click', closeModal);
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', (e) => {
     if(e.target === modal) closeModal();
   });
+
+  // Escape key closes modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+}
+
+/* ---------------------------------------------------------- */
+/*  17. FLOATING WHATSAPP WIDGET (ALL PAGES)                  */
+/* ---------------------------------------------------------- */
+const WHATSAPP_PHONE = '918970365175';
+
+function initFloatingWhatsApp() {
+  if (document.getElementById('floating-whatsapp-widget')) return;
+
+  const path = window.location.pathname.toLowerCase();
+  let defaultMessage = "Hi Atelier Polytech, I have an enquiry about plastic injection molding / prototyping.";
+  if (path.includes('prototyping')) {
+    defaultMessage = "Hi Atelier Polytech, I have an enquiry about prototyping and 3D printing.";
+  } else if (path.includes('products')) {
+    defaultMessage = "Hi Atelier Polytech, I have an enquiry about your plastic products.";
+  } else if (path.includes('services')) {
+    defaultMessage = "Hi Atelier Polytech, I have an enquiry about plastic injection molding services.";
+  }
+
+  const encodedMsg = encodeURIComponent(defaultMessage);
+  const waUrl = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedMsg}`;
+
+  const container = document.createElement('div');
+  container.className = 'floating-whatsapp';
+  container.id = 'floating-whatsapp-widget';
+  container.innerHTML = `
+    <div class="floating-whatsapp__tooltip" id="wa-tooltip" role="tooltip">
+      <span>Chat with us on WhatsApp</span>
+      <button class="floating-whatsapp__tooltip-close" id="wa-tooltip-close" aria-label="Dismiss WhatsApp tooltip">&times;</button>
+    </div>
+    <a href="${waUrl}" class="floating-whatsapp__btn" id="wa-floating-btn" target="_blank" rel="noopener noreferrer" aria-label="Chat with Atelier Polytech on WhatsApp">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM17.39 16.5C17.17 17.13 16.3 17.67 15.62 17.75C15.15 17.81 14.54 17.84 12.49 16.99C9.87 15.9 8.18 13.23 8.05 13.06C7.92 12.89 7 11.67 7 10.41C7 9.15 7.65 8.53 7.89 8.27C8.13 8.01 8.52 7.89 8.87 7.89C8.99 7.89 9.1 7.9 9.2 7.9C9.48 7.91 9.62 7.93 9.8 8.38C10.03 8.94 10.59 10.31 10.66 10.45C10.73 10.59 10.79 10.78 10.7 10.96C10.61 11.14 10.53 11.23 10.39 11.39C10.25 11.55 10.12 11.66 9.98 11.83C9.83 11.99 9.68 12.16 9.84 12.44C10 12.72 10.56 13.63 11.38 14.36C12.44 15.3 13.31 15.6 13.62 15.73C13.93 15.86 14.11 15.83 14.29 15.62C14.47 15.41 15.07 14.71 15.28 14.41C15.49 14.11 15.7 14.16 15.99 14.27C16.28 14.38 17.83 15.14 18.15 15.3C18.47 15.46 18.68 15.54 18.76 15.67C18.84 15.8 18.84 16.43 18.62 17.06L17.39 16.5Z"/>
+      </svg>
+    </a>
+  `;
+  document.body.appendChild(container);
+
+  const tooltip = document.getElementById('wa-tooltip');
+  const tooltipClose = document.getElementById('wa-tooltip-close');
+  const btn = document.getElementById('wa-floating-btn');
+
+  // Show tooltip after ~3 seconds if not previously dismissed
+  if (!sessionStorage.getItem('wa_tooltip_dismissed')) {
+    setTimeout(() => {
+      if (tooltip) tooltip.classList.add('is-visible');
+    }, 3200);
+  }
+
+  if (tooltipClose) {
+    tooltipClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (tooltip) tooltip.classList.remove('is-visible');
+      sessionStorage.setItem('wa_tooltip_dismissed', 'true');
+    });
+  }
+
+  if (btn) {
+    btn.addEventListener('click', () => {
+      if (typeof gtag === 'function') {
+        gtag('event', 'whatsapp_click', {
+          event_category: 'engagement',
+          event_label: window.location.pathname
+        });
+      }
+    });
+  }
 }
 
 /* ---------------------------------------------------------- */
@@ -1121,5 +1280,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initPageHeroVideos();
   renderDynamicProducts();
   initQuickView();
+  initFloatingWhatsApp();
 });
 

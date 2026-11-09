@@ -436,27 +436,11 @@ function initMoldingAnimation() {
 
 
 /* ---------------------------------------------------------- */
-/*  5. GRADIENT TEXT ANIMATION                                */
+/*  5. GRADIENT TEXT ANIMATION (Cleaned - Managed via CSS)   */
 /* ---------------------------------------------------------- */
 
 function initGradientText() {
-  const style = document.createElement('style');
-  style.textContent = `
-    .gradient-text {
-      background: linear-gradient(135deg, var(--accent), var(--accent-hover), var(--accent-dark), var(--accent));
-      background-size: 300% 300%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientShift 4s ease infinite;
-    }
-    @keyframes gradientShift {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-  `;
-  document.head.appendChild(style);
+  // Styles are handled directly in style.css to prevent Light-Mode color inversion
 }
 
 
