@@ -184,21 +184,60 @@
       <div id="contact-glow" style="position: absolute; inset: 0; z-index: 0; pointer-events: none; mix-blend-mode: screen;"></div>
       
       <div class="container" style="position: relative; z-index: 1;">
+        <!-- Dual Fast-Track Ordering Channels -->
+        <div class="contact-channels" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:1.5rem; margin-bottom:2.5rem;">
+          <!-- Channel 1: 3D Printed Products & Custom Prints -->
+          <div class="contact-channel-card" style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; padding:1.75rem; position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; box-shadow:var(--shadow-sm);">
+            <div style="position:absolute; top:1.25rem; right:1.25rem;">
+              <span style="background:rgba(37, 211, 102, 0.15); color:#25D366; font-size:0.75rem; font-weight:700; padding:0.25rem 0.65rem; border-radius:50px; text-transform:uppercase; letter-spacing:0.05em; border:1px solid rgba(37, 211, 102, 0.3);">Fastest Response</span>
+            </div>
+            <div>
+              <div style="width:48px; height:48px; border-radius:12px; background:rgba(37, 211, 102, 0.12); display:flex; align-items:center; justify-content:center; color:#25D366; margin-bottom:1rem;">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
+              </div>
+              <h3 style="font-size:1.25rem; font-weight:700; color:var(--text-primary); margin-bottom:0.5rem;">3D Printed Products &amp; Prototypes</h3>
+              <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.55; margin-bottom:1.5rem;">
+                Order our catalog 3D prints, request custom colors, or send 3D models (STL/STEP) for rapid 24–48h functional prototyping directly on WhatsApp.
+              </p>
+            </div>
+            <a href="https://wa.me/918970365175?text=Hi%20Atelier%20Polytech%2C%20I%27d%20like%20to%20order%20%2F%20inquire%20about%20a%203D%20printed%20product." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="width:100%; text-align:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
+              Order / Chat on WhatsApp
+            </a>
+          </div>
+
+          <!-- Channel 2: OEMs, Industrial Tooling & Volume Manufacturing -->
+          <div class="contact-channel-card" style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:16px; padding:1.75rem; position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; box-shadow:var(--shadow-sm);">
+            <div style="position:absolute; top:1.25rem; right:1.25rem;">
+              <span style="background:rgba(255, 255, 255, 0.08); color:var(--accent); font-size:0.75rem; font-weight:700; padding:0.25rem 0.65rem; border-radius:50px; text-transform:uppercase; letter-spacing:0.05em; border:1px solid var(--border-color);">OEM &amp; Enterprise</span>
+            </div>
+            <div>
+              <div style="width:48px; height:48px; border-radius:12px; background:var(--accent-glow); display:flex; align-items:center; justify-content:center; color:var(--accent); margin-bottom:1rem;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <h3 style="font-size:1.25rem; font-weight:700; color:var(--text-primary); margin-bottom:0.5rem;">OEM Injection Molding &amp; Tooling</h3>
+              <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.55; margin-bottom:1.5rem;">
+                For production molds, high-volume injection molding (500 to 1,000,000+ units), and vendor consolidation. Send full CAD packages or RFQs.
+              </p>
+            </div>
+            <div style="display:flex; gap:0.6rem; flex-wrap:wrap;">
+              <a href="mailto:sales@atelierpolytech.com?subject=OEM%20Injection%20Molding%20RFQ" class="btn btn--secondary" style="flex:1; min-width:140px; text-align:center; font-size:0.85rem; padding:0.65rem 0.75rem;">
+                Email CAD to Sales
+              </a>
+              <a href="https://wa.me/918970365175?text=Hi%20Atelier%20Polytech%2C%20I%27d%20like%20a%20quote%20for%20an%20OEM%20injection%20molding%20project." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp" style="flex:1; min-width:140px; text-align:center; font-size:0.85rem; padding:0.65rem 0.75rem;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
+                WhatsApp CAD
+              </a>
+            </div>
+          </div>
+        </div>
+
         <div class="contact__grid">
           <!-- Form -->
           <div class="contact__form-card">
-            <h2 style="font-size:1.4rem;font-weight:700;margin-bottom:0.75rem;color:var(--text-primary);">Request a Quote &amp; DFM Review</h2>
-            <p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:1.25rem;line-height:1.5;">
-              Fill out the form below or chat with our engineering team directly on WhatsApp.
-            </p>
-
-            <a href="https://wa.me/918970365175?text=Hi%20Atelier%20Polytech%2C%20I%27d%20like%20a%20quote%20for%20a%20plastic%20part.%20Material%3A%20%20Quantity%3A%20" target="_blank" rel="noopener" class="btn btn--whatsapp" style="width:100%;margin-bottom:1.25rem;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
-              Share CAD files on WhatsApp
-            </a>
-
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:1.5rem;text-align:center;">
-              Have CAD files? Send them on WhatsApp or to <a href="mailto:sales@atelierpolytech.com" style="color:var(--accent);font-weight:600;">sales@atelierpolytech.com</a>.
+            <h2 style="font-size:1.35rem;font-weight:700;margin-bottom:0.5rem;color:var(--text-primary);">Quick Project Inquiry Form</h2>
+            <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:1.5rem;line-height:1.5;">
+              Prefer writing to us? Send a quick message and our engineers will reply within 24 business hours.
             </p>
 
             <form class="contact__form" id="contact-form" action="https://formspree.io/f/xaqkvwyb" method="POST">
@@ -211,51 +250,30 @@
               </div>
 
               <div class="form-group">
-                <label for="form-company">Company Name</label>
-                <input type="text" id="form-company" name="company" placeholder="e.g. Nexa Technologies / Stealth Startup" autocomplete="organization">
-              </div>
-
-              <div class="form-group">
                 <label for="form-email">Email Address *</label>
                 <input type="email" id="form-email" name="email" placeholder="e.g. rahul@example.com" required autocomplete="email">
               </div>
 
               <div class="form-group">
-                <label for="form-phone">Phone Number</label>
+                <label for="form-phone">Phone / WhatsApp Number</label>
                 <input type="tel" id="form-phone" name="phone" placeholder="+91 89703 65175" autocomplete="tel">
               </div>
 
               <div class="form-group">
-                <label for="form-interest">Service Interest *</label>
+                <label for="form-interest">What are you looking for? *</label>
                 <select id="form-interest" name="service" required>
-                  <option value="" disabled selected>Select a service...</option>
-                  <option value="component-sourcing">Plastic Component Sourcing</option>
-                  <option value="engineering-review">Engineering Review &amp; DFM</option>
+                  <option value="" disabled selected>Select an option...</option>
+                  <option value="3d-print-order">3D Printed Product Order</option>
                   <option value="prototyping">Rapid Prototyping (3D Printing &amp; Laser)</option>
-                  <option value="supplier-coordination">Supplier Selection &amp; Coordination</option>
-                  <option value="quality-assurance">Quality Assurance &amp; Delivery</option>
-                  <option value="other">Other Inquiry</option>
+                  <option value="injection-molding">Plastic Injection Molding &amp; Tooling</option>
+                  <option value="engineering-review">Engineering Review &amp; DFM</option>
+                  <option value="other">General Inquiry</option>
                 </select>
               </div>
 
               <div class="form-group">
-                <label for="form-quantity">Quantity (approx. annual or per batch)</label>
-                <input type="text" id="form-quantity" name="quantity" placeholder="e.g. 50 pcs prototype / 5,000 units batch">
-              </div>
-
-              <div class="form-group">
-                <label for="form-material">Material (optional)</label>
-                <input type="text" id="form-material" name="material" placeholder="e.g. ABS, PP, PC, Nylon PA-CF, POM, HDPE">
-              </div>
-
-              <div class="form-group">
-                <label for="form-timeline">Timeline</label>
-                <input type="text" id="form-timeline" name="timeline" placeholder="e.g. Prototyping in 24-48h / Tooling in Q3">
-              </div>
-
-              <div class="form-group">
-                <label for="form-message">Your Message / Project Requirements *</label>
-                <textarea id="form-message" name="message" rows="4" placeholder="Describe your product specifications, target tolerances, application requirements..." required></textarea>
+                <label for="form-message">Project Requirements / Message *</label>
+                <textarea id="form-message" name="message" rows="4" placeholder="Tell us what you need, product name, quantities, or specific questions..." required></textarea>
               </div>
 
               <button type="submit" class="btn btn--primary" style="width:100%;margin-top:0.4rem;">

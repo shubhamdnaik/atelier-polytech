@@ -483,10 +483,12 @@ function initContactForm() {
     }
     if (serviceField) {
       const lower = subjectParam.toLowerCase();
-      if (lower.includes('3d') || lower.includes('prototype') || lower.includes('arm') || lower.includes('bracket') || lower.includes('laser')) {
+      if (lower.includes('drone') || lower.includes('arm') || lower.includes('bracket') || lower.includes('casing') || lower.includes('3d')) {
+        serviceField.value = '3d-print-order';
+      } else if (lower.includes('prototype') || lower.includes('laser')) {
         serviceField.value = 'prototyping';
       } else {
-        serviceField.value = 'component-sourcing';
+        serviceField.value = 'injection-molding';
       }
     }
   }
@@ -974,10 +976,20 @@ function renderDynamicProducts() {
   }
 
   const generateCardHTML = (product) => {
-    const catLabel = product.category === '3d-printed' ? '3D Printed' : 'Injection Molded';
+    const is3D = product.category === '3d-printed';
+    const catLabel = is3D ? '3D Printed' : 'Injection Molded';
     const contactUrl = `/contact?subject=${encodeURIComponent(product.title)}`;
+    const waUrl = `https://wa.me/918970365175?text=${encodeURIComponent('Hi Atelier Polytech, I want to order the ' + product.title + '.')}`;
+
+    const actionButton = is3D
+      ? `<a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm" style="flex:1;text-align:center;font-size:0.8rem;padding:0.45rem 0.5rem;display:inline-flex;align-items:center;justify-content:center;gap:0.35rem;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
+          Order
+        </a>`
+      : `<a href="${contactUrl}" class="btn btn--primary btn--sm product-card__inquire-btn" style="flex:1;text-align:center;font-size:0.8rem;padding:0.45rem 0.5rem;">Inquire Now</a>`;
+
     return `
-      <div class="product-card" data-title="${product.title}" data-images='${JSON.stringify(product.images)}' data-desc="${product.desc}">
+      <div class="product-card" data-category="${product.category}" data-title="${product.title}" data-images='${JSON.stringify(product.images)}' data-desc="${product.desc}">
         <div class="product-card__image">
           <img src="${product.images[0]}" alt="${product.title} - Atelier Polytech" loading="lazy" width="400" height="300">
         </div>
@@ -986,7 +998,7 @@ function renderDynamicProducts() {
           <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:0.5rem; color: var(--text-primary);">${product.title}</h3>
           <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${product.desc}</p>
           <div style="display:flex;gap:0.5rem;margin-top:auto;width:100%;">
-            <a href="${contactUrl}" class="btn btn--primary btn--sm product-card__inquire-btn" style="flex:1;text-align:center;font-size:0.8rem;padding:0.45rem 0.5rem;">Inquire Now</a>
+            ${actionButton}
             <button type="button" class="btn btn--secondary btn--sm quick-view-btn" style="font-size:0.8rem;padding:0.45rem 0.65rem;">Quick View</button>
           </div>
         </div>
@@ -1020,6 +1032,7 @@ function initQuickView() {
   const desc = document.getElementById('quick-view-desc');
   const thumbContainer = document.getElementById('quick-view-thumbnails');
   const inqBtn = document.getElementById('quick-view-inquire-btn');
+  const waBtn = document.getElementById('quick-view-wa-btn');
   
   const cards = document.querySelectorAll('.product-card');
   
@@ -1037,10 +1050,26 @@ function initQuickView() {
     
     const cardTitle = card.getAttribute('data-title') || 'Product';
     const cardDesc = card.getAttribute('data-desc') || '';
+    const cardCat = card.getAttribute('data-category') || '';
+    const is3D = cardCat === '3d-printed' || cardTitle.toLowerCase().includes('drone') || cardTitle.toLowerCase().includes('medical') || cardTitle.toLowerCase().includes('bracket');
     
     if (title) title.textContent = cardTitle;
     if (desc) desc.textContent = cardDesc;
-    if (inqBtn) inqBtn.href = `/contact?subject=${encodeURIComponent(cardTitle)}`;
+    if (inqBtn) {
+      inqBtn.href = `/contact?subject=${encodeURIComponent(cardTitle)}`;
+      inqBtn.textContent = is3D ? 'Request Custom Quote' : 'Request Quote / Email';
+    }
+
+    if (waBtn) {
+      const waMsg = is3D
+        ? `Hi Atelier Polytech, I want to order the "${cardTitle}". Please let me know pricing, available colors, and dispatch time.`
+        : `Hi Atelier Polytech, I'd like a quote for "${cardTitle}".`;
+      waBtn.href = `https://wa.me/918970365175?text=${encodeURIComponent(waMsg)}`;
+      waBtn.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
+        ${is3D ? 'Order on WhatsApp' : 'Chat on WhatsApp'}
+      `;
+    }
     
     // Setup Images
     if (thumbContainer) thumbContainer.innerHTML = '';
