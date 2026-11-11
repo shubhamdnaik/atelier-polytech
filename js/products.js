@@ -1,40 +1,45 @@
 /**
  * Product Catalogue
  * Categorized into:
- * - "3d-printed": Additive engineering prototypes and low-volume composite parts
+ * - "3d-printed": Custom 3D printed consumer products, decor lamps, and functional parts
  * - "injection-molded": High-tonnage precision injection molded products & logistics components
  */
 
 const PRODUCT_CATALOGUE = [
   // 3D Printed
   {
-    id: "pa-cf-drone-arm",
-    title: "Carbon Fiber (PA-CF) Drone Arm",
-    desc: "High-rigidity lightweight structural drone arm printed on our Bambu Lab H2S Combo with carbon fiber nylon composite (PA-CF).",
+    id: "dragon-flame-lamp",
+    title: "Fire-Breathing Dragon LED Lamp",
+    desc: "Detailed 3D printed flying dragon table lamp suspended atop a glowing translucent flame plume base. Available in custom dragon and flame color combinations.",
     category: "3d-printed",
     images: [
-      "assets/images/aerospace-component.png",
-      "assets/images/bambu-lab.jpg"
+      "assets/images/products/dragon-flame-lamp/1.jpg",
+      "assets/images/products/dragon-flame-lamp/2.jpg",
+      "assets/images/products/dragon-flame-lamp/3.jpg",
+      "assets/images/products/dragon-flame-lamp/4.jpg",
+      "assets/images/products/dragon-flame-lamp/5.jpg"
     ]
   },
   {
-    id: "medical-device-casing",
-    title: "Medical Device Prototype Casing",
-    desc: "Biocompatible engineering prototype enclosure printed in ABS with functional snap-fit joints and 10W laser-engraved serial ID.",
+    id: "vitthal-idol",
+    title: "Lord Vitthal (Vithoba) 3D Printed Idol",
+    desc: "Intricately detailed 3D printed Lord Vitthal (Vithoba) idol resting on the traditional brick pedestal, featuring fine crown, jewelry, and draped garment detailing in a sleek black finish.",
     category: "3d-printed",
     images: [
-      "assets/images/medical-device.png",
-      "assets/images/bambu-lab.jpg"
+      "assets/images/products/vitthal-idol/1.jpg",
+      "assets/images/products/vitthal-idol/2.jpg"
     ]
   },
   {
-    id: "high-temp-bracket",
-    title: "Polycarbonate Structural Bracket",
-    desc: "Functional mechanical test bracket printed in pure Polycarbonate (PC) using an actively heated 65°C chamber for high-load durability.",
+    id: "melting-face-candle-lamp",
+    title: "Spooky Melting Candle LED Lamp",
+    desc: "3D printed melting wax-effect skull candle holder with hollowed glowing eyes and open mouth, casting warm ambient light from an interior LED candle flame.",
     category: "3d-printed",
     images: [
-      "assets/images/slide-polycarbonate.png",
-      "assets/images/bambu-lab.jpg"
+      "assets/images/products/melting-face-candle-lamp/1.jpg",
+      "assets/images/products/melting-face-candle-lamp/2.jpg",
+      "assets/images/products/melting-face-candle-lamp/3.jpg",
+      "assets/images/products/melting-face-candle-lamp/4.jpg"
     ]
   },
 

@@ -483,7 +483,11 @@ function initContactForm() {
     }
     if (serviceField) {
       const lower = subjectParam.toLowerCase();
-      if (lower.includes('drone') || lower.includes('arm') || lower.includes('bracket') || lower.includes('casing') || lower.includes('3d')) {
+      const matchedCatalogItem = (typeof PRODUCT_CATALOGUE !== 'undefined' && Array.isArray(PRODUCT_CATALOGUE))
+        ? PRODUCT_CATALOGUE.find(p => p.title.toLowerCase() === lower)
+        : null;
+
+      if ((matchedCatalogItem && matchedCatalogItem.category === '3d-printed') || lower.includes('3d') || lower.includes('dragon') || lower.includes('lamp')) {
         serviceField.value = '3d-print-order';
       } else if (lower.includes('prototype') || lower.includes('laser')) {
         serviceField.value = 'prototyping';
@@ -982,11 +986,11 @@ function renderDynamicProducts() {
     const waUrl = `https://wa.me/918970365175?text=${encodeURIComponent('Hi Atelier Polytech, I want to order the ' + product.title + '.')}`;
 
     const actionButton = is3D
-      ? `<a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm" style="flex:1;text-align:center;font-size:0.8rem;padding:0.45rem 0.5rem;display:inline-flex;align-items:center;justify-content:center;gap:0.35rem;">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
-          Order
+      ? `<a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm" style="flex:1;width:100%;text-align:center;font-size:0.82rem;padding:0.55rem 0.75rem;display:inline-flex;align-items:center;justify-content:center;gap:0.4rem;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
+          Order on WhatsApp
         </a>`
-      : `<a href="${contactUrl}" class="btn btn--primary btn--sm product-card__inquire-btn" style="flex:1;text-align:center;font-size:0.8rem;padding:0.45rem 0.5rem;">Inquire Now</a>`;
+      : `<a href="${contactUrl}" class="btn btn--primary btn--sm product-card__inquire-btn" style="flex:1;width:100%;text-align:center;font-size:0.82rem;padding:0.55rem 0.75rem;">Inquire Now</a>`;
 
     return `
       <div class="product-card" data-category="${product.category}" data-title="${product.title}" data-images='${JSON.stringify(product.images)}' data-desc="${product.desc}">
@@ -999,7 +1003,6 @@ function renderDynamicProducts() {
           <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1rem; line-height:1.4; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">${product.desc}</p>
           <div style="display:flex;gap:0.5rem;margin-top:auto;width:100%;">
             ${actionButton}
-            <button type="button" class="btn btn--secondary btn--sm quick-view-btn" style="font-size:0.8rem;padding:0.45rem 0.65rem;">Quick View</button>
           </div>
         </div>
       </div>
@@ -1007,9 +1010,9 @@ function renderDynamicProducts() {
   };
 
   if (featuredContainer) {
-    // Show balanced showcase of 3D printed & injection molded products on homepage
+    // Show balanced showcase of 3D printed & injection molded products (4 total)
     const printed = PRODUCT_CATALOGUE.filter(p => p.category === '3d-printed').slice(0, 2);
-    const molded = PRODUCT_CATALOGUE.filter(p => p.category === 'injection-molded').slice(0, 2);
+    const molded = PRODUCT_CATALOGUE.filter(p => p.category === 'injection-molded').slice(0, Math.max(2, 4 - printed.length));
     const selected = [...printed, ...molded];
     featuredContainer.innerHTML = selected.map(generateCardHTML).join('');
   }
@@ -1020,123 +1023,360 @@ function renderDynamicProducts() {
 }
 
 /* ---------------------------------------------------------- */
-/*  16. QUICK VIEW MODAL                                      */
+/*  16. PRODUCT CARD AUTO-CAROUSEL & ENLARGED VIEW LIGHTBOX   */
 /* ---------------------------------------------------------- */
+function initProductGalleries(openEnlargedModal) {
+  const cards = document.querySelectorAll('.product-card, .showcase-card');
+  if (!cards.length) return;
+
+  const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const activeIntervals = [];
+
+  cards.forEach((card, cardIdx) => {
+    if (card.dataset.galleryInitialized) return;
+
+    const rawImages = card.getAttribute('data-images');
+    const container = card.querySelector('.product-card__image, .showcase-card__gallery');
+    if (!rawImages || !container) return;
+
+    let images = [];
+    try {
+      images = JSON.parse(rawImages);
+    } catch (e) {
+      console.error('Error parsing product images JSON', e);
+      return;
+    }
+    if (!Array.isArray(images) || images.length === 0) return;
+
+    card.dataset.galleryInitialized = 'true';
+    const cardTitle = card.getAttribute('data-title') || 'Product';
+    const hasMultiple = images.length > 1;
+    let currentIndex = 0;
+    let isHoveredOrFocused = false;
+    let autoTimer = null;
+
+    container.classList.add('has-carousel');
+    container.innerHTML = `
+      <div class="card-carousel${hasMultiple ? '' : ' card-carousel--single'}">
+        <div class="card-carousel__track">
+          ${images.map((src, idx) => `
+            <div class="card-carousel__slide" data-slide-idx="${idx}">
+              <img src="${src}" alt="${cardTitle}${hasMultiple ? ` view ${idx + 1}` : ''} - Atelier Polytech" width="400" height="300" loading="${idx === 0 ? 'eager' : 'lazy'}">
+            </div>
+          `).join('')}
+        </div>
+        <button type="button" class="card-carousel__enlarge" aria-label="Enlarge images for ${cardTitle}" title="Open enlarged view">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <polyline points="9 21 3 21 3 15"></polyline>
+            <line x1="21" y1="3" x2="14" y2="10"></line>
+            <line x1="3" y1="21" x2="10" y2="14"></line>
+          </svg>
+        </button>
+        ${hasMultiple ? `
+          <button type="button" class="card-carousel__btn card-carousel__btn--prev" aria-label="Previous image for ${cardTitle}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <button type="button" class="card-carousel__btn card-carousel__btn--next" aria-label="Next image for ${cardTitle}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <div class="card-carousel__dots" role="tablist" aria-label="${cardTitle} gallery navigation">
+            ${images.map((_, idx) => `
+              <button type="button" class="card-carousel__dot${idx === 0 ? ' active' : ''}" data-dot-idx="${idx}" aria-label="Show image ${idx + 1} of ${images.length}" aria-selected="${idx === 0 ? 'true' : 'false'}"></button>
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+
+    const track = container.querySelector('.card-carousel__track');
+    const dots = Array.from(container.querySelectorAll('.card-carousel__dot'));
+    const prevBtn = container.querySelector('.card-carousel__btn--prev');
+    const nextBtn = container.querySelector('.card-carousel__btn--next');
+    const enlargeBtn = container.querySelector('.card-carousel__enlarge');
+    const slides = container.querySelectorAll('.card-carousel__slide');
+
+    const goTo = (nextIdx) => {
+      if (!track || images.length === 0) return;
+      currentIndex = (nextIdx + images.length) % images.length;
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      card.dataset.activeIndex = String(currentIndex);
+      dots.forEach((dot, idx) => {
+        const isActive = idx === currentIndex;
+        dot.classList.toggle('active', isActive);
+        dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    };
+
+    const startAutoPlay = () => {
+      if (!hasMultiple || prefersReducedMotion || autoTimer) return;
+      const delay = 3200 + (cardIdx % 4) * 400;
+      autoTimer = setInterval(() => {
+        if (isHoveredOrFocused || document.hidden || document.body.classList.contains('no-scroll')) return;
+        goTo(currentIndex + 1);
+      }, delay);
+      activeIntervals.push(autoTimer);
+    };
+
+    const resetAutoPlay = () => {
+      if (autoTimer) {
+        clearInterval(autoTimer);
+        autoTimer = null;
+      }
+      startAutoPlay();
+    };
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        goTo(currentIndex - 1);
+        resetAutoPlay();
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        goTo(currentIndex + 1);
+        resetAutoPlay();
+      });
+    }
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const targetIdx = parseInt(dot.getAttribute('data-dot-idx'), 10);
+        if (!isNaN(targetIdx)) {
+          goTo(targetIdx);
+          resetAutoPlay();
+        }
+      });
+    });
+
+    if (enlargeBtn) {
+      enlargeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof openEnlargedModal === 'function') openEnlargedModal(card, currentIndex);
+      });
+    }
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+    container.addEventListener('touchstart', (e) => {
+      if (e.changedTouches && e.changedTouches[0]) {
+        touchStartX = e.changedTouches[0].clientX;
+      }
+    }, { passive: true });
+
+    container.addEventListener('touchend', (e) => {
+      if (!hasMultiple || !e.changedTouches || !e.changedTouches[0]) return;
+      touchEndX = e.changedTouches[0].clientX;
+      const delta = touchEndX - touchStartX;
+      if (Math.abs(delta) > 36) {
+        if (delta < 0) goTo(currentIndex + 1);
+        else goTo(currentIndex - 1);
+        resetAutoPlay();
+      }
+    }, { passive: true });
+
+    slides.forEach((slide) => {
+      slide.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (typeof openEnlargedModal === 'function') openEnlargedModal(card, currentIndex);
+      });
+    });
+
+    card.addEventListener('mouseenter', () => { isHoveredOrFocused = true; });
+    card.addEventListener('mouseleave', () => { isHoveredOrFocused = false; });
+    card.addEventListener('focusin', () => { isHoveredOrFocused = true; });
+    card.addEventListener('focusout', () => {
+      if (!card.contains(document.activeElement)) {
+        isHoveredOrFocused = false;
+      }
+    });
+
+    startAutoPlay();
+  });
+}
+
 function initQuickView() {
   const modal = document.getElementById('quick-view-modal');
-  if (!modal) return;
-  
+  if (!modal) {
+    initProductGalleries(null);
+    return;
+  }
+
   const closeBtn = document.getElementById('quick-view-close');
+  const stage = document.getElementById('quick-view-main-image-container');
   const mainImg = document.getElementById('quick-view-main-image');
+  const prevBtn = document.getElementById('quick-view-prev');
+  const nextBtn = document.getElementById('quick-view-next');
+  const dotsContainer = document.getElementById('quick-view-dots');
+  const counterEl = document.getElementById('quick-view-counter');
   const title = document.getElementById('quick-view-title');
   const desc = document.getElementById('quick-view-desc');
   const thumbContainer = document.getElementById('quick-view-thumbnails');
   const inqBtn = document.getElementById('quick-view-inquire-btn');
   const waBtn = document.getElementById('quick-view-wa-btn');
-  
-  const cards = document.querySelectorAll('.product-card');
-  
-  const openModal = (card) => {
+
+  let currentImages = [];
+  let currentCardTitle = 'Product';
+  let activeModalIdx = 0;
+
+  const setModalSlide = (idx) => {
+    if (!currentImages.length) return;
+    activeModalIdx = (idx + currentImages.length) % currentImages.length;
+    const src = currentImages[activeModalIdx];
+
+    if (mainImg) {
+      mainImg.src = src;
+      mainImg.alt = `${currentCardTitle} - Enlarged view ${activeModalIdx + 1}`;
+    }
+    if (counterEl) {
+      counterEl.textContent = `${activeModalIdx + 1} / ${currentImages.length}`;
+    }
+    if (dotsContainer) {
+      Array.from(dotsContainer.children).forEach((dot, i) => {
+        const isActive = i === activeModalIdx;
+        dot.classList.toggle('active', isActive);
+        dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    }
+    if (thumbContainer) {
+      Array.from(thumbContainer.children).forEach((thumb, i) => {
+        thumb.style.border = i === activeModalIdx ? '2px solid var(--accent)' : '1px solid var(--border-color)';
+      });
+    }
+  };
+
+  const openModal = (card, startIndex = 0) => {
     const rawImages = card.getAttribute('data-images');
-    if(!rawImages) return;
-    
+    if (!rawImages) return;
+
     let images = [];
     try {
       images = JSON.parse(rawImages);
-    } catch(e) {
-      console.error("Error parsing images JSON", e);
+    } catch (e) {
+      console.error('Error parsing images JSON', e);
       return;
     }
-    
-    const cardTitle = card.getAttribute('data-title') || 'Product';
+    if (!Array.isArray(images) || images.length === 0) return;
+
+    currentImages = images;
+    currentCardTitle = card.getAttribute('data-title') || 'Product';
     const cardDesc = card.getAttribute('data-desc') || '';
     const cardCat = card.getAttribute('data-category') || '';
-    const is3D = cardCat === '3d-printed' || cardTitle.toLowerCase().includes('drone') || cardTitle.toLowerCase().includes('medical') || cardTitle.toLowerCase().includes('bracket');
-    
-    if (title) title.textContent = cardTitle;
+    const is3D = cardCat === '3d-printed' || (typeof PRODUCT_CATALOGUE !== 'undefined' && Array.isArray(PRODUCT_CATALOGUE) && PRODUCT_CATALOGUE.some(p => p.title === currentCardTitle && p.category === '3d-printed'));
+    const hasMultiple = images.length > 1;
+
+    if (title) title.textContent = currentCardTitle;
     if (desc) desc.textContent = cardDesc;
     if (inqBtn) {
-      inqBtn.href = `/contact?subject=${encodeURIComponent(cardTitle)}`;
+      inqBtn.href = `/contact?subject=${encodeURIComponent(currentCardTitle)}`;
       inqBtn.textContent = is3D ? 'Request Custom Quote' : 'Request Quote / Email';
     }
 
     if (waBtn) {
       const waMsg = is3D
-        ? `Hi Atelier Polytech, I want to order the "${cardTitle}". Please let me know pricing, available colors, and dispatch time.`
-        : `Hi Atelier Polytech, I'd like a quote for "${cardTitle}".`;
+        ? `Hi Atelier Polytech, I want to order the "${currentCardTitle}". Please let me know pricing, available colors, and dispatch time.`
+        : `Hi Atelier Polytech, I'd like a quote for "${currentCardTitle}".`;
       waBtn.href = `https://wa.me/918970365175?text=${encodeURIComponent(waMsg)}`;
       waBtn.innerHTML = `
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
         ${is3D ? 'Order on WhatsApp' : 'Chat on WhatsApp'}
       `;
     }
-    
-    // Setup Images
-    if (thumbContainer) thumbContainer.innerHTML = '';
-    
-    if(images.length > 0) {
-      if (mainImg) {
-        mainImg.src = images[0];
-        mainImg.alt = `${cardTitle} - Product view`;
+
+    if (prevBtn) prevBtn.hidden = !hasMultiple;
+    if (nextBtn) nextBtn.hidden = !hasMultiple;
+    if (counterEl) counterEl.hidden = !hasMultiple;
+
+    if (dotsContainer) {
+      dotsContainer.innerHTML = '';
+      dotsContainer.hidden = !hasMultiple;
+      if (hasMultiple) {
+        images.forEach((_, idx) => {
+          const dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'card-carousel__dot';
+          dot.setAttribute('aria-label', `View enlarged image ${idx + 1} of ${images.length}`);
+          dot.addEventListener('click', () => setModalSlide(idx));
+          dotsContainer.appendChild(dot);
+        });
       }
-      
-      if(images.length > 1 && thumbContainer) {
+    }
+
+    if (thumbContainer) {
+      thumbContainer.innerHTML = '';
+      thumbContainer.style.display = hasMultiple ? 'flex' : 'none';
+      if (hasMultiple) {
         images.forEach((src, idx) => {
           const img = document.createElement('img');
           img.src = src;
-          img.alt = `${cardTitle} thumbnail ${idx + 1}`;
-          img.style.width = '50px';
-          img.style.height = '50px';
+          img.alt = `${currentCardTitle} thumbnail ${idx + 1}`;
+          img.style.width = '54px';
+          img.style.height = '54px';
           img.style.objectFit = 'cover';
-          img.style.borderRadius = '4px';
+          img.style.borderRadius = '6px';
           img.style.cursor = 'pointer';
-          img.style.border = idx === 0 ? '2px solid var(--accent)' : '1px solid var(--border-color)';
           img.style.background = 'var(--gradient-card)';
-          
-          img.addEventListener('click', () => {
-            if (mainImg) mainImg.src = src;
-            Array.from(thumbContainer.children).forEach(child => {
-              child.style.border = '1px solid var(--border-color)';
-            });
-            img.style.border = '2px solid var(--accent)';
-          });
-          
+          img.addEventListener('click', () => setModalSlide(idx));
           thumbContainer.appendChild(img);
         });
       }
     }
-    
+
+    setModalSlide(startIndex);
+
     modal.removeAttribute('hidden');
     modal.setAttribute('aria-hidden', 'false');
     modal.classList.add('active');
     document.body.classList.add('no-scroll');
   };
-  
+
   const closeModal = () => {
     modal.classList.remove('active');
     modal.setAttribute('hidden', '');
     modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('no-scroll');
   };
-  
-  cards.forEach(card => {
-    card.addEventListener('click', (e) => {
-      if(e.target.tagName.toLowerCase() === 'a') return;
-      openModal(card);
-    });
-  });
-  
+
+  if (prevBtn) prevBtn.addEventListener('click', () => setModalSlide(activeModalIdx - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => setModalSlide(activeModalIdx + 1));
+
+  if (stage) {
+    let modalTouchStartX = 0;
+    stage.addEventListener('touchstart', (e) => {
+      if (e.changedTouches && e.changedTouches[0]) modalTouchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+    stage.addEventListener('touchend', (e) => {
+      if (currentImages.length <= 1 || !e.changedTouches || !e.changedTouches[0]) return;
+      const delta = e.changedTouches[0].clientX - modalTouchStartX;
+      if (Math.abs(delta) > 36) {
+        if (delta < 0) setModalSlide(activeModalIdx + 1);
+        else setModalSlide(activeModalIdx - 1);
+      }
+    }, { passive: true });
+  }
+
   if (closeBtn) closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', (e) => {
-    if(e.target === modal) closeModal();
+    if (e.target === modal) closeModal();
   });
 
-  // Escape key closes modal
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
-      closeModal();
-    }
+    if (!modal.classList.contains('active')) return;
+    if (e.key === 'Escape') closeModal();
+    else if (e.key === 'ArrowLeft' && currentImages.length > 1) setModalSlide(activeModalIdx - 1);
+    else if (e.key === 'ArrowRight' && currentImages.length > 1) setModalSlide(activeModalIdx + 1);
   });
+
+  initProductGalleries(openModal);
 }
 
 /* ---------------------------------------------------------- */

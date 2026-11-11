@@ -2358,10 +2358,23 @@ p {
   border-bottom: 1px solid var(--border-color);
 }
 
+.product-card__image.has-carousel {
+  padding: 0;
+  height: 225px;
+  min-height: 225px;
+  display: block;
+}
+
 @media (max-width: 640px) {
   .product-card__image {
     min-height: 180px;
     padding: 1.25rem;
+  }
+
+  .product-card__image.has-carousel {
+    padding: 0;
+    height: 190px;
+    min-height: 190px;
   }
 }
 
@@ -2378,6 +2391,173 @@ p {
   transform: scale(1.05) translateY(-5px);
 }
 
+.product-card:hover .product-card__image.has-carousel img {
+  transform: none;
+}
+
+/* Shared Product Card Auto-Scrolling Gallery Carousel */
+.card-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.card-carousel__track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.card-carousel__slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2.35rem 1.85rem;
+  cursor: zoom-in;
+  box-sizing: border-box;
+}
+
+.card-carousel--single .card-carousel__slide {
+  padding: 1rem 1.25rem;
+}
+
+.card-carousel__slide img {
+  width: 100%;
+  height: 100%;
+  max-height: 100% !important;
+  max-width: 100% !important;
+  object-fit: contain;
+  padding: 0 !important;
+  margin: 0 auto;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.card-carousel__slide:hover img {
+  transform: scale(1.03);
+}
+
+.card-carousel__btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(15, 15, 20, 0.62);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  padding: 0;
+}
+
+.card-carousel__btn:hover,
+.card-carousel__btn:focus-visible {
+  opacity: 1;
+  background: rgba(15, 15, 20, 0.88);
+  transform: translateY(-50%) scale(1.08);
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.card-carousel__btn--prev {
+  left: 0.5rem;
+}
+
+.card-carousel__btn--next {
+  right: 0.5rem;
+}
+
+.card-carousel__dots {
+  position: absolute;
+  bottom: 0.55rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(15, 15, 20, 0.52);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.card-carousel__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width 0.25s ease, background 0.25s ease, opacity 0.25s ease;
+}
+
+.card-carousel__dot:hover {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.card-carousel__dot.active {
+  width: 16px;
+  background: #ffffff;
+}
+
+.card-carousel__enlarge {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 4;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(15, 15, 20, 0.65);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+}
+
+.card-carousel__enlarge:hover,
+.card-carousel__enlarge:focus-visible {
+  background: rgba(15, 15, 20, 0.9);
+  transform: scale(1.05);
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-carousel__track {
+    transition: none;
+  }
+}
+
 .product-card__content {
   padding: 1.25rem;
   text-align: center;
@@ -2386,15 +2566,15 @@ p {
   flex-direction: column;
 }
 
-/* Quick View Modal Styles */
+/* Enlarged View Lightbox Modal Styles */
 .quick-view-modal {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   justify-content: center;
   align-items: center;
   padding: 1rem;
@@ -2406,25 +2586,67 @@ p {
 
 .quick-view-modal.active {
   display: flex !important;
-  animation: fadeIn 0.3s ease forwards;
+  animation: fadeIn 0.25s ease forwards;
 }
 
 .quick-view-modal__content {
   background: var(--bg-primary);
-  border-radius: 16px;
+  border-radius: 18px;
   width: 100%;
-  max-width: 500px;
-  max-height: 90vh;
+  max-width: 780px;
+  max-height: 92vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
   border: 1px solid var(--border-color);
   transform: scale(0.95);
   opacity: 0;
 }
 
 .quick-view-modal.active .quick-view-modal__content {
-  animation: modalPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: modalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.quick-view-modal__stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: min(54vh, 440px);
+  margin-bottom: 1rem;
+  background: var(--gradient-card);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  padding: 1rem 3rem;
+}
+
+@media (max-width: 640px) {
+  .quick-view-modal__stage {
+    height: min(44vh, 300px);
+    padding: 0.75rem 2.5rem;
+  }
+}
+
+.quick-view-modal__stage .card-carousel__btn {
+  width: 38px;
+  height: 38px;
+}
+
+.quick-view-modal__counter {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 4;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: rgba(15, 15, 20, 0.62);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .quick-view-modal__close {

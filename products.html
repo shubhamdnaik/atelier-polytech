@@ -82,16 +82,16 @@
         "position": 1,
         "item": {
           "@type": "Product",
-          "name": "Carbon Fiber (PA-CF) Drone Arm",
-          "description": "High-rigidity lightweight structural drone arm printed on our Bambu Lab H2S Combo with carbon fiber nylon composite (PA-CF).",
-          "image": "https://atelierpolytech.com/assets/images/aerospace-component.png",
-          "category": "3D Printed Prototype",
+          "name": "Fire-Breathing Dragon LED Lamp",
+          "description": "Detailed 3D printed flying dragon table lamp suspended atop a glowing translucent flame plume base. Available in custom dragon and flame color combinations.",
+          "image": "https://atelierpolytech.com/assets/images/products/dragon-flame-lamp/1.jpg",
+          "category": "3D Printed Product",
           "brand": { "@type": "Brand", "name": "Atelier Polytech" },
           "offers": {
             "@type": "AggregateOffer",
             "priceCurrency": "INR",
             "availability": "https://schema.org/InStock",
-            "url": "https://atelierpolytech.com/contact?subject=Carbon%20Fiber%20(PA-CF)%20Drone%20Arm"
+            "url": "https://atelierpolytech.com/contact?subject=Fire-Breathing%20Dragon%20LED%20Lamp"
           }
         }
       },
@@ -100,16 +100,16 @@
         "position": 2,
         "item": {
           "@type": "Product",
-          "name": "Medical Device Prototype Casing",
-          "description": "Biocompatible engineering prototype enclosure printed in ABS with functional snap-fit joints and 10W laser-engraved serial ID.",
-          "image": "https://atelierpolytech.com/assets/images/medical-device.png",
-          "category": "3D Printed Prototype",
+          "name": "Lord Vitthal (Vithoba) 3D Printed Idol",
+          "description": "Intricately detailed 3D printed Lord Vitthal (Vithoba) idol resting on the traditional brick pedestal, featuring fine crown, jewelry, and draped garment detailing in a sleek black finish.",
+          "image": "https://atelierpolytech.com/assets/images/products/vitthal-idol/1.jpg",
+          "category": "3D Printed Product",
           "brand": { "@type": "Brand", "name": "Atelier Polytech" },
           "offers": {
             "@type": "AggregateOffer",
             "priceCurrency": "INR",
             "availability": "https://schema.org/InStock",
-            "url": "https://atelierpolytech.com/contact?subject=Medical%20Device%20Prototype%20Casing"
+            "url": "https://atelierpolytech.com/contact?subject=Lord%20Vitthal%20(Vithoba)%203D%20Printed%20Idol"
           }
         }
       },
@@ -118,16 +118,16 @@
         "position": 3,
         "item": {
           "@type": "Product",
-          "name": "Polycarbonate Structural Bracket",
-          "description": "Functional mechanical test bracket printed in pure Polycarbonate (PC) using an actively heated 65°C chamber for high-load durability.",
-          "image": "https://atelierpolytech.com/assets/images/slide-polycarbonate.png",
-          "category": "3D Printed Prototype",
+          "name": "Spooky Melting Candle LED Lamp",
+          "description": "3D printed melting wax-effect skull candle holder with hollowed glowing eyes and open mouth, casting warm ambient light from an interior LED candle flame.",
+          "image": "https://atelierpolytech.com/assets/images/products/melting-face-candle-lamp/1.jpg",
+          "category": "3D Printed Product",
           "brand": { "@type": "Brand", "name": "Atelier Polytech" },
           "offers": {
             "@type": "AggregateOffer",
             "priceCurrency": "INR",
             "availability": "https://schema.org/InStock",
-            "url": "https://atelierpolytech.com/contact?subject=Polycarbonate%20Structural%20Bracket"
+            "url": "https://atelierpolytech.com/contact?subject=Spooky%20Melting%20Candle%20LED%20Lamp"
           }
         }
       },
@@ -465,6 +465,7 @@
       overflow: hidden;
       aspect-ratio: 4 / 3;
       background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
     }
 
     .showcase-card__gallery img {
@@ -475,36 +476,12 @@
       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .showcase-card:hover .showcase-card__gallery img {
+    .showcase-card:hover .showcase-card__gallery:not(.has-carousel) img {
       transform: scale(1.08);
     }
 
-    .showcase-card__gallery-dots {
-      position: absolute;
-      bottom: 0.75rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 0.4rem;
-      z-index: 2;
-    }
-
-    .showcase-card__gallery-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--text-muted);
-      opacity: 0.4;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .showcase-card__gallery-dot.active {
-      opacity: 1;
-      background: var(--accent);
-      transform: scale(1.3);
+    .showcase-card__gallery.has-carousel .card-carousel__slide {
+      padding: 1.15rem 2.5rem 2rem;
     }
 
     .showcase-card__body {
@@ -543,30 +520,16 @@
     .showcase-card__footer {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       gap: 0.75rem;
       padding-top: 1rem;
       border-top: 1px solid var(--border-color);
-      flex-wrap: wrap;
     }
 
-    .showcase-card__cta {
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: gap 0.3s ease;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .showcase-card__cta:hover {
-      gap: 0.7rem;
+    .showcase-card__footer > a {
+      flex: 1;
+      text-align: center;
+      justify-content: center;
     }
 
     /* CTA banner at the bottom */
@@ -708,71 +671,59 @@
 
         <!-- Pre-rendered Products Showcase Grid for SEO & Immediate Crawling -->
         <div class="products-showcase" id="productsShowcase">
-          <!-- 1. Carbon Fiber (PA-CF) Drone Arm -->
-          <div class="showcase-card" data-category="3d-printed" data-title="Carbon Fiber (PA-CF) Drone Arm" data-images='["assets/images/aerospace-component.png","assets/images/bambu-lab.jpg"]' data-desc="High-rigidity lightweight structural drone arm printed on our Bambu Lab H2S Combo with carbon fiber nylon composite (PA-CF).">
+          <!-- 1. Fire-Breathing Dragon LED Lamp -->
+          <div class="showcase-card" data-category="3d-printed" data-title="Fire-Breathing Dragon LED Lamp" data-images='["assets/images/products/dragon-flame-lamp/1.jpg","assets/images/products/dragon-flame-lamp/2.jpg","assets/images/products/dragon-flame-lamp/3.jpg","assets/images/products/dragon-flame-lamp/4.jpg","assets/images/products/dragon-flame-lamp/5.jpg"]' data-desc="Detailed 3D printed flying dragon table lamp suspended atop a glowing translucent flame plume base. Available in custom dragon and flame color combinations.">
             <div class="showcase-card__badge">3D Printed</div>
             <div class="showcase-card__gallery">
-              <img src="assets/images/aerospace-component.png" alt="Carbon Fiber (PA-CF) Drone Arm - Atelier Polytech" loading="lazy" width="400" height="300">
+              <img src="assets/images/products/dragon-flame-lamp/1.jpg" alt="Fire-Breathing Dragon LED Lamp - Atelier Polytech" loading="lazy" width="400" height="300">
             </div>
             <div class="showcase-card__body">
               <div class="showcase-card__category">3D Printed</div>
-              <h3 class="showcase-card__title">Carbon Fiber (PA-CF) Drone Arm</h3>
-              <p class="showcase-card__desc">High-rigidity lightweight structural drone arm printed on our Bambu Lab H2S Combo with carbon fiber nylon composite (PA-CF).</p>
+              <h3 class="showcase-card__title">Fire-Breathing Dragon LED Lamp</h3>
+              <p class="showcase-card__desc">Detailed 3D printed flying dragon table lamp suspended atop a glowing translucent flame plume base. Available in custom dragon and flame color combinations.</p>
               <div class="showcase-card__footer">
-                <a href="https://wa.me/918970365175?text=Hi%20Atelier%20Polytech%2C%20I%20want%20to%20order%20the%20Carbon%20Fiber%20(PA-CF)%20Drone%20Arm." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.45rem 0.85rem;font-size:0.8rem;">
+                <a href="https://wa.me/918970365175?text=Hi%20Atelier%20Polytech%2C%20I%20want%20to%20order%20the%20Fire-Breathing%20Dragon%20LED%20Lamp." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.45rem 0.85rem;font-size:0.8rem;">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
                   Order on WhatsApp
                 </a>
-                <button type="button" class="showcase-card__cta quick-view-trigger">
-                  Quick View
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
               </div>
             </div>
           </div>
 
-          <!-- 2. Medical Device Prototype Casing -->
-          <div class="showcase-card" data-category="3d-printed" data-title="Medical Device Prototype Casing" data-images='["assets/images/medical-device.png","assets/images/bambu-lab.jpg"]' data-desc="Biocompatible engineering prototype enclosure printed in ABS with functional snap-fit joints and 10W laser-engraved serial ID.">
+          <!-- 2. Lord Vitthal (Vithoba) 3D Printed Idol -->
+          <div class="showcase-card" data-category="3d-printed" data-title="Lord Vitthal (Vithoba) 3D Printed Idol" data-images='["assets/images/products/vitthal-idol/1.jpg","assets/images/products/vitthal-idol/2.jpg"]' data-desc="Intricately detailed 3D printed Lord Vitthal (Vithoba) idol resting on the traditional brick pedestal, featuring fine crown, jewelry, and draped garment detailing in a sleek black finish.">
             <div class="showcase-card__badge">3D Printed</div>
             <div class="showcase-card__gallery">
-              <img src="assets/images/medical-device.png" alt="Medical Device Prototype Casing - Atelier Polytech" loading="lazy" width="400" height="300">
+              <img src="assets/images/products/vitthal-idol/1.jpg" alt="Lord Vitthal (Vithoba) 3D Printed Idol - Atelier Polytech" loading="lazy" width="400" height="300">
             </div>
             <div class="showcase-card__body">
               <div class="showcase-card__category">3D Printed</div>
-              <h3 class="showcase-card__title">Medical Device Prototype Casing</h3>
-              <p class="showcase-card__desc">Biocompatible engineering prototype enclosure printed in ABS with functional snap-fit joints and 10W laser-engraved serial ID.</p>
+              <h3 class="showcase-card__title">Lord Vitthal (Vithoba) 3D Printed Idol</h3>
+              <p class="showcase-card__desc">Intricately detailed 3D printed Lord Vitthal (Vithoba) idol resting on the traditional brick pedestal, featuring fine crown, jewelry, and draped garment detailing in a sleek black finish.</p>
               <div class="showcase-card__footer">
-                <a href="https://wa.me/918970365175?text=Hi%20Atelier%20Polytech%2C%20I%20want%20to%20order%20the%20Medical%20Device%20Prototype%20Casing." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.45rem 0.85rem;font-size:0.8rem;">
+                <a href="https://wa.me/918970365175?text=Hi%20Atelier%20Polytech%2C%20I%20want%20to%20order%20the%20Lord%20Vitthal%20(Vithoba)%203D%20Printed%20Idol." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.45rem 0.85rem;font-size:0.8rem;">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
                   Order on WhatsApp
                 </a>
-                <button type="button" class="showcase-card__cta quick-view-trigger">
-                  Quick View
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
               </div>
             </div>
           </div>
 
-          <!-- 3. Polycarbonate Structural Bracket -->
-          <div class="showcase-card" data-category="3d-printed" data-title="Polycarbonate Structural Bracket" data-images='["assets/images/slide-polycarbonate.png","assets/images/bambu-lab.jpg"]' data-desc="Functional mechanical test bracket printed in pure Polycarbonate (PC) using an actively heated 65°C chamber for high-load durability.">
+          <!-- 3. Spooky Melting Candle LED Lamp -->
+          <div class="showcase-card" data-category="3d-printed" data-title="Spooky Melting Candle LED Lamp" data-images='["assets/images/products/melting-face-candle-lamp/1.jpg","assets/images/products/melting-face-candle-lamp/2.jpg","assets/images/products/melting-face-candle-lamp/3.jpg","assets/images/products/melting-face-candle-lamp/4.jpg"]' data-desc="3D printed melting wax-effect skull candle holder with hollowed glowing eyes and open mouth, casting warm ambient light from an interior LED candle flame.">
             <div class="showcase-card__badge">3D Printed</div>
             <div class="showcase-card__gallery">
-              <img src="assets/images/slide-polycarbonate.png" alt="Polycarbonate Structural Bracket - Atelier Polytech" loading="lazy" width="400" height="300">
+              <img src="assets/images/products/melting-face-candle-lamp/1.jpg" alt="Spooky Melting Candle LED Lamp - Atelier Polytech" loading="lazy" width="400" height="300">
             </div>
             <div class="showcase-card__body">
               <div class="showcase-card__category">3D Printed</div>
-              <h3 class="showcase-card__title">Polycarbonate Structural Bracket</h3>
-              <p class="showcase-card__desc">Functional mechanical test bracket printed in pure Polycarbonate (PC) using an actively heated 65°C chamber for high-load durability.</p>
+              <h3 class="showcase-card__title">Spooky Melting Candle LED Lamp</h3>
+              <p class="showcase-card__desc">3D printed melting wax-effect skull candle holder with hollowed glowing eyes and open mouth, casting warm ambient light from an interior LED candle flame.</p>
               <div class="showcase-card__footer">
-                <a href="https://wa.me/918970365175?text=Hi%20Atelier%20Polytech%2C%20I%20want%20to%20order%20the%20Polycarbonate%20Structural%20Bracket." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.45rem 0.85rem;font-size:0.8rem;">
+                <a href="https://wa.me/918970365175?text=Hi%20Atelier%20Polytech%2C%20I%20want%20to%20order%20the%20Spooky%20Melting%20Candle%20LED%20Lamp." target="_blank" rel="noopener noreferrer" class="btn btn--whatsapp btn--sm" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.45rem 0.85rem;font-size:0.8rem;">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
                   Order on WhatsApp
                 </a>
-                <button type="button" class="showcase-card__cta quick-view-trigger">
-                  Quick View
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
               </div>
             </div>
           </div>
@@ -789,10 +740,6 @@
               <p class="showcase-card__desc">High-impact, space-saving plastic folding crates precision molded for warehousing, logistics, and bulk distribution.</p>
               <div class="showcase-card__footer">
                 <a href="/contact?subject=Foldable%20Industrial%20Crate" class="btn btn--primary btn--sm showcase-card__inquire-btn">Inquire Now</a>
-                <button type="button" class="showcase-card__cta quick-view-trigger">
-                  Quick View
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
               </div>
             </div>
           </div>
@@ -809,10 +756,6 @@
               <p class="showcase-card__desc">High-density polyethylene molded bucket featuring ergonomic reinforced handle and high-impact drop resistance.</p>
               <div class="showcase-card__footer">
                 <a href="/contact?subject=Precision%20Molded%20Multi-Utility%20Bucket" class="btn btn--primary btn--sm showcase-card__inquire-btn">Inquire Now</a>
-                <button type="button" class="showcase-card__cta quick-view-trigger">
-                  Quick View
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
               </div>
             </div>
           </div>
@@ -829,10 +772,6 @@
               <p class="showcase-card__desc">Durable injection molded polypropylene dividers engineered to optimize and organize industrial storage racking.</p>
               <div class="showcase-card__footer">
                 <a href="/contact?subject=Warehouse%20Modular%20Bin%20Separator" class="btn btn--primary btn--sm showcase-card__inquire-btn">Inquire Now</a>
-                <button type="button" class="showcase-card__cta quick-view-trigger">
-                  Quick View
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
               </div>
             </div>
           </div>
@@ -849,10 +788,6 @@
               <p class="showcase-card__desc">Precision two-component molded food-grade PP colander with transparent PET basin and ergonomic rim handles.</p>
               <div class="showcase-card__footer">
                 <a href="/contact?subject=Dual-Polymer%20Strainer%20%26%20Basin" class="btn btn--primary btn--sm showcase-card__inquire-btn">Inquire Now</a>
-                <button type="button" class="showcase-card__cta quick-view-trigger">
-                  Quick View
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
               </div>
             </div>
           </div>
@@ -869,10 +804,6 @@
               <p class="showcase-card__desc">Custom molded dual-density bristled cleaning tool with anti-drip ventilated holder and molded snap lid.</p>
               <div class="showcase-card__footer">
                 <a href="/contact?subject=Engineered%20Sanitary%20Brush%20System" class="btn btn--primary btn--sm showcase-card__inquire-btn">Inquire Now</a>
-                <button type="button" class="showcase-card__cta quick-view-trigger">
-                  Quick View
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </button>
               </div>
             </div>
           </div>
@@ -971,17 +902,25 @@
     </div>
   </footer>
 
-  <!-- Quick View Modal (Hidden by default to prevent leftover template text) -->
+  <!-- Enlarged Product View Modal -->
   <div class="quick-view-modal" id="quick-view-modal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="quick-view-title">
     <div class="quick-view-modal__content">
-      <button class="quick-view-modal__close" id="quick-view-close" aria-label="Close product quick view">
+      <button class="quick-view-modal__close" id="quick-view-close" aria-label="Close enlarged product view">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
-      <div style="padding: 2.5rem 2rem 2rem;">
-        <div id="quick-view-main-image-container" style="display:flex; justify-content:center; align-items:center; height:300px; margin-bottom:1rem; background:var(--gradient-card); border-radius:8px; border:1px solid var(--border-color);">
-          <img id="quick-view-main-image" src="" alt="Product preview image" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; margin:0 auto;">
+      <div style="padding: 2.25rem 1.75rem 1.75rem;">
+        <div class="quick-view-modal__stage" id="quick-view-main-image-container">
+          <span class="quick-view-modal__counter" id="quick-view-counter" hidden>1 / 1</span>
+          <button type="button" class="card-carousel__btn card-carousel__btn--prev" id="quick-view-prev" aria-label="Previous image" hidden>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <img id="quick-view-main-image" src="" alt="Product enlarged image" style="max-width:100%; max-height:100%; object-fit:contain; border-radius:8px; margin:0 auto;">
+          <button type="button" class="card-carousel__btn card-carousel__btn--next" id="quick-view-next" aria-label="Next image" hidden>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+          <div class="card-carousel__dots" id="quick-view-dots" hidden></div>
         </div>
-        <div id="quick-view-thumbnails" style="display:flex; gap:0.5rem; justify-content:center; overflow-x:auto; margin-bottom:1.5rem; padding-bottom:0.5rem; min-height:55px;">
+        <div id="quick-view-thumbnails" style="display:flex; gap:0.5rem; justify-content:center; overflow-x:auto; margin-bottom:1.25rem; padding-bottom:0.35rem; min-height:55px;">
         </div>
         <h2 id="quick-view-title" style="font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-primary); text-align:center;"></h2>
         <p id="quick-view-desc" style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6; text-align:center;"></p>
@@ -1002,7 +941,7 @@
   <!-- Scripts -->
   <script src="js/products.js?v=2.3"></script>
   <script>
-    // ===== Products Page Dynamic Renderer & Interactive Filter =====
+    // ===== Products Page Interactive Filter =====
     (function() {
       const showcase = document.getElementById('productsShowcase');
       const countEl = document.getElementById('productsCount');
@@ -1047,104 +986,6 @@
           filterProducts(btn.dataset.filter);
         });
       });
-
-      // Quick View Modal
-      function initProductQuickView() {
-        const modal = document.getElementById('quick-view-modal');
-        if (!modal) return;
-
-        const closeBtn = document.getElementById('quick-view-close');
-        const mainImg = document.getElementById('quick-view-main-image');
-        const title = document.getElementById('quick-view-title');
-        const desc = document.getElementById('quick-view-desc');
-        const thumbContainer = document.getElementById('quick-view-thumbnails');
-        const inqBtn = document.getElementById('quick-view-inquire-btn');
-        const waBtn = document.getElementById('quick-view-wa-btn');
-
-        const cards = document.querySelectorAll('.showcase-card');
-
-        const openModal = (card) => {
-          const rawImages = card.getAttribute('data-images');
-          if (!rawImages) return;
-
-          let images = [];
-          try { images = JSON.parse(rawImages); } catch(e) { return; }
-
-          const cardTitle = card.getAttribute('data-title') || 'Product';
-          const cardDesc = card.getAttribute('data-desc') || '';
-          const cardCat = card.getAttribute('data-category') || '';
-          const is3D = cardCat === '3d-printed';
-
-          if (title) title.textContent = cardTitle;
-          if (desc) desc.textContent = cardDesc;
-          if (inqBtn) inqBtn.href = `/contact?subject=${encodeURIComponent(cardTitle)}`;
-
-          if (waBtn) {
-            const waMsg = is3D
-              ? `Hi Atelier Polytech, I want to order the "${cardTitle}". Please let me know pricing, available colors, and dispatch time.`
-              : `Hi Atelier Polytech, I'd like a quote for "${cardTitle}".`;
-            waBtn.href = `https://wa.me/918970365175?text=${encodeURIComponent(waMsg)}`;
-            waBtn.innerHTML = `
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2Z"/></svg>
-              ${is3D ? 'Order on WhatsApp' : 'Chat on WhatsApp'}
-            `;
-          }
-
-          if (thumbContainer) thumbContainer.innerHTML = '';
-          if (images.length > 0) {
-            if (mainImg) {
-              mainImg.src = images[0];
-              mainImg.alt = `${cardTitle} - Product view`;
-            }
-            if (images.length > 1 && thumbContainer) {
-              images.forEach((src, idx) => {
-                const img = document.createElement('img');
-                img.src = src;
-                img.alt = `${cardTitle} thumbnail ${idx + 1}`;
-                img.style.cssText = 'width:50px;height:50px;object-fit:cover;border-radius:4px;cursor:pointer;background:var(--gradient-card);';
-                img.style.border = idx === 0 ? '2px solid var(--accent)' : '1px solid var(--border-color)';
-                img.addEventListener('click', () => {
-                  if (mainImg) mainImg.src = src;
-                  Array.from(thumbContainer.children).forEach(child => child.style.border = '1px solid var(--border-color)');
-                  img.style.border = '2px solid var(--accent)';
-                });
-                thumbContainer.appendChild(img);
-              });
-            }
-          }
-
-          modal.removeAttribute('hidden');
-          modal.setAttribute('aria-hidden', 'false');
-          modal.classList.add('active');
-          document.body.classList.add('no-scroll');
-        };
-
-        const closeModal = () => {
-          modal.classList.remove('active');
-          modal.setAttribute('hidden', '');
-          modal.setAttribute('aria-hidden', 'true');
-          document.body.classList.remove('no-scroll');
-        };
-
-        cards.forEach(card => {
-          card.addEventListener('click', (e) => {
-            if (e.target.tagName.toLowerCase() === 'a') return;
-            openModal(card);
-          });
-        });
-
-        if (closeBtn) closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
-          }
-        });
-      }
-
-      // Initial quick view binding on pre-rendered cards
-      initProductQuickView();
     })();
   </script>
   <script src="js/main.js?v=2.3"></script>
